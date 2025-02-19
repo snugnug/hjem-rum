@@ -17,13 +17,13 @@ To start using Hjem Rum, you must first import the flake and its modules into yo
 inputs = {
     hjem = {
         url = "github:feel-co/hjem";
-        # You may want hjem to use your defined nixpkgs input to 
+        # You may want hjem to use your defined nixpkgs input to
         # minimize redundancies
         inputs.nixpkgs.follows = "nixpkgs";
     };
     hjem-rum = {
-        url = "github:the-unnamed-nug/hjem-rum";
-        # You may want hjem-rum's inputs to follow your defined 
+        url = "github:snugnug/hjem-rum";
+        # You may want hjem-rum's inputs to follow your defined
         # inputs to minimize redundancies
         inputs.nixpkgs.follows = "nixpkgs";
         inputs.hjem.follows = "hjem";
@@ -62,7 +62,7 @@ hjem = {
         user = "<username>";
     };
     # You should probably also enable clobberByDefault at least for now.
-    clobberByDefault = true;  
+    clobberByDefault = true;
 };
 ```
 
