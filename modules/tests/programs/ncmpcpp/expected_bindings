@@ -1,0 +1,13 @@
+def_key "ctrl-q" [immediate]
+  stop
+  quit
+
+def_key "q" [deferred]
+  quit
+
+def_command "!sq" [immediate]
+  stop
+  quit
+
+def_command "!q" [deferred]
+  quit

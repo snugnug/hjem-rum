@@ -8,24 +8,55 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     ...
-  }: let
+  } @ inputs: let
     forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
-    extendedLib = nixpkgs.lib.extend (final: prev: import ./modules/lib/default.nix {lib = prev;});
+    extendedLib = nixpkgs.lib.extend (_: prev: import ./modules/lib/default.nix {lib = prev;});
   in {
+    # Provide the default formatter to invoke on 'nix fmt'.
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+    # Nixos modules exposed by this flake
     nixosModules = {
       hjem-rum = import ./modules/nixos.nix {lib = extendedLib;};
       default = self.nixosModules.hjem-rum;
     };
 
-    lib = extendedLib;
+    # Provides checks to invoke with 'nix flake check'
+    checks = forAllSystems (system: let
+      mkCheckArgs = testDirectory: {
+        inherit self;
+        inherit testDirectory;
+	lib = extendedLib;
+        pkgs = nixpkgs.legacyPackages.${system};
+      };
+    in {
+      pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          alejandra.enable = true;
+          deadnix.enable = true;
+        };
+      };
+      hjem-rum-modules = import ./modules/tests (mkCheckArgs ./modules/tests/programs);
+    });
 
-    # Provide the default formatter to invoke on 'nix fmt'.
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    # Provides devshells to invoke with 'nix develop'
+    devShells = forAllSystems (system: {
+      default = nixpkgs.legacyPackages.${system}.mkShell {
+        inherit (self.checks.${system}.pre-commit-check) shellHook;
+        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+      };
+    });
   };
 }
