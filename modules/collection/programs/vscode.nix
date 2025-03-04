@@ -6,8 +6,8 @@
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
-  inherit (lib.types) attrsOf anything;
-  inherit (builtins) toJSON;
+
+  json = pkgs.formats.json {};
 
   cfg = config.rum.programs.vscode;
 in {
@@ -17,7 +17,7 @@ in {
     package = mkPackageOption pkgs "vscode" {};
 
     settings = mkOption {
-      type = attrsOf anything;
+      type = json.type;
       default = {};
       example = {
         "editor.fontFamily" = "Fira Code Nerdfont";
@@ -38,8 +38,8 @@ in {
   config = mkIf cfg.enable {
     packages = [cfg.package];
     files = {
-      ".config/Code/User/settings.json".text = mkIf (cfg.settings != {}) (
-        toJSON cfg.settings
+      ".config/Code/User/settings.json".source = mkIf (cfg.settings != {}) (
+        json.generate "settings.json" cfg.settings
       );
     };
   };
