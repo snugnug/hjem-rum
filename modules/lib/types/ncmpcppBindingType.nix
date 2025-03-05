@@ -1,7 +1,7 @@
 {lib}: let
   inherit (lib.types) nullOr listOf bool str submodule;
   inherit (lib.options) mkOption;
-in ( 
+in (
   submodule {
     options = {
       binding = mkOption {
