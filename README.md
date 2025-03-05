@@ -90,7 +90,7 @@ hjem.users.<username>.rum.programs.alacritty = {
 
 ## Contributing
 
-Hjem Rum is certainly in need of contribution. WIP Section
+Hjem Rum is always in need of contribution. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more information on how to contribute and our guidelines.
 
 ## Credits
 
