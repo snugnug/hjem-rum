@@ -11,7 +11,7 @@ in {
               then "deferred"
               else "immediate"
             }]
-              ${concatStringsSep "\n" attrset.actions}
+              ${concatStringsSep "\n  " attrset.actions}
           ''
         )
         submodule);
