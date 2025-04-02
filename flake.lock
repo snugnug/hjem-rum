@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1740872218,
+        "narHash": "sha256-ZaMw0pdoUKigLpv9HiNDH2Pjnosg7NBYMJlHTIsHEUo=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "3876f6b87db82f33775b1ef5ea343986105db764",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "hjem": {
       "inputs": {
         "nixpkgs": [
@@ -20,7 +38,55 @@
         "type": "github"
       }
     },
+    "ndg": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1743488981,
+        "narHash": "sha256-sGuzTofjQV+OMWdqoAVGLSprjc4JpOQGuVD6lJktKpQ=",
+        "owner": "feel-co",
+        "repo": "ndg",
+        "rev": "9ba8ffb0bd307f8ce9def74753906830d5fa3322",
+        "type": "github"
+      },
+      "original": {
+        "owner": "feel-co",
+        "ref": "v2",
+        "repo": "ndg",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1743583204,
+        "narHash": "sha256-F7n4+KOIfWrwoQjXrL2wD9RhFYLs2/GGe/MQY1sSdlE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2c8d3f48d33929642c1c12cd243df4cc7d2ce434",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1740872140,
+        "narHash": "sha256-3wHafybyRfpUCLoE8M+uPVZinImg3xX+Nm6gEfN3G8I=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/6d3702243441165a03f699f64416f635220f4f15.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/6d3702243441165a03f699f64416f635220f4f15.tar.gz"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1735471104,
         "narHash": "sha256-0q9NGQySwDQc7RhAV2ukfnu7Gxa5/ybJ2ANT8DQrQrs=",
@@ -39,7 +105,8 @@
     "root": {
       "inputs": {
         "hjem": "hjem",
-        "nixpkgs": "nixpkgs"
+        "ndg": "ndg",
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
