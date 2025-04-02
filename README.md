@@ -15,6 +15,7 @@ To start using Hjem Rum, you must first import the flake and its modules into yo
 ```nix
 # flake.nix
 inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hjem = {
         url = "github:feel-co/hjem";
         # You may want hjem to use your defined nixpkgs input to
@@ -40,9 +41,8 @@ outputs = {
         default = nixpkgs.lib.nixosSystem {
             specialArgs = {inherit inputs;};
             modules = [
-                # Import the flakes' modules
+                # Import the hjem module
                 inputs.hjem.nixosModules.default
-                inputs.hjem-rum.nixosModules.default
 
                 # Whatever other modules you are importing
             ];
@@ -51,11 +51,16 @@ outputs = {
 }
 ```
 
-Be sure to first set the necessary settings for Hjem:
+Be sure to first set the necessary settings for Hjem and import the Hjem module from the input:
 
 ```nix
 # configuration.nix
 hjem = {
+    # Importing the modules
+    extraModules = [
+        inputs.hjem-rum.hjemModules.default
+    ];
+    # Configuring your user(s)
     users.<username> = {
         enable = true;
         directory = "/home/<username>";
