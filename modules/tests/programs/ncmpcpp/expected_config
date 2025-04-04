@@ -1,0 +1,4 @@
+incremental_seeking = yes
+mpd_crossfade_time = 32
+mpd_host = localhost
+mpd_port = 6600
