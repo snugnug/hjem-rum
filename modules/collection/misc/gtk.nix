@@ -58,7 +58,7 @@ in {
         type = lines;
         default = "";
         description = ''
-          CSS to be written to '${config.directory}/.config/gtk-3.0/gtk.css'.
+          CSS to be written to '''''${config.directory}/.config/gtk-3.0/gtk.css'.
           You can either use this as lines or you can reference
           a CSS file from your theme's package (or both).
         '';
@@ -67,7 +67,7 @@ in {
         type = lines;
         default = "";
         description = ''
-          CSS to be written to '${config.directory}/.config/gtk-4.0/gtk.css'.
+          CSS to be written to '''''${config.directory}/.config/gtk-4.0/gtk.css'.
           You can either use this as lines or you can reference
           a CSS file from your theme's package (or both).
         '';
