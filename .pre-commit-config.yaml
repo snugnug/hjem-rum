@@ -15,6 +15,7 @@ repos:
         name: Format nix files
         language: system
         entry: nix fmt
+        files: .+\.nix$
 
   - repo: https://github.com/hukkin/mdformat
     rev: 0.7.22
