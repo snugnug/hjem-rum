@@ -3,6 +3,9 @@
   pkgs,
   lib,
 }: let
+  inherit (lib.meta) getExe;
+  inherit (inputs.ndg.packages."${pkgs.system}") ndg;
+
   hjemRumDocs = pkgs.nixosOptionsDoc {
     variablelistId = "hjem-rum-options";
     warningsAreErrors = true;
@@ -96,11 +99,12 @@
         '${hjemRumDocs.optionsJSON}/share/doc/nixos' \
         "$out/share/doc/hjem-rum"
     '';
-  # Generate the HTML manual pages
+
   html =
-    pkgs.runCommand "hjem-rum-html-docs" {
-    } ''
-      cp -r ${optionsJSON} $out
+    pkgs.runCommand "hjem-rum-html-docs" {}
+    ''
+      mkdir $out
+      ${getExe ndg} -i ${./content} -j ${optionsJSON}/share/doc/hjem-rum/options.json -o $out
     '';
 in
   html
