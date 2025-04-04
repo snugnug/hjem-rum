@@ -6,7 +6,23 @@ Contributing is also a great way to learn the Nix module system and even functio
 
 If you are familiar with contributing to open source software, you can safely skip ahead to [Core Principles](#core-principles). Otherwise, read the following section to learn how to fork a repo and open a PR.
 
-## Getting Started
+<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
+
+- [Getting Started](#getting-started)
+- [Core Principles](#core-principles)
+- [Guidelines](#guidelines)
+  - [Where to put a new module](#where-to-put-a-new-module)
+  - [Aliases](#aliases)
+  - [Writing Options](#writing-options)
+  - [Conditional Config](#conditional-config)
+  - [Extending Lib](#extending-lib)
+  - [Docs](#docs)
+  - [Tests](#tests)
+- [Reviewing a PR](#reviewing-a-pr)
+
+<!-- mdformat-toc end -->
+
+## Getting Started<a name="getting-started"></a>
 
 To begin contributing to HJR, you will first need to create a fork off of the main branch in order to make changes. For info on how to do this, we recommend GitHub's own [documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 
@@ -22,25 +38,25 @@ and then open up a PR, or "Pull Request," in the upstream HJR repository. Again,
 
 After you have setup a PR, it will be [reviewed](#reviewing-a-pr) by maintainers and changes may be requested. Make the changes requested and eventually it will likely be accepted and merged into main.
 
-## Core Principles
+## Core Principles<a name="core-principles"></a>
 
 In creating HJR, we had a few principles in mind for development:
 
 1. Minimize the number of options written;
-2. Include only the module collection - leave functionality to Hjem; and
-3. Maintain readability of code, even for new users.
+1. Include only the module collection - leave functionality to Hjem; and
+1. Maintain readability of code, even for new users.
 
 Please keep these in mind as you read through our general guidelines for contributing.
 
-## Guidelines
+## Guidelines<a name="guidelines"></a>
 
 These guidelines, are, of course, merely guidelines. There are and will continue to be exceptions. However, do your best to stick to them, and keep in mind that reviewers will hold you to them as much as possible.
 
-### Where to put a new module
+### Where to put a new module<a name="where-to-put-a-new-module"></a>
 
 WIP
 
-### Aliases
+### Aliases<a name="aliases"></a>
 
 At the top of any module, there should always be a `let ... in` set. Within this, functions should have their location aliased, cfg should be aliased, and any generators should have an alias as well. Here's an example for a module that makes use of the TOML generator used in nixpkgs:
 
@@ -69,7 +85,7 @@ Also notice that in this case, `pkgs.formats.toml {}` includes both `generate` a
 
 Always be sure to include `cfg` that links to the point where options are configured by the user.
 
-### Writing Options
+### Writing Options<a name="writing-options"></a>
 
 Writing new options is the core of any new module. It is also the easiest place to blunder. As stated above, a core principle of HJR is to minimize the number of options as much as possible. As such, we have created a general template that should help inform you of what options are needed and what are not:
 
@@ -140,7 +156,7 @@ As a rule of thumb, submodules should not be employed. Instead, there should onl
 
 Also note that the option description includes a link to upstream info on settings options.
 
-### Conditional Config
+### Conditional Config<a name="conditional-config"></a>
 
 Always use a `mkIf` before the config section. Example:
 
@@ -179,7 +195,7 @@ files = (
 );
 ```
 
-This essentially takes the attrset of `files` and *optionally* adds attributes defining more files to be written to *if* the corresponding option has been set. This is optimal because the first three files written to share an option due to how GTK configuration works.
+This essentially takes the attrset of `files` and _optionally_ adds attributes defining more files to be written to _if_ the corresponding option has been set. This is optimal because the first three files written to share an option due to how GTK configuration works.
 
 One last case is in the Hyprland, where several checks and several options are needed to compile into one file. Here is how it is done:
 
@@ -239,11 +255,11 @@ An additional attrset of boolean aliases is set within a `let ... in` set to hig
 
 First, the file is only written if any of the options to write to the file are set. `optionalString` is then used to compile each option's results in an optimized and clean way.
 
-### Extending Lib
+### Extending Lib<a name="extending-lib"></a>
 
 Rather than having functions scattered throughout the module collection, we would rather keep our directories organized and purposeful. Therefore, all custom functions should go into our extended lib, found at `modules/lib/`.
 
-The most common functions that might be created are a `generator` and `type` pair. The former should be prefixed with "to" to maintain style and describe their function: conversion *to* other formats. For example, `toNcmpcppSettings` is the function that converts to the format required for ncmpcpp settings.
+The most common functions that might be created are a `generator` and `type` pair. The former should be prefixed with "to" to maintain style and describe their function: conversion _to_ other formats. For example, `toNcmpcppSettings` is the function that converts to the format required for ncmpcpp settings.
 
 Likewise, types should be suffixed with "Type" to maintain style and describe their function. For example, `hyprType` describes the type used in `settings` converted to hyprlang.
 
@@ -253,14 +269,14 @@ If a program uses multiple functions of the same kind (e.g. two generators), you
 
 Additionally, please follow how lib is structured in nixpkgs. For example, the custom function `attrsNamesHasPrefix` is under `attrsets` to signify that it operates on an attrset, just like in nixpkgs.
 
-### Docs
+### Docs<a name="docs"></a>
 
 WIP
 
-### Tests
+### Tests<a name="tests"></a>
 
 WIP
 
-## Reviewing a PR
+## Reviewing a PR<a name="reviewing-a-pr"></a>
 
 Even if you do not have write-access. You can always leave a review on someone else's PR. Again, GitHub has great [documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request) on doing so. This is great practice for learning the guidelines as well as learning exceptions to the rules.
