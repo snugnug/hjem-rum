@@ -39,10 +39,7 @@
     packages = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      docs = import ./docs {
-        inherit inputs pkgs;
-        lib = rumLib;
-      };
+      docs = pkgs.callPackage ./docs/package.nix {inherit inputs rumLib;};
     });
     lib = rumLib;
 
