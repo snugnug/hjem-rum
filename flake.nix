@@ -40,6 +40,9 @@
             python312Packages.mdformat-toc
             python312Packages.mdformat-gfm
           ];
+          shellHook = ''
+            pre-commit install
+          '';
         };
       }
     );
