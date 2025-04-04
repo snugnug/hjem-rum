@@ -134,6 +134,11 @@ configured by the user.
 
 ### Writing Options
 
+> [!IMPORTANT]
+> When writing options for any Nix module, do NOT make any option depend on a
+> value from `config`. Options should be pure, or it will interfere with modules
+> evaluation.
+
 Writing new options is the core of any new module. It is also the easiest place
 to blunder. As stated above, a core principle of HJR is to minimize the number
 of options as much as possible. As such, we have created a general template that
@@ -219,6 +224,10 @@ list of actions that get propagated accordingly:
     '';
   };
 ```
+
+> [!NOTE]
+> Please note the `''${config.directory}` in the module description; this
+> escapes $, and avoids evaluating it in place.
 
 Also note that the option description includes a link to upstream info on
 settings options.
