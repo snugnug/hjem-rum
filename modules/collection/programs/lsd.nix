@@ -26,7 +26,7 @@ in {
         };
       };
       description = ''
-        Configuration written to `${config.directory}/.config/lsd/config.yaml`, defining lsd settings.
+        Configuration written to `''${config.directory}/.config/lsd/config.yaml`, defining lsd settings.
         Please reference https://github.com/lsd-rs/lsd#config-file-content to configure it accordingly.
       '';
     };
@@ -42,7 +42,7 @@ in {
         };
       };
       description = ''
-        Configuration written to `${config.directory}/.config/lsd/icons.yaml`, defining the icons used by
+        Configuration written to `''${config.directory}/.config/lsd/icons.yaml`, defining the icons used by
         lsd.
         Please reference https://github.com/lsd-rs/lsd#icon-theme to configure it accordingly.
       '';
@@ -60,7 +60,7 @@ in {
         };
       };
       description = ''
-        Configuration written to `${config.directory}/.config/lsd/colors.yaml`, defining the colors used by
+        Configuration written to `''${config.directory}/.config/lsd/colors.yaml`, defining the colors used by
         lsd.
         Please reference https://github.com/lsd-rs/lsd#color-theme-file-content to configure it accordingly.
       '';

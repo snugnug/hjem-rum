@@ -46,7 +46,7 @@ in {
         ];
       };
       description = ''
-        The configuration converted to INI and written to `${config.directory}/.config/ghostty/config`.
+        The configuration converted to INI and written to `''${config.directory}/.config/ghostty/config`.
         Please reference https://ghostty.org/docs/config/reference for config options.
       '';
     };

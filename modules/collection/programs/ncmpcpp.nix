@@ -35,7 +35,7 @@ in {
         statusbar_visibility = true;
       };
       description = ''
-        Configuration written to `${config.directory}/.config/ncmpcpp/config`.
+        Configuration written to `''${config.directory}/.config/ncmpcpp/config`.
         Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
         https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config for an example.
       '';
@@ -45,7 +45,7 @@ in {
       type = attrsOf (listOf ncmpcppBindingType);
       default = {};
       description = ''
-               Custom bindings configuration written to `${config.directory}/.config/ncmpcpp/bindings`.
+               Custom bindings configuration written to `''${config.directory}/.config/ncmpcpp/bindings`.
                Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
                https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings for an example.
 

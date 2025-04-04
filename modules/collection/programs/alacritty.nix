@@ -34,7 +34,7 @@ in {
       };
       description = ''
         The configuration converted into TOML and written to
-        `${config.directory}/.config/alacritty/alacritty.toml`.
+        `''${config.directory}/.config/alacritty/alacritty.toml`.
         Please reference https://alacritty.org/config-alacritty.html
         for config options.
       '';
