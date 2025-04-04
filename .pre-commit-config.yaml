@@ -17,6 +17,7 @@ repos:
         entry: nix fmt
         files: .+\.nix$
 
+      # mdformat automatically uses any plugin that is installed
       - id: mdformat
         name: format markdown files
         language: system
