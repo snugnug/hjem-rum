@@ -34,7 +34,7 @@ in {
         };
       };
       description = ''
-        Settings are written as an INI file to ${config.directory}/.config/keepassxc/keepassxc.ini.
+        Settings are written as an INI file to ''${config.directory}/.config/keepassxc/keepassxc.ini.
 
         Please consult https://keepassxc.org/docs/KeePassXC_UserGuide, but also
         a configuration you create by toggling options through the GUI, as it
