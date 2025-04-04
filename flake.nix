@@ -33,7 +33,13 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in {
         default = pkgs.mkShell {
-          packages = with pkgs; [pre-commit];
+          packages = with pkgs; [
+            pre-commit
+            python312Packages.mdformat
+            python312Packages.mdformat-footnote
+            python312Packages.mdformat-toc
+            python312Packages.mdformat-gfm
+          ];
         };
       }
     );

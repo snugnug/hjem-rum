@@ -12,16 +12,13 @@ repos:
   - repo: local
     hooks:
       - id: nix-fmt
-        name: Format nix files
+        name: format nix files
         language: system
         entry: nix fmt
         files: .+\.nix$
 
-  - repo: https://github.com/hukkin/mdformat
-    rev: 0.7.22
-    hooks:
       - id: mdformat
-        additional_dependencies:
-          - mdformat-gfm
-          - mdformat-toc
-          - mdformat-footnote
+        name: format markdown files
+        language: system
+        entry: mdformat
+        files: .+\.md$
