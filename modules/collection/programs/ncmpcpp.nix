@@ -43,8 +43,7 @@ in {
       };
       description = ''
         Configuration written to {file}`$HOME/.config/ncmpcpp/config`.
-        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access [https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
-        for an example.
+        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult [ncmpcpp's example configuration](https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config).
       '';
     };
 
@@ -53,12 +52,12 @@ in {
       default = {};
       description = ''
         Custom bindings configuration written to {file}`$HOME/.config/ncmpcpp/bindings`.
-        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
-        [https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
-        for an example.
+        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or consult
+        [ncmpcpp's example bindings file](https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings).
 
-        The lists are separated between keys, for actions ran on keypresses, and commands, for
-        actions ran on commands. The option's example demonstrates this greatly.
+
+        The lists are separated between keys, for actions ran on keypresses, and commands, for actions ran
+        on commands. The option's example demonstrates this greatly.
       '';
       example = {
         keys = [

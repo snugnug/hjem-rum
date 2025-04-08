@@ -57,8 +57,8 @@ in {
       };
       description = ''
         The configuration converted to INI and written to {file}`$HOME/.config/ghostty/config`.
-        Please reference [https://ghostty.org/docs/config/reference](https://ghostty.org/docs/config/reference)
-        for config options.
+        Please consult [Ghostty's option reference](https://ghostty.org/docs/config/reference)
+        for configuration options.
       '';
     };
     themes = mkOption {
@@ -94,7 +94,8 @@ in {
       };
       description = ''
         An attribute set of themes, with the key as the theme name.
-        Please reference https://ghostty.org/docs/features/theme for config options.
+        Please reference [Ghostty's color theme documentation](https://ghostty.org/docs/features/theme)
+        for configuration options.
       '';
     };
   };

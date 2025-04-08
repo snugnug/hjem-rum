@@ -52,8 +52,8 @@ in {
         The configuration converted into TOML and written to
         {file}`$HOME/.config/spotify-player/app.toml`.
 
-        Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#general
-        for config options.
+        Please reference [spotify_player's configuration documentation](https://github.com/aome510/spotify-player/blob/master/docs/config.md#general)
+        for configuration options.
       '';
     };
 
@@ -101,8 +101,8 @@ in {
         The theme converted into TOML and written to
         {file}`$HOME/.config/spotify-player/themes.toml`.
 
-        Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes
-        for config options.
+        Please reference [spotify_player's theme documentation](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
+        for configuration options.
       '';
     };
 
@@ -128,7 +128,7 @@ in {
         {file}`$HOME/.config/spotify-player/keymap.toml`.
         See example for how to format declarations.
 
-        Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps
+        Please reference [spotify_player's keymaps documentation](https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps)
         for more information.
       '';
     };
