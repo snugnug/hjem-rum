@@ -84,7 +84,8 @@ in {
       };
       description = ''
         An attribute set of themes, with the key as the theme name.
-        Please reference https://ghostty.org/docs/features/theme for config options.
+        Please reference [https://ghostty.org/docs/features/theme](https://ghostty.org/docs/features/theme)
+        for config options.
       '';
     };
   };

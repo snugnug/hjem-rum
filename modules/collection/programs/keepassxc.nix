@@ -36,9 +36,9 @@ in {
       description = ''
         Settings are written as an INI file to {file}`$HOME/.config/keepassxc/keepassxc.ini`.
 
-        Please consult https://keepassxc.org/docs/KeePassXC_UserGuide, but also
-        a configuration you create by toggling options through the GUI, as it
-        doesn't seem they are documented.
+        Please consult [https://keepassxc.org/docs/KeePassXC_UserGuide](https://keepassxc.org/docs/KeePassXC_UserGuide),
+        but also a configuration you create by toggling options through the GUI, as it doesn't seem
+        they are documented.
       '';
     };
   };

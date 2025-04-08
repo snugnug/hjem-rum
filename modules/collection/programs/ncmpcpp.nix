@@ -50,8 +50,8 @@ in {
         [https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
         for an example.
 
-        The lists are separated between keys, for actions ran on keypresses, and commands, for
-        actions ran on commands. The option's example demonstrates this greatly.
+        The lists are separated between keys, for actions ran on keypresses, and commands, for actions ran
+        on commands. The option's example demonstrates this greatly.
       '';
       example = {
         keys = [
