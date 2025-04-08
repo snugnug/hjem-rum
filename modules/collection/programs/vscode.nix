@@ -27,7 +27,7 @@ in {
       };
       description = ''
         The configuration converted into JSON and written to
-        `''${config.directory}/.config/Code/User/settings.json`.
+        {file}`$HOME/.config/Code/User/settings.json`.
 
         Please reference https://code.visualstudio.com/docs/getstarted/settings#_settings-json-file
         for more info.

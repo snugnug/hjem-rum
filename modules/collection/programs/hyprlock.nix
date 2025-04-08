@@ -35,7 +35,7 @@ in {
         ];
       };
       description = ''
-        Is written to `''${config.directory}/hypr/hyprlock.conf`.
+        Is written to {file}`$HOME/hypr/hyprlock.conf`.
 
         Configuration options can be found on the [Hyprland Wiki](https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock).
       '';

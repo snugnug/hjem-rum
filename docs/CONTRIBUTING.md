@@ -216,7 +216,7 @@ list of actions that get propagated accordingly:
     };
     description = ''
       Sets of keymaps and actions converted into TOML and written to
-      `${config.directory}/.config/spotify-player/keymap.toml`.
+      {file}`$HOME/.config/spotify-player/keymap.toml`.
       See example for how to format declarations.
 
       Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps

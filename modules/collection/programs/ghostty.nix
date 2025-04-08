@@ -56,8 +56,9 @@ in {
         ];
       };
       description = ''
-        The configuration converted to INI and written to `''${config.directory}/.config/ghostty/config`.
-        Please reference https://ghostty.org/docs/config/reference for config options.
+        The configuration converted to INI and written to {file}`$HOME/.config/ghostty/config`.
+        Please reference [https://ghostty.org/docs/config/reference](https://ghostty.org/docs/config/reference)
+        for config options.
       '';
     };
     themes = mkOption {

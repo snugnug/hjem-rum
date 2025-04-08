@@ -41,10 +41,10 @@ in {
       };
       description = ''
         The editor configuration converted into TOML and written to
-        `''${config.directory}/.config/helix/config.toml`.
-        Please reference https://docs.helix-editor.com/editor.html
-        and https://docs.helix-editor.com/remapping.html for config
-        options.
+        {file}`$HOME/.config/helix/config.toml`.
+        Please reference [https://docs.helix-editor.com/editor.html](https://docs.helix-editor.com/editor.html)
+        and [https://docs.helix-editor.com/remapping.html](https://docs.helix-editor.com/remapping.html) for
+        config options.
       '';
     };
 
@@ -56,8 +56,8 @@ in {
       };
       description = ''
         The languages configurations converted into TOML and written to
-        `''${config.directory}/.config/helix/languages.toml`.
-        Please reference https://docs.helix-editor.com/languages.html
+        {file}`$HOME/.config/helix/languages.toml`.
+        Please reference [https://docs.helix-editor.com/languages.html](https://docs.helix-editor.com/languages.html)
         for config options.
       '';
     };
@@ -77,8 +77,8 @@ in {
       };
       description = ''
         The custom themes converted into TOML and written to
-        `''${config.directory}/.config/helix/themes/`.
-        Please reference https://docs.helix-editor.com/themes.html
+        {file}`$HOME/.config/helix/themes/`.
+        Please reference [https://docs.helix-editor.com/themes.html](https://docs.helix-editor.com/themes.html)
         for config options.
       '';
     };
