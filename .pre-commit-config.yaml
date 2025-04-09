@@ -8,7 +8,6 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
-
   - repo: local
     hooks:
       - id: nix-fmt
@@ -23,3 +22,10 @@ repos:
         language: system
         entry: mdformat
         files: .+\.md$
+
+      - id: commitizen
+        name: checks commit messages for our commit style
+        entry: cz
+        args: ["check", "--commit-msg-file"]
+        language: system
+        stages: [commit-msg]
