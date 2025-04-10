@@ -1,0 +1,20 @@
+[tool.commitizen]
+name = "cz_customize"
+
+[tool.commitizen.customize]
+message_template = "{{scope}}: {{message}}"
+example = "flake: add new input"
+schema = "<scope>: <message>"
+schema_pattern = "^[a-zA-Z]+(?:\\/[a-zA-Z]+)?:\\s.+$"
+commit_parser = "^(?P<scope>[a-z]+(?:\\/[a-z]+)?):\\s(?P<message>.*)"
+
+# for interactive commits
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "scope"
+message = "Enter the scope (e.g., 'modules', 'programs/example'):"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "message"
+message = "Enter the commit message (no punctuation at start):"

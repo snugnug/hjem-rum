@@ -41,9 +41,10 @@
             python312Packages.mdformat-footnote
             python312Packages.mdformat-toc
             python312Packages.mdformat-gfm
+            python312Packages.commitizen
           ];
           shellHook = ''
-            pre-commit install
+            pre-commit install --hook-type pre-commit --hook-type commit-msg --hook-type pre-push
           '';
         };
       }
