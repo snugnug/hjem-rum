@@ -36,7 +36,7 @@ in {
       };
       description = ''
         Configuration written to {file}`$HOME/.config/ncmpcpp/config`.
-        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access [https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
+        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or access [https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
         for an example.
       '';
     };

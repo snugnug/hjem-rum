@@ -28,7 +28,7 @@ in {
       description = ''
         The configuration converted into "key = value" and written to
         {file}`$HOME/.config/tofi/config`.
-        Please reference [tofi(5) (manpage)](https://github.com/philj56/tofi/blob/master/doc/tofi.5.md),
+        Please reference {manpage}`tofi(5)`,
         or see an example at [https://github.com/philj56/tofi/blob/master/doc/config](https://github.com/philj56/tofi/blob/master/doc/config).
       '';
     };
