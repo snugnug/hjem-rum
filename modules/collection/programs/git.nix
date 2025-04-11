@@ -47,7 +47,7 @@ in {
       default = ".gitconfig";
       description = ''
         Select your preferred git config location. Do note that options set in
-        `~/.gitconfig` will shadow anything set in `.config/git/config`.
+        {file}`$HOME/.gitconfig` will shadow anything set in `.config/git/config`.
       '';
     };
   };

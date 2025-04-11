@@ -7,7 +7,7 @@
 }: let
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.types) listOf package lines str;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkIf mkRenamedOptionModule;
   inherit (lib.lists) optionals;
   inherit (lib.attrsets) optionalAttrs;
   inherit (rumLib.generators.gtk) toGtk2Text toGtkINI;
@@ -17,7 +17,8 @@
 
   cfg = config.rum.gtk;
 in {
-  options.rum.gtk = {
+  imports = [(mkRenamedOptionModule ["rum" "gtk"] ["rum" "misc" "gtk"])];
+  options.rum.misc.gtk = {
     enable = mkEnableOption "GTK configuration";
     packages = mkOption {
       type = listOf package;
@@ -46,8 +47,8 @@ in {
       description = ''
         The settings that will be written to the various gtk files
         to configure the GTK theme. GTK documentation is perhaps
-        nebulous, but the Arch Wiki entry and the official GTK
-        documentation (https://docs.gtk.org/gtk3/class.Settings.html)
+        nebulous, but the Arch Wiki entry and the [official GTK
+        documentation](https://docs.gtk.org/gtk3/class.Settings.html)
         are decent places to start.
 
         Please note that each option name will have "gtk-" prepended
@@ -59,7 +60,7 @@ in {
         type = lines;
         default = "";
         description = ''
-          CSS to be written to '${config.directory}/.config/gtk-3.0/gtk.css'.
+          CSS to be written to {file}`$HOME/.config/gtk-3.0/gtk.css`.
           You can either use this as lines or you can reference
           a CSS file from your theme's package (or both).
         '';
@@ -68,7 +69,7 @@ in {
         type = lines;
         default = "";
         description = ''
-          CSS to be written to '${config.directory}/.config/gtk-4.0/gtk.css'.
+          CSS to be written to {file}`$HOME/.config/gtk-4.0/gtk.css`.
           You can either use this as lines or you can reference
           a CSS file from your theme's package (or both).
         '';

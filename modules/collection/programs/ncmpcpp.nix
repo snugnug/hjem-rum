@@ -35,9 +35,9 @@ in {
         statusbar_visibility = true;
       };
       description = ''
-        Configuration written to `${config.directory}/.config/ncmpcpp/config`.
-        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
-        https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config for an example.
+        Configuration written to {file}`$HOME/.config/ncmpcpp/config`.
+        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or access [https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
+        for an example.
       '';
     };
 
@@ -45,12 +45,13 @@ in {
       type = attrsOf (listOf ncmpcppBindingType);
       default = {};
       description = ''
-               Custom bindings configuration written to `${config.directory}/.config/ncmpcpp/bindings`.
-               Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
-               https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings for an example.
+        Custom bindings configuration written to {file}`$HOME/.config/ncmpcpp/bindings`.
+        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
+        [https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
+        for an example.
 
-        The lists are separated between keys, for actions ran on keypresses, and commands, for
-        actions ran on commands. The option's example demonstrates this greatly.
+        The lists are separated between keys, for actions ran on keypresses, and commands, for actions ran
+        on commands. The option's example demonstrates this greatly.
       '';
       example = {
         keys = [

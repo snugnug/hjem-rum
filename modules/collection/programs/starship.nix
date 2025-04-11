@@ -31,6 +31,12 @@ in {
           error_symbol = "➜";
         };
       };
+
+      description = ''
+        The configuration converted to TOML and written to {file}`$HOME/.config/starship.toml`.
+        Please reference [https://starship.rs/config](https://starship.rs/config)
+        for config options.
+      '';
     };
   };
 
