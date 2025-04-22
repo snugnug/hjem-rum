@@ -44,14 +44,6 @@ in {
       '';
     };
 
-    exportEnvVars = mkOption {
-      default = true;
-      type = bool;
-      description = ''
-        Wether to export environment variables set in ''${config.environment.systemVariables}.
-      '';
-    };
-
     prompt = mkOption {
       default = null;
       type = nullOr (either str path);
@@ -78,21 +70,44 @@ in {
         Otherwise you are expected to handle that yourself.
       '';
     };
+
+    earlyConfigFiles = mkOption {
+      default = {};
+      type = attrsOf (oneOf [str path]);
+      description = ''
+
+      '';
+    };
+
+    abbrs = mkOption {
+      default = {};
+      type = attrsOf str;
+      description = ''
+        A set of fish abbreviations, they will be set up with the `abbr --add` fish builtin.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
     packages = [cfg.package];
 
-    rum.programs.fish.functions.fish_prompt = mkIf (cfg.prompt != null) cfg.prompt;
+    rum.programs.fish = {
+      functions.fish_prompt = mkIf (cfg.prompt != null) cfg.prompt;
+      earlyConfigFiles = {
+        rum-environment-variables = mkIf (env != {}) ''
+          ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
+        '';
+        rum-abbreviations = mkIf (cfg.abbrs != {}) ''
+          ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${toString value}") cfg.abbrs}
+        '';
+      };
+    };
 
     files =
       {
         ".config/fish/config.fish".source = mkIf (cfg.config != null) (toFish cfg.config "config.fish");
-
-        ".config/fish/conf.d/environment-variables.fish".text = mkIf (env != {} && cfg.exportEnvVars) ''
-          ${concatMapAttrsStringSep "\n" (name: value: "set -gx ${name} ${toString value}") env}
-        '';
       }
-      // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions);
+      // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
+      // (mapAttrs' (name: val: nameValuePair ".config/fish/conf.d/${name}.fish" {source = toFish val "${name}.fish";}) cfg.earlyConfigFiles);
   };
 }
