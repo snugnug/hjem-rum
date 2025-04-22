@@ -7,7 +7,7 @@
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
   inherit (lib.strings) typeOf concatMapAttrsStringSep concatMapStringsSep splitString;
   inherit (lib.modules) mkIf;
-  inherit (lib.types) either str path oneOf attrsOf nullOr bool;
+  inherit (lib.types) either str path oneOf attrsOf nullOr;
   inherit (lib.attrsets) mapAttrs' nameValuePair isDerivation;
 
   cfg = config.rum.programs.fish;
@@ -69,14 +69,39 @@ in {
 
         Otherwise you are expected to handle that yourself.
       '';
+      example = lib.literalExample ''
+        {
+          fish_prompt = pkgs.writers.writeFish "fish_prompt.fish" '\'
+              function fish_prompt -d "Write out the prompt"
+                    # This shows up as USER@HOST /home/user/ >, with the directory colored
+                    # $USER and $hostname are set by fish, so you can just use them
+                    # instead of using `whoami` and `hostname`
+                    printf '%s@%s %s%s%s > ' $USER $hostname \
+                        (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)
+              end
+          '\';
+          hello-world = '\'
+              echo Hello, World!
+          '\';
+        }'';
     };
 
     earlyConfigFiles = mkOption {
       default = {};
       type = attrsOf (oneOf [str path]);
       description = ''
+        Extra configuration files, they will all be written verbatim
+        to `.config/fish/conf.d/<name>.fish`.
 
+        Those files are run before `.config/fish/config.fish` as per the fish
+        [documentation](https://fishshell.com/docs/current/language.html#configuration-files).
       '';
+      example = {
+        my-aliases = ''
+          alias la "ls -la"
+          alias ll "ls -l"
+        '';
+      };
     };
 
     abbrs = mkOption {
@@ -104,9 +129,7 @@ in {
     };
 
     files =
-      {
-        ".config/fish/config.fish".source = mkIf (cfg.config != null) (toFish cfg.config "config.fish");
-      }
+      {".config/fish/config.fish".source = mkIf (cfg.config != null) (toFish cfg.config "config.fish");}
       // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
       // (mapAttrs' (name: val: nameValuePair ".config/fish/conf.d/${name}.fish" {source = toFish val "${name}.fish";}) cfg.earlyConfigFiles);
   };
