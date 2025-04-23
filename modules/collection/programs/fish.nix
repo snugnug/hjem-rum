@@ -4,11 +4,13 @@
   config,
   ...
 }: let
-  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+  inherit (lib.options) mkOption mkEnableOption mkPackageOption literalExample;
   inherit (lib.strings) typeOf concatMapAttrsStringSep concatMapStringsSep splitString;
   inherit (lib.modules) mkIf;
   inherit (lib.types) either str path oneOf attrsOf nullOr;
-  inherit (lib.attrsets) mapAttrs' nameValuePair isDerivation;
+  inherit (lib.attrsets) mapAttrs' nameValuePair isDerivation filterAttrs attrValues;
+  inherit (lib.lists) any filter;
+  inherit (lib.trivial) pathExists;
 
   cfg = config.rum.programs.fish;
   env = config.environment.sessionVariables;
@@ -30,6 +32,13 @@
       ''
       else strOrPath
     ) "${funcName}.fish";
+
+  isVendored = plugin:
+    any (p: pathExists "${plugin}/share/fish/${p}") [
+      "vendor_conf.d"
+      "vendor_completions.d"
+      "vendor_functions.d"
+    ];
 in {
   options.rum.programs.fish = {
     enable = mkEnableOption "fish";
@@ -69,7 +78,7 @@ in {
 
         Otherwise you are expected to handle that yourself.
       '';
-      example = lib.literalExample ''
+      example = literalExample ''
         {
           fish_prompt = pkgs.writers.writeFish "fish_prompt.fish" '\'
               function fish_prompt -d "Write out the prompt"
@@ -111,21 +120,68 @@ in {
         A set of fish abbreviations, they will be set up with the `abbr --add` fish builtin.
       '';
     };
+
+    plugins = mkOption {
+      type = attrsOf path;
+      default = {};
+      example = literalExample ''
+        {
+          inherit (pkgs.fishPlugins) z;
+          pisces = pkgs.fetchFromGitHub {
+            owner = "laughedelic";
+            repo = "pisces";
+            tag = "v0.7.0";
+            hash = "sha256-Oou2IeNNAqR00ZT3bss/DbhrJjGeMsn9dBBYhgdafBw=";
+          };
+        };
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages =
+      [cfg.package]
+      ++ (filter (pl: isVendored pl) (attrValues cfg.plugins));
 
     rum.programs.fish = {
       functions.fish_prompt = mkIf (cfg.prompt != null) cfg.prompt;
-      earlyConfigFiles = {
-        rum-environment-variables = mkIf (env != {}) ''
-          ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
-        '';
-        rum-abbreviations = mkIf (cfg.abbrs != {}) ''
-          ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${toString value}") cfg.abbrs}
-        '';
-      };
+      earlyConfigFiles =
+        {
+          rum-environment-variables = mkIf (env != {}) ''
+            ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
+          '';
+          rum-abbreviations = mkIf (cfg.abbrs != {}) ''
+            ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${toString value}") cfg.abbrs}
+          '';
+        }
+        // (mapAttrs' (name: source:
+          nameValuePair "rum-plugin-${name}"
+          #  fish
+          ''
+            # Plugin ${name} -- ${source}
+            set -l src "${source}"
+
+            if test -d "$src/functions"
+                set fish_function_path $fish_function_path[1] "$src/functions" $fish_function_path[2..]
+            end
+
+            if test -d "$src/completions"
+                set fish_complete_path $fish_complete_path[1] "$src/completions" $fish_complete_path[2..]
+            end
+
+            for f in "$src/conf.d/"*
+                source "$f"
+            end
+
+            if test -f "$src/key_bindings.fish"
+                source "$src/key_bindings.fish"
+            end
+
+            if test -f "$src/init.fish"
+                source "$src/init.fish"
+            end
+          '')
+        (filterAttrs (n: v: !(isVendored v)) cfg.plugins));
     };
 
     files =
