@@ -145,47 +145,46 @@ in {
 
     rum.programs.fish = {
       functions.fish_prompt = mkIf (cfg.prompt != null) cfg.prompt;
-      earlyConfigFiles =
-        {
-          rum-environment-variables = mkIf (env != {}) ''
-            ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
-          '';
-          rum-abbreviations = mkIf (cfg.abbrs != {}) ''
-            ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${toString value}") cfg.abbrs}
-          '';
-        }
-        // (mapAttrs' (name: source:
-          nameValuePair "rum-plugin-${name}"
-          #  fish
-          ''
-            # Plugin ${name} -- ${source}
-            set -l src "${source}"
+      earlyConfigFiles = mapAttrs' (name: source:
+        nameValuePair "rum-plugin-${name}"
+        #  fish
+        ''
+          # Plugin ${name} -- ${source}
+          set -l src "${source}"
 
-            if test -d "$src/functions"
-                set fish_function_path $fish_function_path[1] "$src/functions" $fish_function_path[2..]
-            end
+          if test -d "$src/functions"
+              set fish_function_path $fish_function_path[1] "$src/functions" $fish_function_path[2..]
+          end
 
-            if test -d "$src/completions"
-                set fish_complete_path $fish_complete_path[1] "$src/completions" $fish_complete_path[2..]
-            end
+          if test -d "$src/completions"
+              set fish_complete_path $fish_complete_path[1] "$src/completions" $fish_complete_path[2..]
+          end
 
-            for f in "$src/conf.d/"*
-                source "$f"
-            end
+          for f in "$src/conf.d/"*
+              source "$f"
+          end
 
-            if test -f "$src/key_bindings.fish"
-                source "$src/key_bindings.fish"
-            end
+          if test -f "$src/key_bindings.fish"
+              source "$src/key_bindings.fish"
+          end
 
-            if test -f "$src/init.fish"
-                source "$src/init.fish"
-            end
-          '')
-        (filterAttrs (n: v: !(isVendored v)) cfg.plugins));
+          if test -f "$src/init.fish"
+              source "$src/init.fish"
+          end
+        '')
+      (filterAttrs (n: v: !(isVendored v)) cfg.plugins);
     };
 
     files =
-      {".config/fish/config.fish".source = mkIf (cfg.config != null) (toFish cfg.config "config.fish");}
+      {
+        ".config/fish/config.fish".source = mkIf (cfg.config != null) (toFish cfg.config "config.fish");
+        ".config/fish/conf.d/rum-environment-variables.fish".text = mkIf (env != {}) ''
+          ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
+        '';
+        ".config/fish/conf.d/rum-abbreviations.fish".text = mkIf (cfg.abbrs != {}) ''
+          ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${toString value}") cfg.abbrs}
+        '';
+      }
       // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
       // (mapAttrs' (name: val: nameValuePair ".config/fish/conf.d/${name}.fish" {source = toFish val "${name}.fish";}) cfg.earlyConfigFiles);
   };
