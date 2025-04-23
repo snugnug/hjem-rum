@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib.options) mkOption mkEnableOption mkPackageOption literalExample;
-  inherit (lib.strings) typeOf concatMapAttrsStringSep concatMapStringsSep splitString;
+  inherit (lib.strings) typeOf concatMapAttrsStringSep concatMapStringsSep splitString escapeShellArg;
   inherit (lib.modules) mkIf;
   inherit (lib.types) either str path oneOf attrsOf nullOr;
   inherit (lib.attrsets) mapAttrs' nameValuePair isDerivation filterAttrs attrValues;
@@ -182,7 +182,7 @@ in {
           ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
         '';
         ".config/fish/conf.d/rum-abbreviations.fish".text = mkIf (cfg.abbrs != {}) ''
-          ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${toString value}") cfg.abbrs}
+          ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${escapeShellArg (toString value)}") cfg.abbrs}
         '';
       }
       // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
