@@ -11,18 +11,19 @@
   inherit (lib.options) literalExpression mkEnableOption mkPackageOption mkOption;
   inherit (lib.strings) concatStringsSep optionalString;
   inherit (lib.trivial) id;
-  inherit (lib.types) attrsOf listOf bool lines nullOr path submodule;
+  inherit (lib.types) attrsOf bool lines nullOr path submodule str;
 
   mkPlugins = plugins:
     concatStringsSep "\n"
-    (mapAttrsToList (name: value:
+    (mapAttrsToList (_: value:
       # this is to avoid writing empty strings into .zshrc
         concatStringsSep "\n" (filter (s: s != "") [
-          "# ${name}"
-          (optionalString (value.source != null) ''source "${value.source}"'')
-          (optionalString (value.completions != [])
-            (concatStringsSep "\n" (map (completion: "fpath+=(${completion})") value.completions)))
-          (optionalString (value.config != "") value.config)
+          (optionalString (value.src != null) "fpath+=${value.src}")
+          ''
+            if [[ -f "${value.src}/${value.file}" ]]; then
+              source "${value.src}/${value.file}"
+            fi
+          ''
         ]))
     plugins);
 
@@ -48,29 +49,44 @@ in {
     enable = mkEnableOption "zsh module.";
     package = mkPackageOption pkgs "zsh" {};
     plugins = mkOption {
-      type = attrsOf (submodule {
-        options = {
-          source = mkOption {
-            type = nullOr path;
-            default = null;
-            example = literalExpression ''"\${pkgs.nix-zsh-completions}/share/zsh/plugins/nix/nix-zsh-completions-plugin.zsh\"'';
-            description = "Path to the plugin file to load.";
-          };
-          completions = mkOption {
-            type = listOf path;
-            default = [];
-            example = literalExpression ''["\${pkgs.nix-zsh-completions}/share/zsh/site-functions"]'';
-            description = ''
-              A list of completions that will be loaded into `fpath`.
-            '';
-          };
-          config = mkShellConfigOption "{file}`.zshrc` right after the plugin import.";
-        };
-      });
+      type = attrsOf (
+        submodule (
+          {config, ...}: {
+            options = {
+              name = mkOption {
+                type = str;
+                description = ''
+                  The name of the plugin.
+                '';
+              };
+              src = mkOption {
+                type = nullOr path;
+                default = null;
+                example = literalExpression ''"''${pkgs.nix-zsh-completions}/share/zsh/plugins/nix"'';
+                description = ''
+                  Path to the plugin directory.
+                  If using a derivation from nixpkgs, this would be the directory in which the main plugin file is stored.
+
+                  This directory will also be added to {env}`fpath` and {env}`PATH`.
+                '';
+              };
+              file = mkOption {
+                type = str;
+                description = ''
+                  The plugin script to source. This is necessary in case the main plugin file does not follow
+                  plugin naming conventions, i.e. ``<plugin_name>.plugin.zsh`.
+                '';
+              };
+            };
+
+            # default is here and not above so we can still generate static documentation
+            config.file = lib.mkDefault "${config.name}.plugin.zsh";
+          }
+        )
+      );
       default = {};
       description = ''
-        An attrset of plugins to load into zsh. Configuration of the former can be done and is advised to be
-        done at this level, for the sake of organization.
+        Plugins to be loaded in {file}.zshrc.
       '';
     };
     initConfig = mkShellConfigOption "{file}`.zshrc`";
