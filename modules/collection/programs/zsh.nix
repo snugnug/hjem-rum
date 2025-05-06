@@ -31,6 +31,8 @@
       default = "";
       description = ''
         Commands that will be added verbatim to ${configLocation}.
+
+        A good starting point for learning how to configure zsh is [the ArchWiki entry](https://wiki.archlinux.org/title/Zsh).
       '';
     };
 
