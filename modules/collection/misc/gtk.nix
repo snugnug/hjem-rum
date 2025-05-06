@@ -1,11 +1,10 @@
 {
-  pkgs,
   lib,
   config,
   rumLib,
   ...
 }: let
-  inherit (lib.options) mkOption mkEnableOption;
+  inherit (lib.options) literalExpression mkOption mkEnableOption;
   inherit (lib.types) listOf package lines str;
   inherit (lib.modules) mkIf mkRenamedOptionModule;
   inherit (lib.lists) optionals;
@@ -23,13 +22,15 @@ in {
     packages = mkOption {
       type = listOf package;
       default = [];
-      example = [
-        (pkgs.catppuccin-papirus-folders.override {
-          accent = "rosewater";
-          flavor = "mocha";
-        })
-        pkgs.bibata-cursors
-      ];
+      example = literalExpression ''
+        [
+          (pkgs.catppuccin-papirus-folders.override {
+            accent = "rosewater";
+            flavor = "mocha";
+          })
+          pkgs.bibata-cursors
+        ];
+      '';
       description = ''
         The list of packages to be installed for gtk themes.
         This list should consist of any packages that will be used

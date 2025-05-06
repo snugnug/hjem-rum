@@ -19,8 +19,8 @@ in {
       extraDescription = ''
         You can use an override to configure certain settings
         baked into the package.
-
-        ```nix
+      '';
+      example = ''
         package = pkgs.spotify-player.override {
           # Useful overrides in the package
           withStreaming = true;
@@ -32,7 +32,6 @@ in {
           withSixel = true;
           withFuzzy = true;
         };
-        ```
       '';
     };
 

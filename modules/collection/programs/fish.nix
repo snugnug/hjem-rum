@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib.options) mkOption mkEnableOption mkPackageOption literalExample;
+  inherit (lib.options) literalExpression mkOption mkEnableOption mkPackageOption;
   inherit (lib.strings) typeOf concatMapAttrsStringSep concatMapStringsSep splitString escapeShellArg;
   inherit (lib.modules) mkIf;
   inherit (lib.types) either str path oneOf attrsOf nullOr;
@@ -78,7 +78,7 @@ in {
 
         Otherwise you are expected to handle that yourself.
       '';
-      example = literalExample ''
+      example = literalExpression ''
         {
           fish_prompt = pkgs.writers.writeFish "fish_prompt.fish" '\'
               function fish_prompt -d "Write out the prompt"
@@ -146,7 +146,7 @@ in {
 
         If a plugin seems to not work, verify that it contains one of the aformentioned files.
       '';
-      example = literalExample ''
+      example = literalExpression ''
         {
           inherit (pkgs.fishPlugins) z;
           pisces = pkgs.fetchFromGitHub {

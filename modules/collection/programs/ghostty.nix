@@ -35,12 +35,11 @@ in {
     package = mkPackageOption pkgs "ghostty" {
       extraDescription = ''
         You can use an override to configure some settings baked into the package.
-
-        ```nix
-        package = pkgs.ghostty.override {
+      '';
+      example = ''
+        pkgs.ghostty.override {
           withAdwaita = true;
         };
-        ```
       '';
     };
 

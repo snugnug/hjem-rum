@@ -19,16 +19,15 @@ in {
     package = mkPackageOption pkgs "ncmpcpp" {
       extraDescription = ''
         You can override the package to customize certain settings that are baked into the package.
-
-        ```nix
-        package = pkgs.ncmpccpp.override {
+      '';
+      example = ''
+        pkgs.ncmpcpp.override {
           # useful overrides in the package
           outputsSupport = true; # outputs screen
           visualizerSupport = false; # visualizer screen
           clockSupport = true; # clock screen
           taglibSupport = true; # tag editor
         };
-        ```
       '';
     };
 
