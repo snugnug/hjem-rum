@@ -51,7 +51,7 @@ in {
       default = {};
       description = ''
         Custom bindings configuration written to {file}`$HOME/.config/ncmpcpp/bindings`.
-        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or consult
+        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult
         [ncmpcpp's example bindings file](https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings).
 
 
