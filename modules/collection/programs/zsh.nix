@@ -6,12 +6,11 @@
 }: let
   inherit (builtins) any attrValues filter;
   inherit (lib.attrsets) mapAttrsToList;
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkRenamedOptionModule;
-  inherit (lib.options) literalExpression mkEnableOption mkPackageOption mkOption;
+  inherit (lib.options) literalExpression mkEnableOption mkOption mkPackageOption;
   inherit (lib.strings) concatStringsSep optionalString;
   inherit (lib.trivial) id;
-  inherit (lib.types) attrsOf listOf bool lines nullOr path submodule;
+  inherit (lib.types) attrsOf listOf lines nullOr path submodule;
 
   mkPlugins = plugins:
     concatStringsSep "\n"
@@ -31,7 +30,7 @@
       type = lines;
       default = "";
       description = ''
-        Commands that will be added verbatim to ${configLocation}.;
+        Commands that will be added verbatim to ${configLocation}.
       '';
     };
 
@@ -45,7 +44,7 @@ in {
     )
   ];
   options.rum.programs.zsh = {
-    enable = mkEnableOption "zsh module.";
+    enable = mkEnableOption "zsh";
     package = mkPackageOption pkgs "zsh" {};
     plugins = mkOption {
       type = attrsOf (submodule {
