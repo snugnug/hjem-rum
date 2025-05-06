@@ -71,11 +71,10 @@ in {
         If the input value is a string, its contents will be wrapped
         inside of a function declaration, like so:
         ```fish
-            function <name>;
-                <function body>
-            end
+        function <name>;
+            <function body>
+        end
         ```
-
         Otherwise you are expected to handle that yourself.
       '';
       example = literalExpression ''
