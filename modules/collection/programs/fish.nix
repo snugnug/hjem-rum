@@ -101,8 +101,9 @@ in {
         Extra configuration files, they will all be written verbatim
         to `.config/fish/conf.d/<name>.fish`.
 
-        Those files are run before `.config/fish/config.fish` as per the fish
-        [documentation](https://fishshell.com/docs/current/language.html#configuration-files).
+        Those files are run before `.config/fish/config.fish` as per the [fish documentation].
+
+        [fish documentation]: https://fishshell.com/docs/current/language.html#configuration-files
       '';
       example = {
         my-aliases = ''

@@ -29,8 +29,10 @@ in {
         The configuration converted into JSON and written to
         {file}`$HOME/.config/Code/User/settings.json`.
 
-        Please reference [Visual Studio Code's official documentation](https://code.visualstudio.com/docs/getstarted/settings#_settings-json-file)
+        Please reference [Visual Studio Code's official documentation]
         for more information.
+
+        [Visual Studio Code's official documentation]: https://code.visualstudio.com/docs/getstarted/settings#_settings-json-file
       '';
     };
   };

@@ -32,9 +32,9 @@ in {
       };
       description = ''
         Settings are written as an INI file to {file}`$HOME/.config/gammastep/config.ini`.
+        Refer to [gammastep's example configuration] all available options.
 
-        Refer to https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample for
-        all available options.
+        [gammastep's example configuration]: https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample
       '';
     };
   };

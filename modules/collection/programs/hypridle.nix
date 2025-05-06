@@ -41,7 +41,9 @@ in {
       description = ''
         Is written to {file}`$HOME/hypr/hypridle.conf`.
 
-        Configuration options can be found on the [Hyprland Wiki](https://wiki.hyprland.org/Hypr-Ecosystem/hypridle).
+        Configuration options can be found on the [Hyprland Wiki].
+
+        [Hyprland Wiki]: https://wiki.hyprland.org/Hypr-Ecosystem/hypridle
       '';
     };
   };

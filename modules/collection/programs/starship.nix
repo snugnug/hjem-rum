@@ -36,8 +36,9 @@ in {
 
       description = ''
         The configuration converted to TOML and written to {file}`$HOME/.config/starship.toml`.
-        Please reference [Starship's documentation](https://starship.rs/config)
-        for configuration options.
+        Please reference [Starship's documentation] for configuration options.
+
+        [Starship's documentation]: https://starship.rs/config
       '';
     };
     integrations = {

@@ -42,7 +42,9 @@ in {
       };
       description = ''
         Configuration written to {file}`$HOME/.config/ncmpcpp/config`.
-        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult [ncmpcpp's example configuration](https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config).
+        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult [ncmpcpp's example configuration].
+
+        [ncmpcpp's example configuration]: https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config
       '';
     };
 
@@ -52,11 +54,12 @@ in {
       description = ''
         Custom bindings configuration written to {file}`$HOME/.config/ncmpcpp/bindings`.
         Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult
-        [ncmpcpp's example bindings file](https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings).
-
+        [ncmpcpp's example bindings file].
 
         The lists are separated between keys, for actions ran on keypresses, and commands, for actions ran
         on commands. The option's example demonstrates this greatly.
+
+        [ncmpcpp's example bindings file]: https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings
       '';
       example = {
         keys = [

@@ -32,7 +32,9 @@
       description = ''
         Commands that will be added verbatim to ${configLocation}.
 
-        A good starting point for learning how to configure zsh is [the ArchWiki entry](https://wiki.archlinux.org/title/Zsh).
+        A good starting point for learning how to configure zsh is the [Arch Wiki entry].
+
+        [Arch Wiki entry]: https://wiki.archlinux.org/title/Zsh
       '';
     };
 

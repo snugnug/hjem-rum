@@ -42,8 +42,10 @@ in {
       description = ''
         Settings are written as an INI file to {file}`$HOME/.config/foot/foot.ini`.
 
-        Refer to {manpage}`foot.ini(5)` or the [upstream template](https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes)
+        Refer to {manpage}`foot.ini(5)` or the [upstream template]
         for all available options.
+
+        [upstream template]: https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes
       '';
     };
   };

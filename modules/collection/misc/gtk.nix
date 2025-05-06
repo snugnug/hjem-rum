@@ -48,12 +48,14 @@ in {
       description = ''
         The settings that will be written to the various gtk files
         to configure the GTK theme. GTK documentation is perhaps
-        nebulous, but the [Arch Wiki entry](https://wiki.archlinux.org/title/GTK)
-        and the [official GTK documentation](https://docs.gtk.org/gtk3/class.Settings.html)
-        are decent places to start.
+        nebulous, but the [Arch Wiki entry] and the [official GTK
+        documentation] are decent places to start.
 
         Please note that each option name will have "gtk-" prepended
         to it, so there is no need to include that on every single option.
+
+        [Arch Wiki entry]: https://wiki.archlinux.org/title/GTK
+        [official GTK documentation]: https://docs.gtk.org/gtk3/class.Settings.html
       '';
     };
     css = {
