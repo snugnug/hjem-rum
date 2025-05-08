@@ -19,16 +19,15 @@ in {
     package = mkPackageOption pkgs "ncmpcpp" {
       extraDescription = ''
         You can override the package to customize certain settings that are baked into the package.
-
-        ```nix
-        package = pkgs.ncmpccpp.override {
+      '';
+      example = ''
+        pkgs.ncmpcpp.override {
           # useful overrides in the package
           outputsSupport = true; # outputs screen
           visualizerSupport = false; # visualizer screen
           clockSupport = true; # clock screen
           taglibSupport = true; # tag editor
         };
-        ```
       '';
     };
 
@@ -42,9 +41,10 @@ in {
         statusbar_visibility = true;
       };
       description = ''
-        Configuration written to `${config.directory}/.config/ncmpcpp/config`.
-        Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
-        https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config for an example.
+        Configuration written to {file}`$HOME/.config/ncmpcpp/config`.
+        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult [ncmpcpp's example configuration].
+
+        [ncmpcpp's example configuration]: https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config
       '';
     };
 
@@ -52,12 +52,14 @@ in {
       type = attrsOf (listOf ncmpcppBindingType);
       default = {};
       description = ''
-               Custom bindings configuration written to `${config.directory}/.config/ncmpcpp/bindings`.
-               Please reference ncmpcpp(1) (ncmpcpp's man page) to configure it accordingly, or access
-               https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings for an example.
+        Custom bindings configuration written to {file}`$HOME/.config/ncmpcpp/bindings`.
+        Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult
+        [ncmpcpp's example bindings file].
 
-        The lists are separated between keys, for actions ran on keypresses, and commands, for
-        actions ran on commands. The option's example demonstrates this greatly.
+        The lists are separated between keys, for actions ran on keypresses, and commands, for actions ran
+        on commands. The option's example demonstrates this greatly.
+
+        [ncmpcpp's example bindings file]: https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings
       '';
       example = {
         keys = [

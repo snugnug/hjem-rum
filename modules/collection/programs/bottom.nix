@@ -30,8 +30,10 @@ in {
         The configuration converted into TOML and written to
         {file}`$HOME/.config/bottom/bottom.toml`.
 
-        Please reference https://bottom.pages.dev/stable/configuration/config-file/
+        Please reference [bottom's config file documentation]
         for config options.
+
+        [bottom's config file documentation]: https://bottom.pages.dev/stable/configuration/config-file
       '';
     };
   };

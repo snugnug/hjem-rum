@@ -39,7 +39,9 @@ in {
           then "yes"
           else "no";
       }
-      .${typeOf value};
+      .${
+        typeOf value
+      };
   in
     concatStringsSep "\n" (mapAttrsToList (name: value: "${name} = ${convertValue value}") settings);
 }

@@ -34,9 +34,11 @@ in {
       };
       description = ''
         The configuration converted into TOML and written to
-        `${config.directory}/.config/alacritty/alacritty.toml`.
-        Please reference https://alacritty.org/config-alacritty.html
+        {file}`$HOME/.config/alacritty/alacritty.toml`.
+        Please reference [Alacritty's documentation]
         for config options.
+
+        [Alacritty's documentation]: https://alacritty.org/config-alacritty.html
       '';
     };
   };

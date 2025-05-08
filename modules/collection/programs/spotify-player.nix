@@ -19,8 +19,8 @@ in {
       extraDescription = ''
         You can use an override to configure certain settings
         baked into the package.
-
-        ```nix
+      '';
+      example = ''
         package = pkgs.spotify-player.override {
           # Useful overrides in the package
           withStreaming = true;
@@ -32,7 +32,6 @@ in {
           withSixel = true;
           withFuzzy = true;
         };
-        ```
       '';
     };
 
@@ -50,10 +49,12 @@ in {
       };
       description = ''
         The configuration converted into TOML and written to
-        `${config.directory}/.config/spotify-player/app.toml`.
+        {file}`$HOME/.config/spotify-player/app.toml`.
 
-        Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#general
-        for config options.
+        Please reference [spotify_player's configuration documentation]
+        for configuration options.
+
+        [spotify_player's configuration documentation]: https://github.com/aome510/spotify-player/blob/master/docs/config.md#general
       '';
     };
 
@@ -99,10 +100,12 @@ in {
       ];
       description = ''
         The theme converted into TOML and written to
-        `${config.directory}/.config/spotify-player/themes.toml`.
+        {file}`$HOME/.config/spotify-player/themes.toml`.
 
-        Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes
-        for config options.
+        Please reference [spotify_player's theme documentation]
+        for configuration options.
+
+        [spotify_player's theme documentation]: https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes
       '';
     };
 
@@ -125,11 +128,13 @@ in {
       };
       description = ''
         Sets of keymaps and actions converted into TOML and written to
-        `${config.directory}/.config/spotify-player/keymap.toml`.
+        {file}`$HOME/.config/spotify-player/keymap.toml`.
         See example for how to format declarations.
 
-        Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps
+        Please reference [spotify_player's keymaps documentation]
         for more information.
+
+        [spotify_player's keymaps documentation]: https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps
       '';
     };
   };

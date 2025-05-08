@@ -27,9 +27,9 @@ in {
         colors.background = "ffffffff";
       };
       description = ''
-        Is written to `${config.directory}/fuzzel/fuzzel.ini`.
+        Is written to {file}`$HOME/fuzzel/fuzzel.ini`.
 
-        Consult [man 5 fuzzel.ini](https://www.mankier.com/5/fuzzel.ini).
+        Please reference {manpage}`fuzzel.ini(5)` for configuration options.
       '';
     };
   };

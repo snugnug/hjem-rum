@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib.options) mkOption mkEnableOption mkPackageOption literalExample;
+  inherit (lib.options) literalExpression mkOption mkEnableOption mkPackageOption;
   inherit (lib.strings) typeOf concatMapAttrsStringSep concatMapStringsSep splitString escapeShellArg;
   inherit (lib.modules) mkIf;
   inherit (lib.types) either str path oneOf attrsOf nullOr;
@@ -71,14 +71,13 @@ in {
         If the input value is a string, its contents will be wrapped
         inside of a function declaration, like so:
         ```fish
-            function <name>;
-                <function body>
-            end
+        function <name>;
+            <function body>
+        end
         ```
-
         Otherwise you are expected to handle that yourself.
       '';
-      example = literalExample ''
+      example = literalExpression ''
         {
           fish_prompt = pkgs.writers.writeFish "fish_prompt.fish" '\'
               function fish_prompt -d "Write out the prompt"
@@ -102,8 +101,9 @@ in {
         Extra configuration files, they will all be written verbatim
         to `.config/fish/conf.d/<name>.fish`.
 
-        Those files are run before `.config/fish/config.fish` as per the fish
-        [documentation](https://fishshell.com/docs/current/language.html#configuration-files).
+        Those files are run before `.config/fish/config.fish` as per the [fish documentation].
+
+        [fish documentation]: https://fishshell.com/docs/current/language.html#configuration-files
       '';
       example = {
         my-aliases = ''
@@ -146,7 +146,7 @@ in {
 
         If a plugin seems to not work, verify that it contains one of the aformentioned files.
       '';
-      example = literalExample ''
+      example = literalExpression ''
         {
           inherit (pkgs.fishPlugins) z;
           pisces = pkgs.fetchFromGitHub {

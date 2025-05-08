@@ -40,10 +40,12 @@ in {
         };
       };
       description = ''
-        Settings are written as an INI file to ${config.directory}/.config/foot/foot.ini.
+        Settings are written as an INI file to {file}`$HOME/.config/foot/foot.ini`.
 
-        Refer to https://codeberg.org/dnkl/foot/src/branch/master/foot.ini for
-        all available options.
+        Refer to {manpage}`foot.ini(5)` or the [upstream template]
+        for all available options.
+
+        [upstream template]: https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes
       '';
     };
   };

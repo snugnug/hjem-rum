@@ -11,12 +11,17 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ndg = {
+      url = "github:feel-co/ndg/v2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     treefmt-nix,
+    ndg,
     ...
   }: let
     supportedSystems = ["x86_64-linux" "aarch64-linux"];
@@ -54,7 +59,12 @@
       };
       default = self.nixosModules.hjem-rum;
     };
-
+    packages = forAllSystems (pkgs: {
+      docs = pkgs.callPackage ./docs/package.nix {
+        inherit (ndg.packages.${pkgs.system}) ndg;
+        inherit rumLib;
+      };
+    });
     lib = rumLib;
 
     devShells = forAllSystems (

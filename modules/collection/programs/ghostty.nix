@@ -35,12 +35,11 @@ in {
     package = mkPackageOption pkgs "ghostty" {
       extraDescription = ''
         You can use an override to configure some settings baked into the package.
-
-        ```nix
-        package = pkgs.ghostty.override {
+      '';
+      example = ''
+        pkgs.ghostty.override {
           withAdwaita = true;
         };
-        ```
       '';
     };
 
@@ -56,8 +55,11 @@ in {
         ];
       };
       description = ''
-        The configuration converted to INI and written to `${config.directory}/.config/ghostty/config`.
-        Please reference https://ghostty.org/docs/config/reference for config options.
+        The configuration converted to INI and written to {file}`$HOME/.config/ghostty/config`.
+        Please consult [Ghostty's option reference]
+        for configuration options.
+
+        [Ghostty's option reference]: https://ghostty.org/docs/config/reference
       '';
     };
     themes = mkOption {
@@ -93,7 +95,10 @@ in {
       };
       description = ''
         An attribute set of themes, with the key as the theme name.
-        Please reference https://ghostty.org/docs/features/theme for config options.
+        Please reference [Ghostty's color theme documentation]
+        for configuration options.
+
+        [Ghostty's color theme documentation]: https://ghostty.org/docs/features/theme
       '';
     };
   };

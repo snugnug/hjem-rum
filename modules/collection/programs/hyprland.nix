@@ -33,7 +33,9 @@ in {
       description = ''
         Hyprland configuration written in Nix. Entries with the same key
         should be written as lists. Variables' and colors' names should be
-        quoted. See <https://wiki.hyprland.org> for more examples.
+        quoted. See [Hyprland's documentation] for more examples.
+
+        [Hyprland's documentation]: https://wiki.hyprland.org
       '';
     };
 

@@ -15,8 +15,8 @@ in {
     package = mkPackageOption pkgs "obs-studio" {
       extraDescription = ''
         You can override the package to install plugins.
-
-        ```nix
+      '';
+      example = ''
         # OBS has a special "package" to wrap the obs-studio package with plugins
         package = pkgs.wrapOBS.override {
           # These plugins will get installed and wrapped into obs-studio for use
@@ -26,7 +26,6 @@ in {
             obs-websocket
           ];
         };
-        ```
       '';
     };
   };
