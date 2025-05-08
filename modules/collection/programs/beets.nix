@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+  inherit (lib.options) mkOption mkEnableOption mkPackageOption literalExample;
 
   yaml = pkgs.formats.yaml {};
 
@@ -17,20 +17,18 @@ in {
     package = mkPackageOption pkgs "beets" {
       extraDescription = ''
         To get plugins to work, you will need to override the beets derivation
-        with the plugins you want:
+        with the plugins you want. Consult the [beets derivation] for a list of
+        available plugins.
 
-        ```nix
-        package = pkgs.beets.override {
+        [beets derivation]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/audio/beets/builtin-plugins.nix
+      '';
+      example = literalExample ''
+        pkgs.beets.override {
             pluginOverrides = {
                 fish.enable = true;
                 convert.enable = true;
             };
         };
-        ```
-
-        Consult the [beets derivation] for a list of available plugins.
-
-        [beets derivation]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/audio/beets/builtin-plugins.nix
       '';
     };
 
