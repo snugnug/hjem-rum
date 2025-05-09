@@ -22,7 +22,7 @@ in {
 
         [beets derivation]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/audio/beets/builtin-plugins.nix
       '';
-      example = literalExample ''
+      example = ''
         pkgs.beets.override {
             pluginOverrides = {
                 fish.enable = true;
