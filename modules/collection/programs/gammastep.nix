@@ -6,6 +6,8 @@
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+  inherit (lib.types) attrsOf str;
+  inherit (lib.attrsets) optionalAttrs mapAttrs' nameValuePair;
 
   ini = pkgs.formats.ini {};
 
@@ -37,12 +39,44 @@ in {
         all available options.
       '';
     };
+
+    hooks = mkOption {
+      type = attrsOf str;
+      default = {};
+      example = {
+        my-hook = ''
+          #!/usr/bin/env sh
+          case $3 in
+            daytime)
+              echo "Day time!"
+            ;;
+            night)
+              echo "Night time!"
+            ;;
+          esac
+        '';
+      };
+      description = ''
+        Hooks are scripts that are executed when an event is trigged and are written to {file}`$HOME/.config/gammastep/hooks/`.
+        The first parameter indicates the event, the second, the old period and the third, the new period.
+
+        Refer to the {manpage}`gammastep(1)` for more information.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
     packages = [cfg.package];
-    files.".config/gammastep/config.ini".source = mkIf (cfg.settings != {}) (
-      ini.generate "gammastep-config.ini" cfg.settings
-    );
+    files =
+      {
+        ".config/gammastep/config.ini".source = mkIf (cfg.settings != {}) (
+          ini.generate "gammastep-config.ini" cfg.settings
+        );
+      }
+      // optionalAttrs (cfg.hooks != {}) (mapAttrs' (name: val:
+        nameValuePair ".config/gammastep/hooks/${name}" {
+          text = val;
+          executable = true;
+        }));
   };
 }
