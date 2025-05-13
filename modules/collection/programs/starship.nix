@@ -7,7 +7,6 @@
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
-  inherit (lib.types) bool;
 
   toml = pkgs.formats.toml {};
 
@@ -42,14 +41,8 @@ in {
       '';
     };
     integrations = {
-      zsh.enable = mkOption {
-        type = bool;
-        default = false;
-        example = true;
-        description = ''
-          Whether to enable starship integration with zsh.
-        '';
-      };
+      nushell.enable = mkEnableOption "starship integration with nushell";
+      zsh.enable = mkEnableOption "starship integration with zsh";
     };
   };
 
@@ -68,5 +61,14 @@ in {
         mkAfter ''eval "$(${getExe cfg.package} init zsh)"''
       );
     };
+    rum.programs.nushell.extraConfig = mkIf (config.rum.programs.nushell.enable && cfg.integrations.nushell.enable) (
+      mkAfter ''
+        use ${
+          pkgs.runCommand "starship-init-nu" {} ''
+            ${getExe cfg.package} init nu >> "$out"
+          ''
+        }
+      ''
+    );
   };
 }

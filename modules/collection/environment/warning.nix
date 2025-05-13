@@ -13,6 +13,7 @@
   variableLoaders = [
     config.rum.programs.zsh.enable
     config.rum.programs.fish.enable
+    config.rum.programs.nushell.enable
     config.rum.programs.hyprland.enable
   ];
 
