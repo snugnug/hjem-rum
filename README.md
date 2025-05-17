@@ -3,12 +3,15 @@
 [Hjem]: https://github.com/feel-co/hjem
 [contributing guidelines]: ./docs/CONTRIBUTING.md
 [license]: LICENSE
-[programs/fish]: modules/collection/programs/fish.nix
-[programs/zsh]: modules/collection/programs/zsh.nix
-[programs/hyprland]: modules/collection/programs/hyprland.nix
+[`programs/fish.nix`]: modules/collection/programs/fish.nix
+[`programs/zsh.nix`]: modules/collection/programs/zsh.nix
+[`programs/hyprland.nix`]: modules/collection/programs/hyprland.nix
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
+[`programs/starship.nix`]: modules/collection/programs/starship.nix
+[`environment/warning.nix`]: modules/collection/environment/warning.nix
+[Environmental Variables]: #environmental-variables
 
 A module collection for managing your `$HOME` with [Hjem].
 
@@ -99,8 +102,8 @@ hjem = {
 };
 ```
 
-You can then configure any of the options defined in this flake in any nix
-module:
+You may then configure any of the options defined in imported modules in your
+own configuration:
 
 ```nix
 # configuration.nix
@@ -122,6 +125,87 @@ hjem.users.<username>.rum.programs.alacritty = {
 }
 ```
 
+Please keep in mind that Hjem Rum does not currently import most modules
+automatically. Continue reading to learn how to import modules.
+
+### Optional Importing
+
+Hjem Rum now offers a `modulesPath` output so that you can import our modules
+manually, rather than importing all modules by default:
+
+```nix
+# Importing the alacritty module into `hjem.extraModules`
+# Notice that it is very similar to the programs.alacritty namespace
+hjem.extraModules = [
+    "${inputs.hjem-rum.modulesPath}/programs/alacritty.nix"
+]
+```
+
+Keep in mind that when writing modules, we generally assume all modules are
+being imported, and therefore might rely on options from another module that may
+or may not be imported in your config. If you do not keep track of this, you
+will find an evaluation warning on build.
+
+To accommodate this usage, however, we maintain a table of modules that, when
+importing, you should also import other modules:
+
+| Module                      |       Dependencies        | Explanation                                                          |
+| --------------------------- | :-----------------------: | -------------------------------------------------------------------- |
+| [`environment/warning.nix`] |   [`programs/zsh.nix`]    | Checks if any modules that load environmental variables are enabled. |
+|                             |   [`programs/fish.nix`]   |                                                                      |
+|                             | [`programs/hyprland.nix`] |                                                                      |
+| [`programs/starship.nix`]   |   [`programs/zsh.nix`]    | Starship integration.                                                |
+| [`programs/zsh.nix`]        | [`programs/starship.nix`] | A renamed option depended on zsh.                                    |
+
+Example:
+
+```nix
+# configuration.nix
+config.hjem = {
+    # We don't just import the zsh module, but the starship module,
+    # even if we don't use the starship module itself.
+    extraModules = [
+        "${modulesPath}/programs/zsh.nix"
+        "${modulesPath}/programs/starship.nix"
+    ];
+    users.<username>.rum.programs.zsh = {
+        enable = true;
+    };
+};
+```
+
+This is a bit inconvenient, yes, but better than enforcing mass importing, and
+certainly better than disallowing modules from referencing other modules'
+options.
+
+We strongly recommend importing `environment/warning.nix` and its dependencies
+when setting up Hjem Rum, as it offers useful checking and a warning if your
+session variables are not actually being used.
+
+```nix
+hjem.extraModules = [
+    "${modulesPath}/environment/warning.nix"
+    "${modulesPath}/programs/zsh.nix"
+    "${modulesPath}/programs/starship.nix" # A dependency of the zsh module
+    "${modulesPath}/programs/fish.nix"
+    "${modulesPath}/programs/hyprland.nix"
+];
+```
+
+See more information under [Environmental Variables].
+
+### Importing All Modules
+
+Alternatively, you can replicate conventional functionality by importing all
+modules automatically with `lib.filesystem.listFilesRecursive`:
+
+```nix
+# Feeding our module collection directly into hjem.extraModules
+hjem.extraModules = lib.filesystem.listFilesRecursive inputs.hjem-rum.modulesPath;
+```
+
+Keep in mind this would increase eval times as our module collection grows.
+
 ## Environmental Variables
 
 Hjem provides attribute set "environment.sessionVariables" that allows the user
@@ -133,9 +217,9 @@ Currently, some of our modules may add environmental variables (such as our GTK
 module), but cannot load them without the use of another module. Currently,
 modules that load environmental variables include:
 
-- [programs/fish]
-- [programs/zsh]
-- [programs/hyprland]
+- [`programs/fish.nix`]
+- [`programs/zsh.nix`]
+- [`programs/hyprland.nix`]
 
 If you are either using something like our GTK module, or are manually adding
 variables to `environment.sessionVariables`, but are neither loading those

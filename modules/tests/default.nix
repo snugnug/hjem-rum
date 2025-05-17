@@ -35,6 +35,9 @@ Usage: (import ./location-of-lib.nix) {test-script-here}
           password = "";
         };
       };
+      # `node.specialArgs` wasn't actually letting tests use `self`, but
+      # it's included anyways since I'm not sure what it actually does.
+      _module.args = {inherit self lib;};
       node.specialArgs = {inherit self lib;};
       imports = [test];
     };

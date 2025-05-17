@@ -11,30 +11,34 @@ let
       indicator-position = "none";
     };
   };
-in {
-  name = "programs-foot";
-  nodes.machine = {
-    hjem.users.bob.rum = {
-      programs.foot = {
-        enable = true;
-        inherit settings;
+in
+  {self, ...}: {
+    name = "programs-foot";
+    nodes.machine = {
+      hjem = {
+        extraModules = ["${self.modulesPath}/programs/foot.nix"];
+        users.bob.rum = {
+          programs.foot = {
+            enable = true;
+            inherit settings;
+          };
+        };
       };
     };
-  };
 
-  testScript =
-    #python
-    ''
-      # Waiting for our user to load.
-      machine.succeed("loginctl enable-linger bob")
-      machine.wait_for_unit("default.target")
+    testScript =
+      #python
+      ''
+        # Waiting for our user to load.
+        machine.succeed("loginctl enable-linger bob")
+        machine.wait_for_unit("default.target")
 
-      confPath = "/home/bob/.config/foot/foot.ini"
+        confPath = "/home/bob/.config/foot/foot.ini"
 
-      # Letting foot check the validity of the config file
-      machine.succeed("su bob -c 'foot -C -c %s'" % confPath);
+        # Letting foot check the validity of the config file
+        machine.succeed("su bob -c 'foot -C -c %s'" % confPath);
 
-      # Verifying that something from the config has actually been written to the file
-      machine.succeed("grep '${settings.main.font}' < %s" % confPath)
-    '';
-}
+        # Verifying that something from the config has actually been written to the file
+        machine.succeed("grep '${settings.main.font}' < %s" % confPath)
+      '';
+  }
