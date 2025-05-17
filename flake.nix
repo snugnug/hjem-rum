@@ -46,10 +46,7 @@
       });
   in {
     hjemModules = {
-      hjem-rum = import ./modules/hjem.nix {
-        inherit (nixpkgs) lib;
-        inherit rumLib;
-      };
+      hjem-rum = import ./modules/hjem.nix {inherit rumLib;};
       default = self.hjemModules.hjem-rum;
     };
     packages = forAllSystems (pkgs: {
@@ -58,6 +55,9 @@
         inherit rumLib;
       };
     });
+
+    modulesPath = ./modules/collection;
+
     lib = rumLib;
 
     devShells = forAllSystems (

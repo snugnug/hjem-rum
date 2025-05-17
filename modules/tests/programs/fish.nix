@@ -1,21 +1,28 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  self,
+  ...
+}: {
   name = "programs-fish";
   nodes.machine = {
-    hjem.users.bob = {
-      environment.sessionVariables = {
-        RUM_TEST = "HEY";
-      };
-
-      rum.programs.fish = {
-        enable = true;
-        plugins = {inherit (pkgs.fishPlugins) z;};
-        earlyConfigFiles = {
-          hello = ''
-            echo Welcome
-          '';
+    hjem = {
+      extraModules = ["${self.modulesPath}/programs/fish.nix"];
+      users.bob = {
+        environment.sessionVariables = {
+          RUM_TEST = "HEY";
         };
-        abbrs = {
-          foo = "bar";
+
+        rum.programs.fish = {
+          enable = true;
+          plugins = {inherit (pkgs.fishPlugins) z;};
+          earlyConfigFiles = {
+            hello = ''
+              echo Welcome
+            '';
+          };
+          abbrs = {
+            foo = "bar";
+          };
         };
       };
     };
