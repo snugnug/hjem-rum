@@ -3,12 +3,15 @@
 [Hjem]: https://github.com/feel-co/hjem
 [contributing guidelines]: ./docs/CONTRIBUTING.md
 [license]: LICENSE
-[programs/fish]: modules/collection/programs/fish.nix
-[programs/zsh]: modules/collection/programs/zsh.nix
-[programs/hyprland]: modules/collection/programs/hyprland.nix
+[`programs/fish.nix`]: modules/collection/programs/fish.nix
+[`programs/zsh.nix`]: modules/collection/programs/zsh.nix
+[`programs/hyprland.nix`]: modules/collection/programs/hyprland.nix
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
+[`programs/starship.nix`]: modules/collection/programs/starship.nix
+[`environment/warning.nix`]: modules/collection/environment/warning.nix
+[Environmental Variables]: #environmental-variables
 
 A module collection for managing your `$HOME` with [Hjem].
 
@@ -18,10 +21,10 @@ A module collection for managing your `$HOME` with [Hjem].
 > Hjem, the tooling Hjem Rum is built off of, is still unfinished. Use at your
 > own risk, and beware of bugs, issues, and missing features. If you do not feel
 > like being a beta tester, wait until Hjem is more finished. It is not yet
-> ready to fully replace Home Manager in the average user's config, but if you
-> truly want to, an option could be to use both in conjunction. Either way, as
-> Hjem continues to be developed, Hjem Rum will be worked on as we build modules
-> and functionality out to support average users.
+> ready to fully replace Home Manager in the average user's configuration, but
+> if you truly want to, an option could be to use both in conjunction. Either
+> way, as Hjem continues to be developed, Hjem Rum will be worked on as we build
+> modules and functionality out to support average users.
 
 Based on the Hjem tooling, Hjem Rum (literally meaning "home rooms") is a
 collection of modules for various programs and services to simplify the use of
@@ -31,7 +34,7 @@ Hjem was initially created as an improved implementation of the `home`
 functionality that Home Manager provides. Its purpose was minimal. Hjem Rum's
 purpose is to create a module collection based on that tooling in order to
 recreate the functionality that Home Manager's large collection of modules
-provides, allowing you to simply install and config a program.
+provides, allowing you to simply install and configure a program.
 
 ## Setup
 
@@ -99,8 +102,8 @@ hjem = {
 };
 ```
 
-You can then configure any of the options defined in this flake in any nix
-module:
+You may then configure any of the options defined in imported modules in your
+own configuration:
 
 ```nix
 # configuration.nix
@@ -122,6 +125,95 @@ hjem.users.<username>.rum.programs.alacritty = {
 }
 ```
 
+### Optional: Manual Module Importing
+
+> [!WARNING]
+> Manual module importing is an advanced user feature and is not recommended for
+> the average user. While it is supported and tested for, you may encounter more
+> problems with it, and we advise users to become more familiar with the NixOS
+> module system and Hjem Rum in particular before attempting to leave behind the
+> automatic importing of all modules. Please skip ahead to
+> [Environmental Variables] if you are not interested in this.
+
+While the default hjemModule imports all modules in the collection recursively,
+we have implemented functionality to support users who would prefer to only
+import modules that they plan to use. If you would like to do so, rather than
+importing the default hjemModule we provide, you will have to use the special
+`bare` module:
+
+```nix
+hjem.extraModules = [
+    inputs.hjem-rum.hjemModules.bare # The alternative module
+    # inputs.hjem-rum.hjemModules.default
+];
+```
+
+This alternative module does not import any of our modules, which means that you
+will not be able to do anything with Hjem Rum without manually importing our
+modules yourself. To this end, we offer a `modulesPath` output for you to import
+modules from.
+
+```nix
+hjem.extraModules = [
+    # Notice the similarity to the programs.alacritty namespace
+    "${inputs.hjem-rum.modulesPath}/programs/alacritty.nix" # Importing the alacritty module
+];
+```
+
+Keep in mind that when writing modules, we may implement functionality that
+requires reference to another module that may or may not be imported into your
+configuration. If you do not keep track of this, you will find an evaluation
+warning on build.
+
+To accommodate this usage, however, we maintain a table of modules that, when
+importing, you should also import other modules:
+
+| Module                      |       Dependencies        | Explanation                                                          |
+| --------------------------- | :-----------------------: | -------------------------------------------------------------------- |
+| [`environment/warning.nix`] |   [`programs/zsh.nix`]    | Checks if any modules that load environmental variables are enabled. |
+|                             |   [`programs/fish.nix`]   |                                                                      |
+|                             | [`programs/hyprland.nix`] |                                                                      |
+| [`programs/starship.nix`]   |   [`programs/zsh.nix`]    | Starship integration.                                                |
+| [`programs/zsh.nix`]        | [`programs/starship.nix`] | A renamed option depended on zsh.                                    |
+
+Example:
+
+```nix
+# configuration.nix
+config.hjem = {
+    # We don't just import the zsh module, but the starship module,
+    # even if we don't use the starship module itself.
+    extraModules = [
+        "${modulesPath}/programs/zsh.nix"
+        "${modulesPath}/programs/starship.nix"
+    ];
+    users.<username>.rum.programs.zsh = {
+        enable = true;
+    };
+};
+```
+
+While this is unfortunate, it is a fair compromise between allowing power users
+to optimize their configuration and ensuring maximum functionality of our
+modules. Additionally, most modules are not dependencies. You will find that
+shells most often tend to be dependencies for various reasons.
+
+We strongly recommend importing `environment/warning.nix` and its dependencies
+when setting up Hjem Rum, as it offers useful checking and a warning if your
+session variables are not actually being used.
+
+```nix
+hjem.extraModules = [
+    "${modulesPath}/environment/warning.nix"
+    "${modulesPath}/programs/zsh.nix"
+    "${modulesPath}/programs/starship.nix" # A dependency of the zsh module
+    "${modulesPath}/programs/fish.nix"
+    "${modulesPath}/programs/hyprland.nix"
+];
+```
+
+See more information below.
+
 ## Environmental Variables
 
 Hjem provides attribute set "environment.sessionVariables" that allows the user
@@ -133,9 +225,9 @@ Currently, some of our modules may add environmental variables (such as our GTK
 module), but cannot load them without the use of another module. Currently,
 modules that load environmental variables include:
 
-- [programs/fish]
-- [programs/zsh]
-- [programs/hyprland]
+- [`programs/fish.nix`]
+- [`programs/zsh.nix`]
+- [`programs/hyprland.nix`]
 
 If you are either using something like our GTK module, or are manually adding
 variables to `environment.sessionVariables`, but are neither loading those
