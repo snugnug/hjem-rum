@@ -67,18 +67,12 @@ wait for the proper systemd targets to be reached, change users to run commands,
 and avoid other possible footguns. The approach this module uses to test its
 configuration is to have a file for each configuration alongside it, which then
 gets passed to the test VM and gets evaluated with diff. You can use other
-approaches if its more convenient, that's just a suggestion.
+approaches if it's more convenient, that's just a suggestion.
 
 You can also debug your tests through a Python REPL by running:
 
 ```bash
-nix run .#checks.<arch>.vm-test-run-<name>.driver -- --interactive
-```
-
-You can also debug your tests through a python repl by running:
-
-```bash
-nix run .#checks.<arch>.vm-test-run-<name>.driver -- --interactive
+nix run .#checks.<arch>.vm-test-run-<category>-<module name>[-suffix].driver -- --interactive
 ```
 
 [^1]: Although both guides refer to `lib.tests.runNixOSTest` instead of
