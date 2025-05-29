@@ -1,10 +1,13 @@
 {
   name = "programs-beets-no-file-created";
-  nodes.machine = {
-    hjem.users.bob.rum = {
-      programs.beets = {
-        enable = true;
-        settings = {};
+  nodes.machine = {self, ...}: {
+    hjem = {
+      extraModules = ["${self.modulesPath}/programs/beets.nix"];
+      users.bob.rum = {
+        programs.beets = {
+          enable = true;
+          settings = {};
+        };
       };
     };
   };

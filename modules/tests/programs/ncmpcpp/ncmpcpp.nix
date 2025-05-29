@@ -1,42 +1,45 @@
 {
   name = "programs-ncmpcpp";
-  nodes.machine = {
-    hjem.users.bob.rum = {
-      programs.ncmpcpp = {
-        enable = true;
+  nodes.machine = {self, ...}: {
+    hjem = {
+      extraModules = ["${self.modulesPath}/programs/ncmpcpp.nix"];
+      users.bob.rum = {
+        programs.ncmpcpp = {
+          enable = true;
 
-        # This aims to test the ncmpcpp generator type conversion
-        # Options were chose at random
-        settings = {
-          mpd_host = "localhost";
-          mpd_port = 6600;
-          mpd_crossfade_time = 32;
-          incremental_seeking = true;
-        };
+          # This aims to test the ncmpcpp generator type conversion
+          # Options were chose at random
+          settings = {
+            mpd_host = "localhost";
+            mpd_port = 6600;
+            mpd_crossfade_time = 32;
+            incremental_seeking = true;
+          };
 
-        bindings = {
-          keys = [
-            {
-              binding = "ctrl-q";
-              actions = ["stop" "quit"];
-            }
-            {
-              binding = "q";
-              actions = ["quit"];
-              deferred = true;
-            }
-          ];
-          commands = [
-            {
-              binding = "!sq";
-              actions = ["stop" "quit"];
-            }
-            {
-              binding = "!q";
-              actions = ["quit"];
-              deferred = true;
-            }
-          ];
+          bindings = {
+            keys = [
+              {
+                binding = "ctrl-q";
+                actions = ["stop" "quit"];
+              }
+              {
+                binding = "q";
+                actions = ["quit"];
+                deferred = true;
+              }
+            ];
+            commands = [
+              {
+                binding = "!sq";
+                actions = ["stop" "quit"];
+              }
+              {
+                binding = "!q";
+                actions = ["quit"];
+                deferred = true;
+              }
+            ];
+          };
         };
       };
     };
