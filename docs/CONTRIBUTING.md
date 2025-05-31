@@ -382,4 +382,5 @@ on how tests work.
 Even if you do not have write-access, you can always leave a review on someone
 else's PR. Again, GitHub has great [documentation on reviewing PRs]. This is
 great practice for learning the guidelines as well as learning exceptions to the
-rules.
+rules. For some guidelines on review practices, see
+[REVIEWING.MD](REVIEWING.md).
