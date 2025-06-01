@@ -1,17 +1,13 @@
 {
-  lib,
   config,
+  lib,
   pkgs,
-  inputs,
-  rumLib,
   ...
-}:
-let
+}: let
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkEnableOption mkPackageOption mkOption optionalAttrs;
-  inherit (rumLib.generators) toJson;
-  inherit (rumLib.types) jsonType;
-  inherit (lib.meta) getExe;
+  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+
+  json = pkgs.formats.json {};
 
   cfg = config.rum.programs.hyprpanel;
 in {
@@ -23,7 +19,7 @@ in {
     hyprland.enable = mkEnableOption "Enable Hyprland integration";
 
     settings = mkOption {
-      type = jsonType;
+      type = json.type;
       default = {};
       example = {
         "bar.layouts" = {
@@ -37,7 +33,8 @@ in {
       description = ''
         JSON-style configuration for HyprPanel, written to
         {file}`$HOME/.config/hyprpanel/config.json`.
-         Refer to [HyprPanel documentation](https://hyprpanel.com/configuration/settings.html).
+
+        Refer to [HyprPanel documentation](https://hyprpanel.com/configuration/settings.html).
       '';
     };
   };
@@ -46,12 +43,14 @@ in {
     packages = [cfg.package];
 
     # Integration with Hyprland exec-once 
-    rum.programs.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [ lib.getExe cfg.package ];
+    rum.programs.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [
+      lib.getExe cfg.package
+    ];
 
-    # JSON config
-    files.".config/hyprpanel/config.json".text = mkIf (cfg.settings != {}) (toJson {
-      attrs = cfg.settings;
-      indent = 2;
-    });
+    files = {
+      ".config/hyprpanel/config.json".source = mkIf (cfg.settings != {}) (
+        json.generate "hyprpanel-config.json" cfg.settings
+      );
+    };
   };
 }
