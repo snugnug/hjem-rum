@@ -7,12 +7,15 @@
   settingsFile = yaml.generate "settings.yaml" settings;
 in {
   name = "programs-beets";
-  nodes.machine = {
-    hjem.users.bob.rum = {
-      programs.beets = {
-        enable = true;
-        package = pkgs.beets.override {pluginOverrides.duplicates.enable = true;};
-        inherit settings;
+  nodes.machine = {self, ...}: {
+    hjem = {
+      extraModules = ["${self.modulesPath}/programs/beets.nix"];
+      users.bob.rum = {
+        programs.beets = {
+          enable = true;
+          package = pkgs.beets.override {pluginOverrides.duplicates.enable = true;};
+          inherit settings;
+        };
       };
     };
   };
