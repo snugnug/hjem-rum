@@ -1,25 +1,5 @@
 {
   "nodes": {
-    "hjem": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1746355589,
-        "narHash": "sha256-LguszqsDBTtdBxblQTtN7vOAYmfoe43aHkB8aK1dChE=",
-        "owner": "feel-co",
-        "repo": "hjem",
-        "rev": "77b37eeb583d43e1c723119a69c906235174ce57",
-        "type": "github"
-      },
-      "original": {
-        "owner": "feel-co",
-        "repo": "hjem",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "locked": {
         "lastModified": 1733328505,
@@ -53,6 +33,26 @@
         "type": "github"
       }
     },
+    "hjem": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1746355589,
+        "narHash": "sha256-LguszqsDBTtdBxblQTtN7vOAYmfoe43aHkB8aK1dChE=",
+        "owner": "feel-co",
+        "repo": "hjem",
+        "rev": "77b37eeb583d43e1c723119a69c906235174ce57",
+        "type": "github"
+      },
+      "original": {
+        "owner": "feel-co",
+        "repo": "hjem",
+        "type": "github"
+      }
+    },
     "ndg": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -62,16 +62,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1746459301,
-        "narHash": "sha256-QcAaxXdcPMqY5IppLa9fHCq3Rzq597DQqq8s2fKuE0k=",
+        "lastModified": 1748103964,
+        "narHash": "sha256-aRFl6I3x1aKzeOBaD/OJHYv+OQ+qE+3FR9uKhIvfW+A=",
         "owner": "feel-co",
         "repo": "ndg",
-        "rev": "2864a9901102a86db82157f72998809c570c36bb",
+        "rev": "c556c4cbcba61474bf8a342a31a2d94cbefd8986",
         "type": "github"
       },
       "original": {
         "owner": "feel-co",
-        "ref": "v2",
         "repo": "ndg",
         "type": "github"
       }

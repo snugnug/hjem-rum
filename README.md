@@ -9,6 +9,7 @@
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
+[documentation]: snugnug.github.io/hjem-rum/
 
 A module collection for managing your `$HOME` with [Hjem].
 
@@ -121,6 +122,9 @@ hjem.users.<username>.rum.programs.alacritty = {
     };
 }
 ```
+
+> [!TIP]
+> Consult the [documentation] for an overview of all available options.
 
 ## Environmental Variables
 

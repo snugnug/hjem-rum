@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ndg = {
-      url = "github:feel-co/ndg/v2";
+      url = "github:feel-co/ndg";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

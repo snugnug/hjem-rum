@@ -277,8 +277,8 @@ defining more files to be written to _if_ the corresponding option has been set.
 This is optimal because the first three files written to share an option due to
 how GTK configuration works.
 
-One last case is in the Hyprland, where several checks and several options are
-needed to compile into one file. Here is how it is done:
+One last case is in the Hyprland module, where several checks and several
+options are needed to compile into one file. Here is how it is done:
 
 ```nix
 files = let
@@ -333,8 +333,8 @@ in {
 ```
 
 An additional attrset of boolean aliases is set within a `let ... in` set to
-highlight the different checks done and to add qucik ways to reference each
-check without excess and redudant code.
+highlight the different checks done and to add quick ways to reference each
+check without excess and redundant code.
 
 First, the file is only written if any of the options to write to the file are
 set. `optionalString` is then used to compile each option's results in an
