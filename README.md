@@ -5,6 +5,7 @@
 [license]: LICENSE
 [programs/fish]: modules/collection/programs/fish.nix
 [programs/zsh]: modules/collection/programs/zsh.nix
+[programs/nushell]: modules/collection/programs/nushell.nix
 [programs/hyprland]: modules/collection/programs/hyprland.nix
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 [@eclairevoyant]: https://github.com/eclairevoyant
@@ -139,6 +140,7 @@ modules that load environmental variables include:
 
 - [programs/fish]
 - [programs/zsh]
+- [programs/nushell]
 - [programs/hyprland]
 
 If you are either using something like our GTK module, or are manually adding
