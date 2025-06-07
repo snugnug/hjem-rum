@@ -50,7 +50,7 @@ start with the aformentioned pattern, such as `programs-foot-test-plugins`.
 
 Tests for Hjem Rum are written just like any other test, so it might be worth to
 take a read at how NixOS tests work. [nix.dev provides a useful guide], as does
-the [NixOS Manual][^1], both detailing how to use the framework.
+the [NixOS Manual], both detailing how to use the framework.
 
 Our test system has some pre-defined things aiming at avoid boilerplate code:
 

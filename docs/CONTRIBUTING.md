@@ -6,6 +6,7 @@
 [documentation on forking repositories]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
 [documentation on reviewing PRs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
 [Core Principles]: #core-principles
+[REVIEWING.md]: ./REVIEWING.md
 
 Hjem Rum (or HJR) is always in need of contributions as a module collection. As
 programs are developed, modules will need to be added, changed, removed, etc.,
@@ -382,4 +383,4 @@ on how tests work.
 Even if you do not have write-access, you can always leave a review on someone
 else's PR. Again, GitHub has great [documentation on reviewing PRs]. This is
 great practice for learning the guidelines as well as learning exceptions to the
-rules.
+rules. For some guidelines on review practices, see [REVIEWING.md].
