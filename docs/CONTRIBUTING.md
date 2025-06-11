@@ -6,7 +6,8 @@
 [documentation on forking repositories]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
 [documentation on reviewing PRs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
 [Core Principles]: #core-principles
-[REVIEWING.md]: ./REVIEWING.md
+[testing documentation]: /TESTING.md
+[reviewed]: #reviewing-a-pr
 
 Hjem Rum (or HJR) is always in need of contributions as a module collection. As
 programs are developed, modules will need to be added, changed, removed, etc.,
@@ -42,7 +43,7 @@ For consistency, we do enforce a strict (but simple) commit style, that will be
 linted against. The format is as follows (sections between `[]` are optional):
 
 ```console
-<top_level_scope>/[<specific_scope>]: <message>
+<top_level_scope>[/<specific_scope>]: <message>
 
 [<body>]
 ```
@@ -71,17 +72,17 @@ git push origin <branch-name>
 and then open up a PR, or "Pull Request," in the upstream HJR repository. Again,
 GitHub has good documentation for [creating a PR].
 
-After you have setup a PR, it will be [reviewed](#reviewing-a-pr) by maintainers
-and changes may be requested. Make the changes requested and eventually it will
-likely be accepted and merged into main.
+After you have setup a PR, it will be [reviewed] by maintainers and changes may
+be requested. Make the changes requested and eventually it will likely be
+accepted and merged into main.
 
 ## Core Principles
 
 In creating HJR, we had a few principles in mind for development:
 
-1. Minimize the number of options written;
-1. Include only the module collection - leave functionality to Hjem; and
-1. Maintain readability of code, even for new users.
+1. Minimize the number of options written.
+2. Include only the module collection - leave functionality to Hjem.
+3. Maintain readability of code, even for new users.
 
 Please keep these in mind as you read through our general guidelines for
 contributing.
@@ -92,16 +93,12 @@ These guidelines, are, of course, merely guidelines. There are and will continue
 to be exceptions. However, do your best to stick to them, and keep in mind that
 reviewers will hold you to them as much as possible.
 
-### Where to put a new module
-
-WIP
-
 ### Aliases
 
 At the top of any module, there should always be a `let ... in` set. Within
 this, functions should have their location aliased, cfg should be aliased, and
 any generators should have an alias as well. Here's an example for a module that
-makes use of the TOML generator used in nixpkgs:
+makes use of the TOML generator used in Nixpkgs:
 
 ```nix
 {
@@ -125,7 +122,7 @@ in {
 Notice that each function has its location aliased with an inherit to its target
 location. Ideally, this location should be where one could find it in the source
 code. For example, rather than using `lib.mkIf`, we use `lib.modules.mkIf`,
-because mkIf is declared at `lib/modules.nix` within the nixpkgs repo.
+because mkIf is declared at `lib/modules.nix` within the Nixpkgs repo.
 
 Also notice that in this case, `pkgs.formats.toml {}` includes both `generate`
 and `type`, so the alias name is just `toml`.
@@ -134,11 +131,6 @@ Always be sure to include `cfg` that links to the point where options are
 configured by the user.
 
 ### Writing Options
-
-> [!IMPORTANT]
-> When writing options for any Nix module, do NOT make any option depend on a
-> value from `config`. Options should be pure, or it will interfere with modules
-> evaluation.
 
 Writing new options is the core of any new module. It is also the easiest place
 to blunder. As stated above, a core principle of HJR is to minimize the number
@@ -158,8 +150,8 @@ should help inform you of what options are needed and what are not:
 For the most part, this should be sufficient. Overrides of packages should be
 simply offered through a direct override in `package`. For example, ncmpcpp's
 package has a `withVisualizer ? false` argument. Rather than creating an extra
-option for this, the contributor should note this with `extraDescription` like
-so:
+option for this, the contributor should note this with `extraDescription`, and
+give an example of it like so:
 
 ```nix
 options.rum.programs.ncmpcpp = {
@@ -167,8 +159,17 @@ options.rum.programs.ncmpcpp = {
 
   package = mkPackageOption pkgs "ncmpcpp" {
     extraDescription = ''
-      You can use an override to toggle certain features like the visualizer, a clock screen, and more.
-      Please check out the package source for a complete list.
+        You can override the package to customize certain settings that are baked
+        into the package.
+    '';
+    example = '' # Note that mkPackageOption's example automatically uses literalExpression
+        pkgs.ncmpcpp.override {
+            # useful overrides in the package
+            outputsSupport = true; # outputs screen
+            visualizerSupport = false; # visualizer screen
+            clockSupport = true; # clock screen
+            taglibSupport = true; # tag editor
+        };
     '';
   };
 ```
@@ -199,7 +200,7 @@ list of actions that get propagated accordingly:
 
 ```nix
   keymap = mkOption {
-    type = toml.type;
+    inherit (toml) type; # We can use a streamlined inherit to say type = toml.type
     default = {};
     example = {
       keymaps = [
@@ -229,13 +230,13 @@ list of actions that get propagated accordingly:
 Also note that the option description includes a link to upstream info on
 settings options.
 
-### Conditional Config
+### Conditionals in Modules
 
-Always use a `mkIf` before the config section. Example:
+Always use a `mkIf` before the `config` section. Example:
 
 ```nix
 config = mkIf cfg.enable {
-
+    ...
 };
 ```
 
@@ -248,7 +249,7 @@ avoid this:
 config = mkIf cfg.enable {
   packages = [cfg.package];
   files.".config/alacritty/alacritty.toml".source = mkIf (cfg.settings != {}) (
-    toml.generate "alacritty.toml" cfg.settings
+    toml.generate "alacritty.toml" cfg.settings # The indentation makes it more readable
   );
 };
 ```
@@ -273,10 +274,10 @@ files = (
 );
 ```
 
-This essentially takes the attrset of `files` and _optionally_ adds attributes
-defining more files to be written to _if_ the corresponding option has been set.
-This is optimal because the first three files written to share an option due to
-how GTK configuration works.
+This essentially takes the attrset of `files` and _conditionally_ adds
+attributes defining more files to be written to depending on _if_ the
+corresponding option has been set. This is optimal because the first three files
+written to share an option due to how GTK configuration works.
 
 One last case is in the Hyprland module, where several checks and several
 options are needed to compile into one file. Here is how it is done:
@@ -341,7 +342,7 @@ First, the file is only written if any of the options to write to the file are
 set. `optionalString` is then used to compile each option's results in an
 optimized and clean way.
 
-### Extending Lib
+### Extending RumLib
 
 Rather than having functions scattered throughout the module collection, we
 would rather keep our directories organized and purposeful. Therefore, all
@@ -354,29 +355,39 @@ is the function that converts to the format required for ncmpcpp settings.
 
 Likewise, types should be suffixed with "Type" to maintain style and describe
 their function. For example, `hyprType` describes the type used in `settings`
-converted to hyprlang.
+converted to Hyprlang.
 
 When it comes to directory structure, you should be able to infer how we
 organize our lib by both our folder structure itself as well as the names of
-functions. For example, `lib.rum.types.gtkType` is found in
+functions. For example, `rumLib.types.gtkType` is found in
 `lib/types/gtkType.nix`. In cases where a file is a single function, always be
 sure to make sure the name matches the file.
 
 If a program uses multiple functions of the same kind (e.g. two generators), you
 can put them in one file, like is done in `lib/generators/gtk.nix`.
 
-Additionally, please follow how lib is structured in nixpkgs. For example, the
+Additionally, please follow how lib is structured in Nixpkgs. For example, the
 custom function `attrsNamesHasPrefix` is under `attrsets` to signify that it
-operates on an attrset, just like in nixpkgs.
+operates on an attrset, just like in Nixpkgs.
 
 ### Docs
 
-WIP
+If you would like to contribute to our documentation, we ask a few things of
+you:
+
+1. Please aim to write in a formal tone.
+2. Use proper grammar and check for misspellings or typos.
+3. Try to be concise, but also explain things in full.
+
+In general, the requirements are very loose, but maintainers may have more
+specific asks of you depending on the case. Writing can be very personal and
+very fluid, so there are less rigid expectations here, but that does not mean
+standards are lower.
 
 ### Tests
 
-Please refer to the [testing documentation](./TESTING.md) for more information
-on how tests work.
+Please refer to the [testing documentation] for more information on how tests
+work.
 
 ## Reviewing a PR
 
