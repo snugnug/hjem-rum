@@ -1,7 +1,7 @@
 # Hjem Rum
 
 [Hjem]: https://github.com/feel-co/hjem
-[contributing guidelines]: ./CONTRIBUTING.md
+[our docs]: hjr.snugroup.org/CONTRIBUTING.html
 [license]: LICENSE
 [programs/fish]: modules/collection/programs/fish.nix
 [programs/zsh]: modules/collection/programs/zsh.nix
@@ -11,53 +11,52 @@
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
 [documentation]: hjr.snugroup.org
+[contributors]: https://github.com/snugnug/hjem-rum/graphs/contributors
+[Home Manager]: https://github.com/nix-community/home-manager
 
 A module collection for managing your `$HOME` with [Hjem].
 
 ## A brief explanation
 
-> [!IMPORTANT]
-> Hjem, the tooling Hjem Rum is built off of, is still unfinished. Use at your
-> own risk, and beware of bugs, issues, and missing features. If you do not feel
-> like being a beta tester, wait until Hjem is more finished. It is not yet
-> ready to fully replace Home Manager in the average user's config, but if you
-> truly want to, an option could be to use both in conjunction. Either way, as
-> Hjem continues to be developed, Hjem Rum will be worked on as we build modules
-> and functionality out to support average users.
+> [!WARNING]
+> Hjem Rum is currently considered alpha software―here be dragons. While many of
+> us currently use its modules in our NixOS configurations, that does not mean
+> it will necessarily offer a seamless experience yet, nor does it mean there
+> will not be breaking changes (there will). As Hjem Rum continues to grow and
+> evolve, it should become more stable and expansive, but please be patient as
+> it is a hobby project. Furthermore, Hjem, the tooling Hjem Rum is built off
+> of, is still unfinished and missing critical features, such as services. Hjem
+> Rum is still useable, but it is not for a novice user.
 
-Based on the Hjem tooling, Hjem Rum (literally meaning "home rooms") is a
-collection of modules for various programs and services to simplify the use of
-Hjem for managing your `$HOME` files.
+Built off the Hjem tooling, Hjem Rum (loosely translated to "rooms of a home")
+is a collection of modules for various applications intended to simplify `$HOME`
+management for usage and configuration of applications.
 
-Hjem was initially created as an improved implementation of the `home`
-functionality that Home Manager provides. Its purpose was minimal. Hjem Rum's
-purpose is to create a module collection based on that tooling in order to
-recreate the functionality that Home Manager's large collection of modules
-provides, allowing you to simply install and config a program.
+Hjem was initially created as a streamlined implementation of the `home`
+functionality that Home Manager provides. Hjem Rum, in contrast, is intended to
+provide an expansive module collection as a useful abstraction for users to
+configure their applications with ease, recreating Home Manager's complete
+functionality.
 
 ## Setup
 
-To start using Hjem Rum, you must first import the flake and its modules into
-your system(s):
+To use Hjem Rum, simply add and import Hjem and Hjem Rum into your flake:
 
 ```nix
 # flake.nix
 inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+    # To minimize redundancies, we suggest you set your flakes to follow your inputs.
     hjem = {
         url = "github:feel-co/hjem";
-        # You may want hjem to use your defined nixpkgs input to
-        # minimize redundancies.
         inputs.nixpkgs.follows = "nixpkgs";
     };
     hjem-rum = {
         url = "github:snugnug/hjem-rum";
-        # You may want hjem-rum to use your defined nixpkgs input to
-        # minimize redundancies.
-        inputs.nixpkgs.follows = "nixpkgs";
-        # Same goes for hjem, to avoid discrepancies between the version
-        # you use directly and the one hjem-rum uses.
-        inputs.hjem.follows = "hjem";
+        inputs = {
+            nixpkgs.follows = "nixpkgs";
+            hjem.follows = "hjem";
+        };
     };
 };
 
@@ -71,17 +70,16 @@ outputs = {
         default = nixpkgs.lib.nixosSystem {
             specialArgs = {inherit inputs;};
             modules = [
-                # Import the hjem module
-                inputs.hjem.nixosModules.default
-                # Whatever other modules you are importing
+                inputs.hjem.nixosModules.default # Import the hjem module
+                ./modules
             ];
         };
     };
 }
 ```
 
-Be sure to first set the necessary settings for Hjem and import the Hjem module
-from the input:
+Be sure to first set the necessary settings for Hjem and import Hjem Rum's Hjem
+module from the input:
 
 ```nix
 # configuration.nix
@@ -108,7 +106,7 @@ module:
 # configuration.nix
 hjem.users.<username>.rum.programs.alacritty = {
     enable = true;
-    #package = pkgs.alacritty; # Default
+    package = pkgs.alacritty; # Default
     settings = {
         window = {
             dimensions = {
@@ -140,7 +138,6 @@ modules that load environmental variables include:
 
 - [programs/fish]
 - [programs/zsh]
-- [programs/nushell]
 - [programs/hyprland]
 
 If you are either using something like our GTK module, or are manually adding
@@ -155,15 +152,25 @@ your shell or compositor is on listed there, please leave a comment and it will
 be added. You are encouraged to open a PR to help support your shell or
 compositor if possible.
 
-## Contributing
+## Contribution
 
-Hjem Rum is always in need of contribution. Please see our
-[contributing guidelines] for more information on how to contribute and our
-guidelines.
+If you are interested in contributing to Hjem Rum, please check out our
+contributing guidelines on [our docs]. We are always interested in
+contributions, particularly as Hjem Rum is inherently a very, very broad task.
+If you are new, unfamiliar, or otherwise scared of trying to contribute, please
+know that any contribution helps, big or small, and that reviewers are here to
+help you contribute and write good code for this project.
 
 ## Credits
 
 Credit goes to [@NotAShelf] and [@eclairevoyant] for creating Hjem.
+
+We would also like to give special thanks to all [contributors], past and
+present, for making Hjem Rum what it is today.
+
+Additionally, we would like to thank everyone who has contributed or maintained
+[Home Manager], as without them, this project likely would not be possible, or
+even be conceived.
 
 ## License
 
