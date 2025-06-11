@@ -109,13 +109,18 @@
     ''
       mkdir -p $out
 
-      ndg --verbose html \
-        --jobs $NIX_BUILD_CORES --title "Hjem Rum" \
+      ndg \
+        --verbose html \
+        --title "Hjem Rum"  \
+        --jobs $NIX_BUILD_CORES \
         --module-options ${configJSON}/share/doc/nixos/options.json \
         --manpage-urls ${./manpage-urls.json} \
-        --options-depth 2 \
+        --options-depth 3 \
         --generate-search true \
+        --input-dir ${./.} \
         --output-dir "$out"
+
+      echo hjr.snugroup.org > "$out/CNAME"
     '';
 in
   hjemRumDocs
