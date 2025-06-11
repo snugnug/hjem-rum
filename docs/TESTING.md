@@ -7,7 +7,7 @@
 
 Hjem Rum's testing system is designed with simplicity in mind, so we shy away
 from other testing frameworks and stick with `runTest`, from the
-[internal NixOS lib] located in the nixpkgs monorepo. There are no non-standard
+[internal NixOS lib] located in the Nixpkgs monorepo. There are no non-standard
 abstractions in regards to writing the tests, so they should be written just
 like any other test that uses the NixOS Test Driver.
 
@@ -50,7 +50,7 @@ start with the aformentioned pattern, such as `programs-foot-test-plugins`.
 
 Tests for Hjem Rum are written just like any other test, so it might be worth to
 take a read at how NixOS tests work. [nix.dev provides a useful guide], as does
-the [NixOS Manual][^1], both detailing how to use the framework.
+the [NixOS Manual],[^1] both detailing how to use the framework.
 
 Our test system has some pre-defined things aiming at avoid boilerplate code:
 
