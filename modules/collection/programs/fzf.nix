@@ -2,11 +2,14 @@
   lib,
   pkgs,
   config,
+  rumLib,
   ...
 }: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkPackageOption;
+
+  inherit (rumLib.options) mkIntegrationOption;
 
   cfg = config.rum.programs.fzf;
 in {
@@ -16,8 +19,8 @@ in {
     package = mkPackageOption pkgs "fzf" {};
 
     integrations = {
-      fish.enable = mkEnableOption "fzf integration with fish";
-      zsh.enable = mkEnableOption "fzf integration with zsh";
+      fish.enable = mkIntegrationOption "fzf" "fish";
+      zsh.enable = mkIntegrationOption "fzf" "zsh";
     };
   };
 

@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  rumLib,
   ...
 }: let
   inherit (lib.attrsets) optionalAttrs;
@@ -9,6 +10,8 @@
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types) nullOr path;
+
+  inherit (rumLib.options) mkIntegrationOption;
 
   kittyKeyValue = pkgs.formats.keyValue {
     listsAsDuplicateKeys = true;
@@ -79,8 +82,8 @@ in {
     };
 
     integrations = {
-      fish.enable = mkEnableOption "kitty integration with fish";
-      zsh.enable = mkEnableOption "kitty integration with zsh";
+      fish.enable = mkIntegrationOption "kitty" "fish";
+      zsh.enable = mkIntegrationOption "kitty" "zsh";
     };
   };
 

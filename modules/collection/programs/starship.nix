@@ -2,12 +2,14 @@
   lib,
   pkgs,
   config,
+  rumLib,
   ...
 }: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
-  inherit (lib.types) bool;
+
+  inherit (rumLib.options) mkIntegrationOption;
 
   toml = pkgs.formats.toml {};
 
@@ -42,14 +44,7 @@ in {
       '';
     };
     integrations = {
-      zsh.enable = mkOption {
-        type = bool;
-        default = false;
-        example = true;
-        description = ''
-          Whether to enable starship integration with zsh.
-        '';
-      };
+      zsh.enable = mkIntegrationOption "starship" "zsh";
     };
   };
 
