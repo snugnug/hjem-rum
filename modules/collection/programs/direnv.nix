@@ -2,12 +2,15 @@
   lib,
   pkgs,
   config,
+  rumLib,
   ...
 }: let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types) lines;
+
+  inherit (rumLib.options) mkIntegrationOption;
 
   toml = pkgs.formats.toml {};
 
@@ -55,17 +58,17 @@ in {
     };
 
     integrations = {
-      fish.enable = mkEnableOption "direnv integration with fish";
+      fish.enable = mkIntegrationOption "direnv" "fish";
       nix-direnv = {
         enable =
-          mkEnableOption "direnv integration with nix-direnv"
+          mkIntegrationOption "direnv" "nix-direnv"
           // {
             default = true;
             example = false;
           };
         package = mkPackageOption pkgs "nix-direnv" {};
       };
-      zsh.enable = mkEnableOption "direnv integration with zsh";
+      zsh.enable = mkIntegrationOption "direnv" "zsh";
     };
   };
 

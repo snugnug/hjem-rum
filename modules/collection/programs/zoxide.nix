@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  rumLib,
   ...
 }: let
   inherit (lib.meta) getExe;
@@ -9,6 +10,8 @@
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.types) listOf str;
+
+  inherit (rumLib.options) mkIntegrationOption;
 
   toFlags = concatStringsSep " " cfg.flags;
 
@@ -34,8 +37,8 @@ in {
     };
 
     integrations = {
-      fish.enable = mkEnableOption "zoxide integration with fish";
-      zsh.enable = mkEnableOption "zoxide integration with zsh";
+      fish.enable = mkIntegrationOption "zoxide" "fish";
+      zsh.enable = mkIntegrationOption "zoxide" "zsh";
     };
   };
 
