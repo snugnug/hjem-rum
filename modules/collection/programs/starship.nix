@@ -7,6 +7,7 @@
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
+  inherit (lib.strings) optionalString;
 
   toml = pkgs.formats.toml {};
 
@@ -40,7 +41,11 @@ in {
         [Starship's documentation]: https://starship.rs/config
       '';
     };
+
+    transience.enable = mkEnableOption "enable transience";
+
     integrations = {
+      fish.enable = mkEnableOption "starship integration with fish";
       nushell.enable = mkEnableOption "starship integration with nushell";
       zsh.enable = mkEnableOption "starship integration with zsh";
     };
@@ -48,27 +53,28 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/starship.toml".source = mkIf (cfg.settings != {}) (
-        toml.generate "starship.toml" cfg.settings
+    files.".config/starship.toml".source = mkIf (cfg.settings != {}) (
+      toml.generate "starship.toml" cfg.settings
+    );
+
+    rum.programs = {
+      fish.config = mkIf cfg.integrations.nushell.enable (
+        mkAfter "starship init fish | source" + (optionalString cfg.transience.enable) "\nenable_transience"
       );
 
-      /*
-      Needs to be added to the end of ~/.zshrc, hence the `mkIf` and `mkAfter`.
-      https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship
-      */
-      ".zshrc".text = mkIf (config.rum.programs.zsh.enable && cfg.integrations.zsh.enable) (
+      nushell.extraConfig = mkIf cfg.integrations.nushell.enable (
+        mkAfter ''
+          use ${
+            pkgs.runCommand "starship-init-nu" {} ''
+              ${getExe cfg.package} init nu >> "$out"
+            ''
+          }
+        ''
+      );
+
+      zsh.initConfig = mkIf cfg.integrations.zsh.enable (
         mkAfter ''eval "$(${getExe cfg.package} init zsh)"''
       );
     };
-    rum.programs.nushell.extraConfig = mkIf (config.rum.programs.nushell.enable && cfg.integrations.nushell.enable) (
-      mkAfter ''
-        use ${
-          pkgs.runCommand "starship-init-nu" {} ''
-            ${getExe cfg.package} init nu >> "$out"
-          ''
-        }
-      ''
-    );
   };
 }
