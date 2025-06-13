@@ -19,6 +19,7 @@ name = "top_level_scope"
 message = "Choose the top-level scope in which your changes are going:"
 choices = [
   {value = "programs", name = "programs: for modules that are programs (e.g. fish)"},
+  {value = "desktops", name = "desktops: for modules that are desktops (e.g. hyprland)"},
   {value = "misc", name = "misc: for modules that aren't programs nor services (e.g. gtk)"},
   {value = "lib", name = "lib: for new hjem-rum lib functions"},
   {value = "meta", name = "meta: for repo related changes (e.g. formatting, adding a new commit hook...)"},

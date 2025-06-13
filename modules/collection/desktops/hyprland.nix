@@ -16,9 +16,9 @@
   inherit (rumLib.generators.hypr) toHyprconf pluginsToHyprconf;
   inherit (rumLib.types) hyprType;
 
-  cfg = config.rum.programs.hyprland;
+  cfg = config.rum.desktops.hyprland;
 in {
-  options.rum.programs.hyprland = {
+  options.rum.desktops.hyprland = {
     enable = mkEnableOption "Hyprland";
 
     settings = mkOption {
