@@ -7,7 +7,7 @@
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
-  inherit (lib.types) bool;
+  inherit (lib.strings) optionalString;
 
   toml = pkgs.formats.toml {};
 
@@ -41,15 +41,12 @@ in {
         [Starship's documentation]: https://starship.rs/config
       '';
     };
+
+    enableTransience = mkEnableOption "enable transience.";
+
     integrations = {
-      zsh.enable = mkOption {
-        type = bool;
-        default = false;
-        example = true;
-        description = ''
-          Whether to enable starship integration with zsh.
-        '';
-      };
+      zsh.enable = mkEnableOption "enable zsh integration.";
+      fish.enable = mkEnableOption "enable fish integration.";
     };
   };
 
@@ -59,13 +56,22 @@ in {
       ".config/starship.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "starship.toml" cfg.settings
       );
+    };
 
-      /*
-      Needs to be added to the end of ~/.zshrc, hence the `mkIf` and `mkAfter`.
-      https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship
-      */
-      ".zshrc".text = mkIf (config.rum.programs.zsh.enable && cfg.integrations.zsh.enable) (
+    /*
+    Needs to be added to the end of the shell config file, hence the `mkAfter`s.
+    https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship
+    */
+    rum.programs = {
+      zsh.initConfig = mkIf cfg.integrations.zsh.enable (
         mkAfter ''eval "$(${getExe cfg.package} init zsh)"''
+      );
+
+      fish.config = mkIf (cfg.integrations.fish.enable) (
+        mkAfter (
+          "starship init fish | source"
+          + (optionalString cfg.enableTransience "\nenable_transience")
+        )
       );
     };
   };
