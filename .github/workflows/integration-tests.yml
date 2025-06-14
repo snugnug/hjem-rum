@@ -6,6 +6,12 @@ on:
       - main
     path:
       - modules/**
+      # Important files, changes to them will trigger an execution of all checks.
+      # They need to be added to the criticialPaths array in [./create-test-plan.sh].
+      - flake.nix
+      - flake.lock
+      - .github/workflows/create-test-plan.sh
+      - .github/workflows/integration-tests.yml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
