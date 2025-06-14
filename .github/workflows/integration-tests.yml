@@ -6,6 +6,10 @@ on:
       - main
     path:
       - modules/**
+      - flake.nix
+      - flake.lock
+      - .github/workflows/create-test-plan.sh
+      - .github/workflows/integration-tests.yml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
