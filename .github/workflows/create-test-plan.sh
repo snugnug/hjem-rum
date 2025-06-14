@@ -5,13 +5,16 @@ echo "run-all-checks=true" >>"$GITHUB_OUTPUT"
 
 allChangedFiles="$(git diff "$GITHUB_SHA" origin/"$GITHUB_BASE_REF" --name-only)"
 
-# Changes to /modules/lib can affect modules consuming those functions.
+# Changes to these files can affect modules.
 # Run all checks out of precaution.
-if echo "$allChangedFiles" | grep modules/lib/; then
-  echo "Changes to 'modules/lib/' detected, running all tests..."
-  echo "run-all-checks=true" >>"$GITHUB_OUTPUT"
-  exit 0
-fi
+criticalPaths=("modules/lib/" "flake.nix" "flake.lock" ".github/workflows/create-test-plan.sh" ".github/workflows/integration-tests.yml")
+for criticalPath in "${criticalPaths[@]}"; do
+  if echo "$allChangedFiles" | grep "$criticalPath"; then
+    echo "Changes to '$criticalPath' detected, running all tests..."
+    echo "run-all-checks=true" >>"$GITHUB_OUTPUT"
+    exit 0
+  fi
+done
 
 changedFiles=$(
   # Get all changed files in /modules/tests and /modules/collection
