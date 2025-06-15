@@ -7,31 +7,23 @@
   inherit (lib.options) literalExpression mkOption mkEnableOption mkPackageOption;
   inherit (lib.strings) typeOf concatMapAttrsStringSep concatMapStringsSep splitString escapeShellArg;
   inherit (lib.modules) mkIf;
-  inherit (lib.types) either str path oneOf attrsOf nullOr;
+  inherit (lib.types) lines path oneOf attrsOf;
   inherit (lib.attrsets) mapAttrs' nameValuePair isDerivation filterAttrs attrValues;
   inherit (lib.lists) any filter optionals;
   inherit (lib.trivial) pathExists;
+  inherit (pkgs.writers) writeFish;
 
-  cfg = config.rum.programs.fish;
-  env = config.environment.sessionVariables;
-
-  toFish = strOrPath: fileName:
-    if (typeOf strOrPath) == "string"
-    then pkgs.writers.writeFish fileName strOrPath
-    else if isDerivation strOrPath
-    then strOrPath
-    else throw "Input is of invalid type ${typeOf strOrPath}, expected `path` or `string`.";
-
-  toFishFunc = strOrPath: funcName:
-    toFish (
-      if (typeOf strOrPath) == "string"
-      then ''
+  toFishFunc = body: funcName:
+    if (typeOf body) == "string"
+    then
+      writeFish "${funcName}.fish" ''
         function ${funcName};
-        ${concatMapStringsSep "\n" (line: "\t${line}") (splitString "\n" strOrPath)}
+        ${concatMapStringsSep "\n" (line: "\t${line}") (splitString "\n" body)}
         end
       ''
-      else strOrPath
-    ) "${funcName}.fish";
+    else if isDerivation body
+    then body
+    else throw "Input is of invalid type ${typeOf body}, expected `path` or `string`.";
 
   isVendored = plugin:
     any (p: pathExists "${plugin}/share/fish/${p}") [
@@ -39,6 +31,9 @@
       "vendor_completions.d"
       "vendor_functions.d"
     ];
+
+  cfg = config.rum.programs.fish;
+  env = config.environment.sessionVariables;
 in {
   options.rum.programs.fish = {
     enable = mkEnableOption "fish";
@@ -46,25 +41,16 @@ in {
     package = mkPackageOption pkgs "fish" {nullable = true;};
 
     config = mkOption {
-      default = null;
-      type = nullOr (either str path);
+      default = "";
+      type = lines;
       description = ''
         The main configuration for fish, written verbatim to `.config/fish/config.fish`.
       '';
     };
 
-    prompt = mkOption {
-      default = null;
-      type = nullOr (either str path);
-      description = ''
-        Your fish prompt, written to `.config/fish/functions/fish_prompt.fish`.
-        It follows the behaviour of `rum.programs.fish.functions`.
-      '';
-    };
-
     functions = mkOption {
       default = {};
-      type = attrsOf (oneOf [str path]);
+      type = attrsOf (oneOf [lines path]);
       description = ''
         A fish function which is being written to `.config/fish/functions/<name>.fish`.
 
@@ -96,7 +82,7 @@ in {
 
     earlyConfigFiles = mkOption {
       default = {};
-      type = attrsOf (oneOf [str path]);
+      type = attrsOf lines;
       description = ''
         Extra configuration files, they will all be written verbatim
         to `.config/fish/conf.d/<name>.fish`.
@@ -112,7 +98,7 @@ in {
 
     abbrs = mkOption {
       default = {};
-      type = attrsOf str;
+      type = attrsOf lines;
       description = ''
         A set of fish abbreviations, they will be set up with the `abbr --add` fish builtin.
       '';
@@ -120,7 +106,7 @@ in {
 
     aliases = mkOption {
       default = {};
-      type = attrsOf str;
+      type = attrsOf lines;
       description = ''
         A set of fish aliases, they will be set up with the `alias` fish builtin.
       '';
@@ -170,41 +156,38 @@ in {
       (optionals (cfg.package != null) [cfg.package])
       ++ (filter (pl: isVendored pl) (attrValues cfg.plugins));
 
-    rum.programs.fish = {
-      functions.fish_prompt = mkIf (cfg.prompt != null) cfg.prompt;
-      earlyConfigFiles = mapAttrs' (name: source:
-        nameValuePair "rum-plugin-${name}"
-        #  fish
-        ''
-          # Plugin ${name} -- ${source}
-          set -l src "${source}"
+    rum.programs.fish.earlyConfigFiles = mapAttrs' (name: source:
+      nameValuePair "rum-plugin-${name}"
+      #  fish
+      ''
+        # Plugin ${name} -- ${source}
+        set -l src "${source}"
 
-          if test -d "$src/functions"
-              set fish_function_path $fish_function_path[1] "$src/functions" $fish_function_path[2..]
-          end
+        if test -d "$src/functions"
+            set fish_function_path $fish_function_path[1] "$src/functions" $fish_function_path[2..]
+        end
 
-          if test -d "$src/completions"
-              set fish_complete_path $fish_complete_path[1] "$src/completions" $fish_complete_path[2..]
-          end
+        if test -d "$src/completions"
+            set fish_complete_path $fish_complete_path[1] "$src/completions" $fish_complete_path[2..]
+        end
 
-          for f in "$src/conf.d/"*
-              source "$f"
-          end
+        for f in "$src/conf.d/"*
+            source "$f"
+        end
 
-          if test -f "$src/key_bindings.fish"
-              source "$src/key_bindings.fish"
-          end
+        if test -f "$src/key_bindings.fish"
+            source "$src/key_bindings.fish"
+        end
 
-          if test -f "$src/init.fish"
-              source "$src/init.fish"
-          end
-        '')
-      (filterAttrs (n: v: !(isVendored v)) cfg.plugins);
-    };
+        if test -f "$src/init.fish"
+            source "$src/init.fish"
+        end
+      '')
+    (filterAttrs (n: v: !(isVendored v)) cfg.plugins);
 
     files =
       {
-        ".config/fish/config.fish".source = mkIf (cfg.config != null) (toFish cfg.config "config.fish");
+        ".config/fish/config.fish".source = mkIf (cfg.config != "") (writeFish "config.fish" cfg.config);
         ".config/fish/conf.d/rum-environment-variables.fish".text = mkIf (env != {}) ''
           ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
         '';
@@ -215,7 +198,7 @@ in {
           ${concatMapAttrsStringSep "\n" (name: value: "alias -- ${name} ${escapeShellArg (toString value)}") cfg.aliases}
         '';
       }
-      // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
-      // (mapAttrs' (name: val: nameValuePair ".config/fish/conf.d/${name}.fish" {source = toFish val "${name}.fish";}) cfg.earlyConfigFiles);
+      // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val "${name}.fish";}) cfg.functions)
+      // (mapAttrs' (name: val: nameValuePair ".config/fish/conf.d/${name}.fish" {source = writeFish "${name}.fish" val;}) cfg.earlyConfigFiles);
   };
 }
