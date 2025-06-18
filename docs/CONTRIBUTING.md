@@ -373,6 +373,9 @@ operates on an attrset, just like in nixpkgs.
 
 WIP
 
+When modifying the domain used to publish to via github pages, keep in mind that
+this file is copied from `docs/CNAME`
+
 ### Tests
 
 Please refer to the [testing documentation](./TESTING.md) for more information
