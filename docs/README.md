@@ -4,6 +4,7 @@
 [our docs]: hjr.snugroup.org/CONTRIBUTING.html
 [license]: LICENSE
 [programs/fish]: modules/collection/programs/fish.nix
+[programs/nushell]: modules/collection/programs/nushell.nix
 [programs/zsh]: modules/collection/programs/zsh.nix
 [programs/nushell]: modules/collection/programs/nushell.nix
 [programs/hyprland]: modules/collection/programs/hyprland.nix
@@ -137,6 +138,7 @@ module), but cannot load them without the use of another module. Currently,
 modules that load environmental variables include:
 
 - [programs/fish]
+- [programs/nushell]
 - [programs/zsh]
 - [programs/hyprland]
 

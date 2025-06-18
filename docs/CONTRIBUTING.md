@@ -8,6 +8,7 @@
 [Core Principles]: #core-principles
 [testing documentation]: /TESTING.md
 [reviewed]: #reviewing-a-pr
+[REVIEWING.md]: ./REVIEWING.md
 
 Hjem Rum (or HJR) is always in need of contributions as a module collection. As
 programs are developed, modules will need to be added, changed, removed, etc.,
