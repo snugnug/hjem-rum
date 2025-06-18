@@ -116,6 +116,8 @@
         --options-depth 2 \
         --generate-search true \
         --output-dir "$out"
+
+      cp ${./CNAME} $out
     '';
 in
   hjemRumDocs
