@@ -6,7 +6,7 @@
 [documentation on forking repositories]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
 [documentation on reviewing PRs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
 [Core Principles]: #core-principles
-[testing documentation]: /TESTING.md
+[testing documentation]: ./TESTING.md
 [reviewed]: #reviewing-a-pr
 [REVIEWING.md]: ./REVIEWING.md
 

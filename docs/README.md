@@ -1,8 +1,8 @@
 # Hjem Rum
 
 [Hjem]: https://github.com/feel-co/hjem
-[our docs]: hjr.snugroup.org/CONTRIBUTING.html
-[license]: LICENSE
+[our docs]: ./CONTRIBUTING.md
+[license]: ../LICENSE
 [programs/fish]: modules/collection/programs/fish.nix
 [programs/nushell]: modules/collection/programs/nushell.nix
 [programs/zsh]: modules/collection/programs/zsh.nix
@@ -11,7 +11,7 @@
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
-[documentation]: hjr.snugroup.org
+[documentation]: rum.snugnug.org
 [contributors]: https://github.com/snugnug/hjem-rum/graphs/contributors
 [Home Manager]: https://github.com/nix-community/home-manager
 
