@@ -1,0 +1,28 @@
+name: "Docs Check"
+permissions: read-all
+
+on:
+  pull_request:
+    branches:
+      - main
+    path:
+      - modules/**
+      - docs/**
+      - flake.nix
+      - flake.lock
+      - .github/workflows/docs-check.yml
+
+jobs:
+  docs-check:
+    name: "Test build docs"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build documentation packages
+        run: nix build .#docs -Lv
