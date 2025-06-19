@@ -1,1 +1,0 @@
-docs/manual/README.md
