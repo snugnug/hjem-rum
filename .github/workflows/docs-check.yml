@@ -27,3 +27,17 @@ jobs:
 
       - name: Build documentation packages
         run: nix build .#docs -Lv
+
+  lychee-check:
+    name: "Link checker"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build documentation packages
+        run: nix build .#docsLinkCheck -Lv
