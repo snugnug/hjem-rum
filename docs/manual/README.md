@@ -7,7 +7,7 @@
 [programs/nushell]: modules/collection/programs/nushell.nix
 [programs/zsh]: modules/collection/programs/zsh.nix
 [programs/nushell]: modules/collection/programs/nushell.nix
-[programs/hyprland]: modules/collection/programs/hyprland.nix
+[desktops/hyprland]: modules/collection/desktops/hyprland.nix
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
@@ -140,7 +140,7 @@ modules that load environmental variables include:
 - [programs/fish]
 - [programs/nushell]
 - [programs/zsh]
-- [programs/hyprland]
+- [desktops/hyprland]
 
 If you are either using something like our GTK module, or are manually adding
 variables to `environment.sessionVariables`, but are neither loading those
