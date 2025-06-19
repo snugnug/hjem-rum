@@ -120,7 +120,7 @@
         --input-dir ${./.} \
         --output-dir "$out"
 
-      echo rum.snugnug.org > "$out/CNAME"
+      cat ${./CNAME} > "$out/CNAME"
     '';
 in
   hjemRumDocs
