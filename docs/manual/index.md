@@ -1,13 +1,8 @@
 # Hjem Rum
 
 [Hjem]: https://github.com/feel-co/hjem
-[our docs]: ./CONTRIBUTING.md
-[license]: ../LICENSE
-[programs/fish]: modules/collection/programs/fish.nix
-[programs/nushell]: modules/collection/programs/nushell.nix
-[programs/zsh]: modules/collection/programs/zsh.nix
-[programs/nushell]: modules/collection/programs/nushell.nix
-[desktops/hyprland]: modules/collection/desktops/hyprland.nix
+[our docs]: ./CONTRIBUTING.html
+[license]: https://github.com/snugnug/hjem-rum/blob/main/LICENSE
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
@@ -128,26 +123,26 @@ hjem.users.<username>.rum.programs.alacritty = {
 
 ## Environmental Variables
 
-Hjem provides attribute set "environment.sessionVariables" that allows the user
-to set environmental variables to be sourced. However, Hjem does not have the
-capability to actually source them. This can be done manually, which is what
-Hjem Rum tries to do.
+Hjem provides attribute set {option}`environment.sessionVariables` that allows
+the user to set environmental variables to be sourced. However, Hjem does not
+have the capability to actually source them. This can be done manually, which is
+what Hjem Rum tries to do.
 
 Currently, some of our modules may add environmental variables (such as our GTK
 module), but cannot load them without the use of another module. Currently,
 modules that load environmental variables include:
 
-- [programs/fish]
-- [programs/nushell]
-- [programs/zsh]
-- [desktops/hyprland]
+- {option}`rum.programs.fish`}
+- {option}`rum.programs.nushell`
+- {option}`rum.programs.zsh`
+- {option}`rum.desktops.hyprland`
 
 If you are either using something like our GTK module, or are manually adding
-variables to `environment.sessionVariables`, but are neither loading those
-variables manually, or using one of the above modules, those variables will not
-be loaded, and may cause unintended problems. For example, GTK applications may
-not respect your theme, as some rely on the environmental variable to actually
-use the theme you declare.
+variables to {option}`environment.sessionVariables`, but are neither loading
+those variables manually, or using one of the above modules, those variables
+will not be loaded, and may cause unintended problems. For example, GTK
+applications may not respect your theme, as some rely on the environmental
+variable to actually use the theme you declare.
 
 Please see [#17] for status on providing support for shells and compositors. If
 your shell or compositor is on listed there, please leave a comment and it will

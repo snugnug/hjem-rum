@@ -1,6 +1,6 @@
 # Testing setup for modules
 
-[nushell test module]: ../modules/tests/programs/nushell.nix
+[nushell test module]: https://github.com/snugnug/hjem-rum/blob/main/modules/tests/programs/nushell.nix
 [nix.dev provides a useful guide]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
 [NixOS Manual]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
 [internal NixOS lib]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
@@ -13,11 +13,12 @@ like any other test that uses the NixOS Test Driver.
 
 ## Creating tests
 
-Every file is automatically imported with `lib.filesystem.listFilesRecursive`,
-given that there is a check output that imports the directory (more on that
-later), so your only worry should be creating the tests in their relevant
-directories. If you're writing a test for btop, for instance, you should create
-a module as `/modules/tests/programs/btop.nix`.
+Every file is automatically imported with
+{file}`lib.filesystem.listFilesRecursive`, given that there is a check output
+that imports the directory (more on that later), so your only worry should be
+creating the tests in their relevant directories. If you're writing a test for
+btop, for instance, you should create a module as
+{file}`modules/tests/programs/btop.nix`.
 
 If you're certain your test category doesn't get covered by any of the existing
 directories, you can create a new one together with a check that imports files
@@ -36,9 +37,9 @@ respected: `<category>-<module name>`.
 
 Below is a list of files, and their corresponding name.
 
-- `modules/collection/programs/foot.nix` -> `programs-foot`
-- `modules/tests/programs/fish.nix` -> `programs-fish`
-- `modules/tests/programs/ncmpcpp/ncmpcpp.nix` -> `programs-ncmpcpp`
+- {file}`modules/collection/programs/foot.nix` -> `programs-foot`
+- {file}`modules/tests/programs/fish.nix` -> `programs-fish`
+- {file}`modules/tests/programs/ncmpcpp/ncmpcpp.nix` -> `programs-ncmpcpp`
 
 You may declare multiple test files for a module by having all of those names
 start with the aformentioned pattern, such as `programs-foot-test-plugins`.
@@ -75,7 +76,7 @@ You can also debug your tests through a Python REPL by running:
 nix run .#checks.<arch>.vm-test-run-<category>-<module name>[-suffix].driver -- --interactive
 ```
 
-[^1]: Although both guides refer to `lib.tests.runNixOSTest` instead of
+[^1]: Although both guides refer to {file}`lib.tests.runNixOSTest` instead of
     `runTest`, the former is just a wrapper around the latter, abstracting
     certain concepts, so the code ran by them should be interchangeable between
     one another.

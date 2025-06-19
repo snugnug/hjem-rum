@@ -6,9 +6,9 @@
 [documentation on forking repositories]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
 [documentation on reviewing PRs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
 [Core Principles]: #core-principles
-[testing documentation]: ./TESTING.md
+[testing documentation]: ./TESTING.html
 [reviewed]: #reviewing-a-pr
-[REVIEWING.md]: ./REVIEWING.md
+[REVIEWING.md]: ./REVIEWING.html
 
 Hjem Rum (or HJR) is always in need of contributions as a module collection. As
 programs are developed, modules will need to be added, changed, removed, etc.,
@@ -122,8 +122,9 @@ in {
 
 Notice that each function has its location aliased with an inherit to its target
 location. Ideally, this location should be where one could find it in the source
-code. For example, rather than using `lib.mkIf`, we use `lib.modules.mkIf`,
-because mkIf is declared at `lib/modules.nix` within the Nixpkgs repo.
+code. For example, rather than using {file}`lib.mkIf`, we use
+{file}`lib.modules.mkIf`, because mkIf is declared at `lib/modules.nix` within
+the Nixpkgs repo.
 
 Also notice that in this case, `pkgs.formats.toml {}` includes both `generate`
 and `type`, so the alias name is just `toml`.
@@ -194,10 +195,10 @@ custom generator, a `type` should be created in `lib/types/` (for example,
 
 As a rule of thumb, submodules should not be employed. Instead, there should
 only be one option per file. For some files, such as spotify-player's
-`keymap.toml`, you may be tempted to create multiple options for `actions` and
-`keymaps`, as Home Manager does. Please avoid this. In this case, we can have a
-simple `keymap` option that the user can then include a list of keymaps and/or a
-list of actions that get propagated accordingly:
+{file}`keymap.toml`, you may be tempted to create multiple options for `actions`
+and `keymaps`, as Home Manager does. Please avoid this. In this case, we can
+have a simple `keymap` option that the user can then include a list of keymaps
+and/or a list of actions that get propagated accordingly:
 
 ```nix
   keymap = mkOption {
@@ -381,12 +382,12 @@ converted to Hyprlang.
 
 When it comes to directory structure, you should be able to infer how we
 organize our lib by both our folder structure itself as well as the names of
-functions. For example, `rumLib.types.gtkType` is found in
-`lib/types/gtkType.nix`. In cases where a file is a single function, always be
-sure to make sure the name matches the file.
+functions. For example, {option}`rumLib.types.gtkType` is found in
+{file}`lib/types/gtkType.nix`. In cases where a file is a single function,
+always be sure to make sure the name matches the file.
 
 If a program uses multiple functions of the same kind (e.g. two generators), you
-can put them in one file, like is done in `lib/generators/gtk.nix`.
+can put them in one file, like is done in {file}`lib/generators/gtk.nix`.
 
 Additionally, please follow how lib is structured in Nixpkgs. For example, the
 custom function `attrsNamesHasPrefix` is under `attrsets` to signify that it
