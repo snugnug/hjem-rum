@@ -1,6 +1,6 @@
 # Testing setup for modules
 
-[ncmpcpp test module]: ../modules/tests/programs/ncmpcpp/ncmpcpp.nix
+[nushell test module]: ../modules/tests/programs/nushell.nix
 [nix.dev provides a useful guide]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
 [NixOS Manual]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
 [internal NixOS lib]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
@@ -61,8 +61,8 @@ Our test system has some pre-defined things aiming at avoid boilerplate code:
 `self`, `lib` and `pkgs` are also passed to every test module, so you're free to
 use them as you will.
 
-The [ncmpcpp test module] was written to serve as an example for future tests,
-and provides comments for each step of the `testScript`. Care should be taken to
+The [nushell test module] can serve as a strong example of a test module, and
+provides comments for each step of the `testScript`. Care should be taken to
 wait for the proper systemd targets to be reached, change users to run commands,
 and avoid other possible footguns. The approach this module uses to test its
 configuration is to have a file for each configuration alongside it, which then
