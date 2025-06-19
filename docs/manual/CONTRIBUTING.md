@@ -231,6 +231,27 @@ list of actions that get propagated accordingly:
 Also note that the option description includes a link to upstream info on
 settings options.
 
+If an option is dependent on `config`, (e.g.
+`default = config.myOption.enable;`) you must _also_ set `defaultText` alongside
+`default`. Example:
+
+```nix
+integrations = {
+    # We basically override the `default` and `defaultText` attrs in the mkEnableOption function
+    fish.enable = mkEnableOption // {
+        default = config.programs.fish.enable;
+        defaultText = "config.programs.fish.enable";
+    };
+};
+```
+
+It is essentially just a string that shows the user what the option is set to by
+default. This can also be used in `mkOption`, but it is more common to use it in
+`mkEnableOption`.
+
+If you do not set this, the docs builder will break due to not knowing how to
+resolve the reference to `config`.
+
 ### Conditionals in Modules
 
 Always use a `mkIf` before the `config` section. Example:
