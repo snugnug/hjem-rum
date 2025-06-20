@@ -7,14 +7,13 @@
   inherit (lib.attrsets) optionalAttrs;
   inherit (lib.meta) getExe;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
-  inherit (lib.modules) mkIf mkRemovedOptionModule;
+  inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.types) lines listOf str;
 
   gitIni = pkgs.formats.gitIni {};
   cfg = config.rum.programs.git;
 in {
-  imports = [(mkRemovedOptionModule ["rum" "programs" "git" "destination"] "The default destination is now under `~/.config/git`")];
   options.rum.programs.git = {
     enable = mkEnableOption "git";
 
