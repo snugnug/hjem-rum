@@ -6,7 +6,7 @@
 }: let
   inherit (lib.options) literalExpression mkOption mkEnableOption;
   inherit (lib.types) listOf package lines str;
-  inherit (lib.modules) mkIf mkRenamedOptionModule;
+  inherit (lib.modules) mkIf;
   inherit (lib.lists) optionals;
   inherit (lib.attrsets) optionalAttrs;
   inherit (rumLib.generators.gtk) toGtk2Text toGtkINI;
@@ -16,7 +16,6 @@
 
   cfg = config.rum.misc.gtk;
 in {
-  imports = [(mkRenamedOptionModule ["rum" "gtk"] ["rum" "misc" "gtk"])];
   options.rum.misc.gtk = {
     enable = mkEnableOption "GTK configuration";
     packages = mkOption {

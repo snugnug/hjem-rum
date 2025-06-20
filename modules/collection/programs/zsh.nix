@@ -6,7 +6,7 @@
 }: let
   inherit (builtins) any attrValues filter;
   inherit (lib.attrsets) mapAttrsToList;
-  inherit (lib.modules) mkIf mkRenamedOptionModule;
+  inherit (lib.modules) mkIf;
   inherit (lib.options) literalExpression mkEnableOption mkOption mkPackageOption;
   inherit (lib.strings) concatStringsSep optionalString;
   inherit (lib.trivial) id;
@@ -40,13 +40,6 @@
 
   cfg = config.rum.programs.zsh;
 in {
-  imports = [
-    (
-      mkRenamedOptionModule
-      ["rum" "programs" "zsh" "integrations" "starship" "enable"]
-      ["rum" "programs" "starship" "integrations" "zsh" "enable"]
-    )
-  ];
   options.rum.programs.zsh = {
     enable = mkEnableOption "zsh";
     package = mkPackageOption pkgs "zsh" {nullable = true;};
