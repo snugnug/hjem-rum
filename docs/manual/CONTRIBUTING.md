@@ -408,6 +408,28 @@ specific asks of you depending on the case. Writing can be very personal and
 very fluid, so there are less rigid expectations here, but that does not mean
 standards are lower.
 
+If you are including an option or function labeled like:
+
+```md
+Make sure to use `lib.options.mkEnableOption`, like is done in
+`rum.programs.fish.enable`
+```
+
+Then you will have to include {file} before it, or {option} if it is an option:[^1]
+
+```md
+Make sure to use {file}`lib.options.mkEnableOption`, like is done in
+{option}`rum.programs.fish.enable`.
+```
+
+[^1]: It is admittedly a bit confusing why we could use {file} for `lib`, but
+    the best way to think of it is that {file}`lib.modules.mkIf` literally
+    corresponds to file {file}`lib/modules.nix` in Nixpkgs, which contains the
+    `mkIf` function.
+
+If you do not do it like this, the link check on the docs will fail, since our
+docs generator will attempt to make hyperlinks out of those function names.
+
 ### Tests
 
 Please refer to the [testing documentation] for more information on how tests
