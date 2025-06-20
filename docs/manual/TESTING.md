@@ -18,7 +18,7 @@ Every file is automatically imported with
 that imports the directory (more on that later), so your only worry should be
 creating the tests in their relevant directories. If you're writing a test for
 btop, for instance, you should create a module as
-{file}`modules/tests/programs/btop.nix`.
+`modules/tests/programs/btop.nix`.
 
 If you're certain your test category doesn't get covered by any of the existing
 directories, you can create a new one together with a check that imports files
@@ -37,9 +37,9 @@ respected: `<category>-<module name>`.
 
 Below is a list of files, and their corresponding name.
 
-- {file}`modules/collection/programs/foot.nix` -> `programs-foot`
-- {file}`modules/tests/programs/fish.nix` -> `programs-fish`
-- {file}`modules/tests/programs/ncmpcpp/ncmpcpp.nix` -> `programs-ncmpcpp`
+- `modules/collection/programs/foot.nix` -> `programs-foot`
+- `modules/tests/programs/fish.nix` -> `programs-fish`
+- `modules/tests/programs/ncmpcpp/ncmpcpp.nix` -> `programs-ncmpcpp`
 
 You may declare multiple test files for a module by having all of those names
 start with the aformentioned pattern, such as `programs-foot-test-plugins`.

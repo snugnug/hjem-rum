@@ -164,7 +164,8 @@ options.rum.programs.ncmpcpp = {
         You can override the package to customize certain settings that are baked
         into the package.
     '';
-    example = '' # Note that mkPackageOption's example automatically uses literalExpression
+    # Note that mkPackageOption's example automatically uses literalExpression
+    example = ''
         pkgs.ncmpcpp.override {
             # useful overrides in the package
             outputsSupport = true; # outputs screen
@@ -239,7 +240,7 @@ If an option is dependent on `config`, (e.g.
 ```nix
 integrations = {
     # We basically override the `default` and `defaultText` attrs in the mkEnableOption function
-    fish.enable = mkEnableOption // {
+    fish.enable = mkEnableOption "starship integration with fish" // {
         default = config.programs.fish.enable;
         defaultText = "config.programs.fish.enable";
     };
@@ -297,7 +298,7 @@ files = (
 );
 ```
 
-This essentially takes the attrset of `files` and _conditionally_ adds
+This essentially takes the attribute set of `files` and _conditionally_ adds
 attributes defining more files to be written to depending on _if_ the
 corresponding option has been set. This is optimal because the first three files
 written to share an option due to how GTK configuration works.
@@ -357,8 +358,8 @@ in {
 };
 ```
 
-An additional attrset of boolean aliases is set within a `let ... in` set to
-highlight the different checks done and to add quick ways to reference each
+An additional attribute set of boolean aliases is set within a `let ... in` set
+to highlight the different checks done and to add quick ways to reference each
 check without excess and redundant code.
 
 First, the file is only written if any of the options to write to the file are
@@ -383,15 +384,15 @@ converted to Hyprlang.
 When it comes to directory structure, you should be able to infer how we
 organize our lib by both our folder structure itself as well as the names of
 functions. For example, {option}`rumLib.types.gtkType` is found in
-{file}`lib/types/gtkType.nix`. In cases where a file is a single function,
-always be sure to make sure the name matches the file.
+`lib/types/gtkType.nix`. In cases where a file is a single function, always be
+sure to make sure the name matches the file.
 
 If a program uses multiple functions of the same kind (e.g. two generators), you
-can put them in one file, like is done in {file}`lib/generators/gtk.nix`.
+can put them in one file, like is done in `lib/generators/gtk.nix`.
 
 Additionally, please follow how lib is structured in Nixpkgs. For example, the
 custom function `attrsNamesHasPrefix` is under `attrsets` to signify that it
-operates on an attrset, just like in Nixpkgs.
+operates on an attribute set, just like in Nixpkgs.
 
 ### Docs
 
