@@ -1,9 +1,9 @@
-# Review tips
+# Review Tips {#review-tips}
 
 [Code Review Antipatterns]: https://www.chiark.greenend.org.uk/~sgtatham/quasiblog/code-review-antipatterns/
 [nixpkgs]: https://github.com/NixOS/nixpkgs
 [SNUG Discord server]: https://discord.gg/6rMPtKDKzt
-[multi-trip reviews]: #2-single-trip-reviews
+[multi-trip reviews]: #ch-2-single-trip-reviews
 
 An often overlooked part of contributing to an open source project is proper
 review practices. It's very easy to alienate contributors with bad code review.
@@ -18,7 +18,7 @@ tips serve as a reference, not a rule of law.
 <sub>Much of this guide is inspired by [Code Review Antipatterns] by Simon
 Tatham. If you're interested, give it a look! </sub>
 
-## 1. Be nice
+## 1. Be nice {#ch-1-be-nice}
 
 Starting off with an easy one! However, there's actually something meaningful to
 be said here. As a reviewer, it's easy to get frustrated with constantly giving
@@ -34,7 +34,7 @@ This might sound silly at first. But when it feels like a reviewer is _on your
 side_, it makes a huge difference. If this tone feels a little foreign, pretend
 you're writing an email, and that should give you a good barometer.
 
-## 2. Single-trip reviews
+## 2. Single-trip reviews {#ch-2-single-trip-reviews}
 
 As a contributor, it can be frustrating to finish accommodating all the review
 comments, only to immediately be given a bunch of other suggestions, which
@@ -59,7 +59,7 @@ something will require a lot of changes to be mergeable, be up-front about
 it―even if you feel a little guilty. Better to rip the bandaid off now, than to
 leave it on for a few review sessions.
 
-## 3. United front
+## 3. United front {#ch-3-united-front}
 
 Anyone who's contributed to [nixpkgs] knows the cycle―you've accommodated one
 reviewer's comments, only for a different reviewer to come in with MORE things
@@ -70,7 +70,7 @@ When possible, try to coordinate review feedback. The [SNUG Discord server] is a
 great place for working together to ensure feedback is clear and consistent
 between reviewers.
 
-## 4. Bikeshedding
+## 4. Bikeshedding {#ch-4-bikeshedding}
 
 Have you ever made a PR, only for every single line to be criticized for not
 being done exactly how the reviewer wants? It feels like your code is being held
@@ -108,7 +108,7 @@ Maybe, if it's a stylistic change, say:
 
 > Stylistic nitpick, but could you maybe change this to ____? Not blocking.
 
-# Extending this document
+# Extending this document {#extending-this-document}
 
 If you find yourself experiencing something as a contributor that makes you less
 motivated to contribute―whether it's for Hjem Rum or some other project―feel

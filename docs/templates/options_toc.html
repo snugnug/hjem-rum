@@ -1,0 +1,54 @@
+<ul class="toc-list">
+  {# Single options first #} {% for option in single_options %}
+  <li>
+    <a
+      href='#option-{{ option.name | replace(from=".", to="-") }}'
+      title="{{ option.name }}"
+    >
+      {{ option.name }} {% if option.internal %}<span class="toc-internal"
+      >internal</span>{% endif %} {% if option.read_only %}<span
+        class="toc-readonly"
+      >read-only</span>{% endif %}
+    </a>
+  </li>
+  {% endfor %} {# Then dropdown categories #} {% for category in
+  dropdown_categories %}
+  <li>
+    <details class="toc-category">
+      <summary title="{{ category.name }}">
+        <span>{{ category.name }}</span>
+        <span class="toc-count">{{ category.count }}</span>
+      </summary>
+      <ul>
+        {% if category.parent_option %}
+        <li>
+          <a
+            href='#option-{{ category.parent_option.name | replace(from=".", to="-") }}'
+            class="parent-option"
+            title="{{ category.parent_option.name }}"
+          >
+            {{ category.parent_option.name }} {% if
+            category.parent_option.internal %}<span class="toc-internal"
+            >internal</span>{% endif %} {% if category.parent_option.read_only
+            %}<span class="toc-readonly">read-only</span>{% endif %}
+          </a>
+        </li>
+        {% endif %} {% for child in category.children %}
+        <li>
+          <a
+            href='#option-{{ child.name | replace(from=".", to="-") }}'
+            title="{{ child.name }}"
+          >
+            {{ child.display_name }} {% if child.internal %}<span
+              class="toc-internal"
+            >internal</span>{% endif %} {% if child.read_only %}<span
+              class="toc-readonly"
+            >read-only</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </details>
+  </li>
+  {% endfor %}
+</ul>

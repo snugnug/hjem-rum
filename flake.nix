@@ -52,10 +52,17 @@
       };
       default = self.hjemModules.hjem-rum;
     };
-    packages = forAllSystems (pkgs: {
+    packages = forAllSystems (pkgs: let
       docs = pkgs.callPackage ./docs/package.nix {
         inherit (ndg.packages.${pkgs.system}) ndg;
         inherit rumLib;
+      };
+    in {
+      inherit docs;
+      docsLinkCheck = pkgs.testers.lycheeLinkCheck {
+        site = docs;
+        remap."rum.snugnug.org" = docs;
+        extraConfig.exclude = [];
       };
     });
     lib = rumLib;
