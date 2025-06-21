@@ -1,9 +1,9 @@
-# Installing Hjem Rum
+# Installing Hjem Rum {#installing-hjem-rum}
 
 Welcome to Hjem Rum. Installing and configuring Hjem Rum is as easy as any other
 module.
 
-## Importing the Hjem Rum Flake
+## Importing the Hjem Rum Flake {#ch-importing-the-hjem-rum-flake}
 
 To begin using Hjem Rum, simply add and import Hjem and Hjem Rum into your
 flake:
@@ -44,7 +44,7 @@ outputs = {
 }
 ```
 
-## Important Hjem Settings
+## Important Hjem Settings {#ch-important-hjem-settings}
 
 Be sure to first set the necessary settings for Hjem and import Hjem Rum's Hjem
 module from the input:
@@ -67,7 +67,7 @@ hjem = {
 };
 ```
 
-## Configuring Hjem Rum Modules
+## Configuring Hjem Rum Modules {#ch-configuring-the-hjem-rum-modules}
 
 You can then configure any of the options defined in this flake in any nix
 module:

@@ -116,7 +116,6 @@
         --manpage-urls ${./manpage-urls.json} \
         --options-depth 3 \
         --generate-search true \
-        --template-dir ${./templates} \
         --input-dir ${./manual} \
         --output-dir "$out"
 

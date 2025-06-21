@@ -1,4 +1,4 @@
-# Quirks, Tips, & Tricks
+# Quirks, Tips, & Tricks {#quirks-tips-tricks}
 
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
 
@@ -10,7 +10,7 @@ serving only as a module collection on top of Hjem.
 To help alleviate this, here are some of those quirks that you may find, as well
 as some tips to help you on your journey with Hjem Rum.
 
-## Environmental Variables
+## Environmental Variables {#ch-environmental-variables}
 
 Hjem provides the option {option}`environment.sessionVariables` allowing the
 user to set environmental variables to be sourced. However, Hjem does not have

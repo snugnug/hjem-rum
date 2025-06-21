@@ -1,4 +1,4 @@
-# Testing setup for modules
+# Testing setup for modules {#testing-setup-for-module}
 
 [nushell test module]: https://github.com/snugnug/hjem-rum/blob/main/modules/tests/programs/nushell.nix
 [nix.dev provides a useful guide]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
@@ -11,7 +11,7 @@ from other testing frameworks and stick with `runTest`, from the
 abstractions in regards to writing the tests, so they should be written just
 like any other test that uses the NixOS Test Driver.
 
-## Creating Tests
+## Creating Tests {#ch-creating-tests}
 
 Every file is automatically imported with
 {file}`lib.filesystem.listFilesRecursive`, given that there is a check output
@@ -29,7 +29,7 @@ checks = hjem-rum-services = import ./modules/tests (mkCheckArgs ./modules/tests
   # Just // (import ./modules/tests and pass mkCheckArgs with your brand-new directory to it.
 ```
 
-### Naming
+### Naming {#sec-naming}
 
 To reduce CI run time, we only run checks for which the module or test file has
 changed. For this association to work, the following naming scheme has to be
@@ -47,7 +47,7 @@ start with the aformentioned pattern, such as `programs-foot-test-plugins`.
 > [!IMPORTANT]
 > If you do not follow this rule, your tests will not be run during CI.
 
-## Writing Tests
+## Writing Tests {#ch-writing-tests}
 
 Tests for Hjem Rum are written just like any other test, so it might be worth to
 take a read at how NixOS tests work. [nix.dev provides a useful guide], as does

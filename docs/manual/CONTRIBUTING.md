@@ -1,13 +1,13 @@
-# Contributing
+# Contributing {#contributing}
 
 [commitizen]: https://github.com/commitizen-tools/commitizen
 [article from GeeksforGeeks]: https://www.geeksforgeeks.org/how-to-create-a-new-branch-in-git/
 [creating a PR]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 [documentation on forking repositories]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
 [documentation on reviewing PRs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
-[Core Principles]: #core-principles
+[Core Principles]: #ch-core-principles
 [testing documentation]: ./TESTING.html
-[reviewed]: #reviewing-a-pr
+[reviewed]: #ch-reviewing-a-pr
 [REVIEWING.md]: ./REVIEWING.html
 
 Hjem Rum (or HJR) is always in need of contributions as a module collection. As
@@ -21,7 +21,7 @@ If you are familiar with contributing to open source software, you can safely
 skip ahead to [Core Principles]. Otherwise, read the following section to learn
 how to fork a repo and open a PR.
 
-## Getting Started
+## Getting Started {#ch-getting-started}
 
 To begin contributing to HJR, you will first need to create a fork off of the
 main branch in order to make changes. For info on how to do this, we recommend
@@ -33,7 +33,7 @@ from your fork. To do so, you can read this [article from GeeksforGeeks] that
 will also explain branches for you. Don't worry too much about the technical
 details, the most important thing is to make and switch to a branch from HEAD.
 
-### Commit format
+### Commit Format {#sec-commit-format}
 
 > [!TIP]
 > Our dev shell allows for interactive commits, through the means of
@@ -77,7 +77,7 @@ After you have setup a PR, it will be [reviewed] by maintainers and changes may
 be requested. Make the changes requested and eventually it will likely be
 accepted and merged into main.
 
-## Core Principles
+## Core Principles {#ch-core-principles}
 
 In creating HJR, we had a few principles in mind for development:
 
@@ -88,13 +88,13 @@ In creating HJR, we had a few principles in mind for development:
 Please keep these in mind as you read through our general guidelines for
 contributing.
 
-## Guidelines
+## Guidelines {#ch-guidelines}
 
 These guidelines, are, of course, merely guidelines. There are and will continue
 to be exceptions. However, do your best to stick to them, and keep in mind that
 reviewers will hold you to them as much as possible.
 
-### Aliases
+### Aliases {#sec-aliases}
 
 At the top of any module, there should always be a `let ... in` set. Within
 this, functions should have their location aliased, cfg should be aliased, and
@@ -132,7 +132,7 @@ and `type`, so the alias name is just `toml`.
 Always be sure to include `cfg` that links to the point where options are
 configured by the user.
 
-### Writing Options
+### Writing Options {#sec-writing-options}
 
 Writing new options is the core of any new module. It is also the easiest place
 to blunder. As stated above, a core principle of HJR is to minimize the number
@@ -254,7 +254,7 @@ default. This can also be used in `mkOption`, but it is more common to use it in
 If you do not set this, the docs builder will break due to not knowing how to
 resolve the reference to `config`.
 
-### Conditionals in Modules
+### Conditionals in Modules {#sec-conditionals-in-modules}
 
 Always use a `mkIf` before the `config` section. Example:
 
@@ -366,7 +366,7 @@ First, the file is only written if any of the options to write to the file are
 set. `optionalString` is then used to compile each option's results in an
 optimized and clean way.
 
-### Extending RumLib
+### Extending RumLib {#sec-extending-rumlib}
 
 Rather than having functions scattered throughout the module collection, we
 would rather keep our directories organized and purposeful. Therefore, all
@@ -394,7 +394,7 @@ Additionally, please follow how lib is structured in Nixpkgs. For example, the
 custom function `attrsNamesHasPrefix` is under `attrsets` to signify that it
 operates on an attribute set, just like in Nixpkgs.
 
-### Docs
+### Docs {#sec-docs}
 
 If you would like to contribute to our documentation, we ask a few things of
 you:
@@ -430,12 +430,30 @@ Make sure to use {file}`lib.options.mkEnableOption`, like is done in
 If you do not do it like this, the link check on the docs will fail, since our
 docs generator will attempt to make hyperlinks out of those function names.
 
-### Tests
+Headers should always have an anchor with them to ensure the link checker can
+follow header links at time of build. Follow these examples, and you should find
+it simple:
+
+```md
+# My new document page {#my-new-document-page}
+
+## My 1st chapter heading! {#ch-my-1st-chapter-heading}
+
+### WHAT_DI-887-NI-DO>????? WRONG ? my cool section! {#sec-what-di-887-ni-do-wrong-my-cool-section}
+```
+
+Words should be separated by `-`, special characters should be removed, numbers
+are fine to keep, extra spaces should be removed, everything should be lower
+caps, first headings have no prefix, second headings have `ch` prefix, third
+headings have `sec` prefix, etc. If you're unsure, just give it your best shot
+and a reviewer will make sure it's as it should be.
+
+### Tests {#sec-tests}
 
 Please refer to the [testing documentation] for more information on how tests
 work.
 
-## Reviewing a PR
+## Reviewing a PR {#ch-reviewing-a-pr}
 
 Even if you do not have write-access, you can always leave a review on someone
 else's PR. Again, GitHub has great [documentation on reviewing PRs]. This is
