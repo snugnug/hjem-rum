@@ -11,7 +11,7 @@ from other testing frameworks and stick with `runTest`, from the
 abstractions in regards to writing the tests, so they should be written just
 like any other test that uses the NixOS Test Driver.
 
-## Creating tests
+## Creating Tests
 
 Every file is automatically imported with
 {file}`lib.filesystem.listFilesRecursive`, given that there is a check output
@@ -47,7 +47,7 @@ start with the aformentioned pattern, such as `programs-foot-test-plugins`.
 > [!IMPORTANT]
 > If you do not follow this rule, your tests will not be run during CI.
 
-## Writing tests
+## Writing Tests
 
 Tests for Hjem Rum are written just like any other test, so it might be worth to
 take a read at how NixOS tests work. [nix.dev provides a useful guide], as does
