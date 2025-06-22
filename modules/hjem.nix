@@ -8,7 +8,8 @@
   # Import the collection modules recursively so that all files
   # are imported. This then gets imported into the user's
   # 'hjem.extraModules' to make them available under 'hjem.users.<username>'
-  imports = lib.filesystem.listFilesRecursive ./collection;
+  imports =
+    lib.filesystem.listFilesRecursive ./collection;
 
   _module.args.rumLib = rumLib;
 }
