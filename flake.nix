@@ -66,7 +66,7 @@
       inherit docs;
       docsLinkCheck = pkgs.testers.lycheeLinkCheck {
         site = docs;
-        remap."rum.aurabora.org" = docs;
+        remap."rum.snugnug.org" = docs;
         extraConfig.exclude = [];
       };
     });
