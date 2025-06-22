@@ -108,7 +108,7 @@ Maybe, if it's a stylistic change, say:
 
 > Stylistic nitpick, but could you maybe change this to ____? Not blocking.
 
-# Extending this document {#extending-this-document}
+## Extending this document {#ch-extending-this-document}
 
 If you find yourself experiencing something as a contributor that makes you less
 motivated to contribute―whether it's for Hjem Rum or some other project―feel
