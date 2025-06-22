@@ -2,8 +2,8 @@
 
 [Hjem]: https://github.com/feel-co/hjem
 [discussions]: https://github.com/snugnug/hjem-rum/discussions
-[documentation]: https://rum.aurabora.org
-[our docs]: https://rum.aurabora.org/contributing/introduction.html
+[documentation]: https://rum.snugnug.org
+[our docs]: https://rum.snugnug.org/contributing/introduction.html
 [@NotAShelf]: https://github.com/NotAShelf
 [@eclairevoyant]: https://github.com/eclairevoyant
 [contributors]: https://github.com/snugnug/hjem-rum/graphs/contributors
