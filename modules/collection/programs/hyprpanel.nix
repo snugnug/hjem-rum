@@ -5,7 +5,8 @@
   ...
 }: let
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.meta) getExe;
 
   json = pkgs.formats.json {};
 
@@ -36,11 +37,11 @@ in {
         theme.notification.scaling = 80;  
       };
       description = ''
-        JSON-style configuration for HyprPanel, written to
-        {file}`$HOME/.config/hyprpanel/config.json`.
-
-        Refer to [HyprPanel documentation](https://hyprpanel.com/configuration/settings.html).
-      '';
+        Settings are written as an <format> file to {file}`$HOME/.config/path/to/hyprpanel.<format>`.
+        Refer to [Hyprpanel's documentation] to see all available options.
+        
+        [Hyprpanel's documentation]: https://hyprpanel.com/configuration/panel.html
+       '';
     };
 
     override = mkOption {
@@ -53,7 +54,7 @@ in {
         "theme.bar.buttons.clock.text" = "#cdd6f4";
       };
       description = ''
-        Additional theme values for overriding default themes.
+          Alternative config input (overrides settings if set).
       '';
     };
   };
@@ -63,7 +64,7 @@ in {
 
     # Integration with Hyprland exec-once 
     rum.programs.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [
-      lib.getExe cfg.package
+      getExe cfg.package
     ];
 
     files = {
