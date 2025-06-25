@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <script>
+      // Apply sidebar state immediately to prevent flash
+      (function () {
+        if (localStorage.getItem("sidebar-collapsed") === "true") {
+          document.documentElement.classList.add("sidebar-collapsed");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="assets/style.css" />
+    <script defer src="assets/main.js"></script>
+    {% if generate_search %}
+    <script defer src="assets/search.js"></script>
+    {% endif %}
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-left">
+          <h1 class="site-title"><a href="index.html">{{ site_title }}</a></h1>
+        </div>
+        <nav class="header-nav">
+          <ul>
+            <li {{ has_options|safe }}><a href="options.html">Options</a></li>
+            {% if generate_search %}
+            <li><a href="search.html">Search</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+        {% if generate_search %}
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search..." />
+          <div id="search-results" class="search-results"></div>
+        </div>
+        {% endif %}
+      </header>
+
+      <div class="layout">
+        <div class="sidebar-toggle" aria-label="Toggle sidebar">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+          </svg>
+        </div>
+        <nav id="sidebar" class="sidebar">
+          <div class="docs-nav">
+            <h2>Documents</h2>
+            <ul>
+              {{ doc_nav|safe }}
+            </ul>
+          </div>
+
+          <div class="toc">
+            <h2>Contents</h2>
+            {{ toc|safe }}
+          </div>
+        </nav>
+
+        <main class="content">
+          <h1>{{ heading }}</h1>
+
+          {% if generate_search %}
+          <div class="search-form">
+            <input
+              type="text"
+              id="options-filter"
+              placeholder="Filter options..."
+            />
+          </div>
+          {% endif %}
+
+          <div class="options-container">{{ options|safe }}</div>
+
+          <div class="footnotes-container">
+            <!-- Footnotes will be appended here -->
+          </div>
+        </main>
+      </div>
+
+      <footer>
+        <p>{{ footer_text }}</p>
+      </footer>
+    </div>
+
+    {{ custom_scripts|safe }}
+  </body>
+</html>

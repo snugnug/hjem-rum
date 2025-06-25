@@ -62,15 +62,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1748103964,
-        "narHash": "sha256-aRFl6I3x1aKzeOBaD/OJHYv+OQ+qE+3FR9uKhIvfW+A=",
+        "lastModified": 1750630139,
+        "narHash": "sha256-lPF0eNpixN7T1DwQz+ypp6aDbQOXMuZ/ChXDSf/P6+s=",
         "owner": "feel-co",
         "repo": "ndg",
-        "rev": "c556c4cbcba61474bf8a342a31a2d94cbefd8986",
+        "rev": "09fde8c12f8be19d8df4f59f6b54cf02e40b51b8",
         "type": "github"
       },
       "original": {
         "owner": "feel-co",
+        "ref": "nested-templates",
         "repo": "ndg",
         "type": "github"
       }
