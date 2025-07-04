@@ -63,7 +63,7 @@ in {
       type = lines;
       default = "";
       description = ''
-        Extra configuration that will be appended verbatim at the end of your `hyprland.conf`.
+        Extra configuration that will be appended verbatim at the end of {file}`~/.config/hypr/hyprland.conf`.
       '';
     };
   };
