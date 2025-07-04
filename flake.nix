@@ -54,10 +54,17 @@
       };
       default = self.hjemModules.hjem-rum;
     };
-    packages = forAllSystems (pkgs: {
+    packages = forAllSystems (pkgs: let
       docs = pkgs.callPackage ./docs/package.nix {
         inherit (ndg.packages.${pkgs.system}) ndg;
         inherit rumLib inputs;
+      };
+    in {
+      inherit docs;
+      docsLinkCheck = pkgs.testers.lycheeLinkCheck {
+        site = docs;
+        remap."rum.aurabora.org" = docs;
+        extraConfig.exclude = [];
       };
     });
     lib = rumLib;
