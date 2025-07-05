@@ -42,8 +42,11 @@
         programs.deno.enable = true;
         programs.shfmt.enable = true;
 
-        settings = {
-          deno.includes = ["*.md"];
+        settings.formatter = {
+          deno = {
+            # Exclude the footer because we specifically need ' over "
+            excludes = ["docs/footer.html"];
+          };
         };
       });
   in {
