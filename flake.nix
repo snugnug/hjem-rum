@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ndg = {
-      url = "github:feel-co/ndg";
+      url = "github:feel-co/ndg?ref=colmark";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
