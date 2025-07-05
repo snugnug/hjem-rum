@@ -121,8 +121,9 @@
         --jobs $NIX_BUILD_CORES \
         --module-options ${configJSON}/share/doc/nixos/options.json \
         --manpage-urls ${./manpage-urls.json} \
-        --options-depth 2 \
+        --options-depth 3 \
         --generate-search true \
+        --highlight-code true \
         --footer "$footer" \
         --output-dir "$out"
 
