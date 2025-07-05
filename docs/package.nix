@@ -125,6 +125,7 @@
         --generate-search true \
         --highlight-code true \
         --footer "$footer" \
+        --input-dir ${./manual} \
         --output-dir "$out"
 
       cat ${./CNAME} > "$out/CNAME" # use the CNAME
