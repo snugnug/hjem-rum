@@ -114,12 +114,15 @@
     ''
       mkdir -p $out
 
+      footer=$(cat ${./footer.html})
+
       ndg --verbose html \
         --jobs $NIX_BUILD_CORES --title "Hjem Rum" \
         --module-options ${configJSON}/share/doc/nixos/options.json \
         --manpage-urls ${./manpage-urls.json} \
         --options-depth 2 \
         --generate-search true \
+        --footer "$footer" \
         --output-dir "$out"
 
       cat ${./CNAME} > "$out/CNAME" # use the CNAME
