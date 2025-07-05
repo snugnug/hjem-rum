@@ -121,6 +121,8 @@
         --options-depth 2 \
         --generate-search true \
         --output-dir "$out"
+
+      cat ${./CNAME} > "$out/CNAME" # use the CNAME
     '';
 in
   hjemRumDocs
