@@ -14,7 +14,7 @@
 
   configJSON =
     (pkgs.nixosOptionsDoc {
-      variablelistId = "hjr-options";
+      variablelistId = "hjem-rum-options";
       warningsAreErrors = true;
 
       inherit
@@ -105,17 +105,25 @@
     .optionsJSON;
 
   hjemRumDocs =
-    pkgs.runCommandLocal "hjr-docs" {nativeBuildInputs = [ndg];}
+    pkgs.runCommandLocal "hjem-rum-docs" {nativeBuildInputs = [ndg];}
     ''
       mkdir -p $out
 
+      footer=$(cat ${./footer.html})
+
       ndg --verbose html \
-        --jobs $NIX_BUILD_CORES --title "Hjem Rum" \
+        --title "Hjem Rum"  \
+        --jobs $NIX_BUILD_CORES \
         --module-options ${configJSON}/share/doc/nixos/options.json \
         --manpage-urls ${./manpage-urls.json} \
-        --options-depth 2 \
+        --options-depth 3 \
         --generate-search true \
+        --highlight-code true \
+        --footer "$footer" \
+        --input-dir ${./manual} \
         --output-dir "$out"
+
+      cat ${./CNAME} > "$out/CNAME" # use the CNAME
     '';
 in
   hjemRumDocs
