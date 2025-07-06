@@ -7,6 +7,8 @@
 [documentation on reviewing PRs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
 [Core Principles]: #core-principles
 [REVIEWING.md]: ./REVIEWING.md
+[deprecations.nix]: ./modules/collection/deprecations.nix
+[ISO 8601]: https://en.wikipedia.org/wiki/ISO_8601
 
 Hjem Rum (or HJR) is always in need of contributions as a module collection. As
 programs are developed, modules will need to be added, changed, removed, etc.,
@@ -368,6 +370,22 @@ can put them in one file, like is done in `lib/generators/gtk.nix`.
 Additionally, please follow how lib is structured in nixpkgs. For example, the
 custom function `attrsNamesHasPrefix` is under `attrsets` to signify that it
 operates on an attrset, just like in nixpkgs.
+
+### Deprecating options
+
+Sometimes, you will have to deprecate an option (if it was renamed or removed).
+This is done within `[deprecations.nix]`, and needs to be centralized there.
+
+Additionally, we require deprecations to be given a date, which you can do with
+the `mkRenamedOptionUntil` option, which takes the same parameters as
+`mkRenamedOption` as well as an [ISO 8601] date which is added to the warning
+message.
+
+The baseline for deprecations is 3 months from when the PR was made, but this
+can be made longer if needed (eg. for a widely used/critical option).
+
+After the due date, the option will need to be removed (using
+`mkRemovedOptionModule`).
 
 ### Docs
 
