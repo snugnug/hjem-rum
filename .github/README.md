@@ -2,13 +2,13 @@
 
 [Hjem]: https://github.com/feel-co/hjem
 [Danish IPA]: https://en.wikipedia.org/wiki/Help:IPA/Danish
-[source]: https://github.com/snugnug/hjem-rum/tree/main/modules/collection
-[discussions]: https://github.com/snugnug/hjem-rum/discussions
+[source]: https://github.com/lunarnovaa/hjem-rum/tree/main/modules/collection
+[discussions]: https://github.com/lunarnovaa/hjem-rum/discussions
 [documentation]: https://rum.aurabora.org
 [our docs]: https://rum.aurabora.org/contributing/introduction.html
 [@NotAShelf]: https://github.com/NotAShelf
 [@éclairevoyant]: https://github.com/eclairevoyant
-[contributors]: https://github.com/snugnug/hjem-rum/graphs/contributors
+[contributors]: https://github.com/lunarnovaa/hjem-rum/graphs/contributors
 [Home Manager]: https://github.com/nix-community/home-manager
 [GPLv3]: https://www.gnu.org/licenses/gpl-3.0.en.html
 [license at the top level of our codebase]: https://github.com/lunarnovaa/hjem-rum/blob/main/LICENSE
