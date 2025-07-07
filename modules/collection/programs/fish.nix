@@ -126,7 +126,7 @@ in {
         - /share/fish/vendor_completions.d
         - /share/fish/vendor_functions.d
 
-        This will be the case with plugins present in `pkgs.fishPlugins`.
+        This will be the case with plugins present in {file}`pkgs.fishPlugins`.
 
         For the remaining cases, a file will be created at `~/.config/fish/conf.d/rum-plugin-<name>.fish`.
         It will attempt to handle or source a variety of expected files from the derivation. Those files are:
