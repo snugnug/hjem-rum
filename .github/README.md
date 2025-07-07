@@ -10,7 +10,10 @@
 [@éclairevoyant]: https://github.com/eclairevoyant
 [contributors]: https://github.com/snugnug/hjem-rum/graphs/contributors
 [Home Manager]: https://github.com/nix-community/home-manager
-[license]: https://github.com/snugnug/hjem-rum/blob/main/LICENSE
+[GPLv3]: https://www.gnu.org/licenses/gpl-3.0.en.html
+[license at the top level of our codebase]: https://github.com/lunarnovaa/hjem-rum/blob/main/LICENSE
+[CC-BY-NC-SA 4.0]: https://creativecommons.org/licenses/by-nc-sa/4.0/
+[license within the documentation directory]: https://github.com/lunarnovaa/hjem-rum/blob/main/docs/manual/LICENSE
 
 A module collection for managing your `$HOME` with [Hjem].
 
@@ -136,8 +139,12 @@ Additionally, we would like to thank everyone who has contributed or maintained
 [Home Manager], as without them, this project likely would not be possible, or
 even be conceived.
 
-## License
+## Licenses
 
-All the code within this repository is protected under the GPLv3 license unless
-explicitly stated otherwise within a file. Please see [LICENSE] for more
-information.
+All the code within this repository is protected under the [GPLv3] license
+unless explicitly stated otherwise within a file. Please see the
+[license at the top level of our codebase] for more information.
+
+Additionally, all of our documentation, including this file, is protected under
+[CC-BY-NC-SA 4.0], as according to the
+[license within the documentation directory].
