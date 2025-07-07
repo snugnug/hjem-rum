@@ -7,7 +7,7 @@
 [documentation]: https://rum.aurabora.org
 [our docs]: https://rum.aurabora.org/contributing/introduction.html
 [@NotAShelf]: https://github.com/NotAShelf
-[@eclairevoyant]: https://github.com/eclairevoyant
+[@éclairevoyant]: https://github.com/eclairevoyant
 [contributors]: https://github.com/snugnug/hjem-rum/graphs/contributors
 [Home Manager]: https://github.com/nix-community/home-manager
 [license]: https://github.com/snugnug/hjem-rum/blob/main/LICENSE
@@ -127,7 +127,7 @@ here to help you contribute and write good code for this project.
 
 ## Credits
 
-Credit goes to [@NotAShelf] and [@eclairevoyant] for creating Hjem.
+Credit goes to [@NotAShelf] and [@éclairevoyant] for creating Hjem.
 
 We would also like to give special thanks to all [contributors], past and
 present, for making Hjem Rum what it is today.
