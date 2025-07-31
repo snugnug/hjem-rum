@@ -2,7 +2,7 @@
   description = "A module collection for Hjem";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "/home/nezia/Projects/nix/nixpkgs";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,7 +65,12 @@
         default = pkgs.mkShell {
           packages = with pkgs; [
             pre-commit
-            python312Packages.commitizen
+            python313Packages.commitizen
+            (python313.withPackages (python-packages:
+              with python-packages; [
+                ast-grep-py
+                whenever
+              ]))
           ];
           inputsFrom = [
             treefmtEval.${pkgs.system}.config.build.devShell
