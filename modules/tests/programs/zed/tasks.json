@@ -1,0 +1,17 @@
+[
+  {
+    "allow_concurrent_runs": false,
+    "command": "for i in {1..5}; do echo \"Hello $i/5\"; sleep 1; done",
+    "env": {
+      "foo": "bar"
+    },
+    "hide": "never",
+    "label": "Example task",
+    "reveal": "always",
+    "shell": "system",
+    "show_output": true,
+    "show_summary": true,
+    "tags": [],
+    "use_new_terminal": false
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "author": "Bob Rum",
+  "name": "Bob's cool themes",
+  "themes": {
+    "appearance": "dark",
+    "name": "Bob's dark theme",
+    "style": {
+      "background": "#313337ff",
+      "border": "#3f4043ff",
+      "border.disabled": "#383a3eff",
+      "border.focused": "#1b4a6eff",
+      "border.selected": "#1b4a6eff",
+      "border.transparent": "#00000000",
+      "border.variant": "#2d2f34ff",
+      "elevated_surface.background": "#1f2127ff",
+      "surface.background": "#1f2127ff"
+    },
+    "syntax": {
+      "attribute": {
+        "color": "#5ac1feff",
+        "font_style": null,
+        "font_weight": null
+      },
+      "boolean": {
+        "color": "#d2a6ffff",
+        "font_style": null,
+        "font_weight": null
+      }
+    }
+  }
+}
