@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib.meta) getExe;
-  inherit (lib.modules) mkAfter mkIf;
+  inherit (lib.modules) mkAfter mkBefore mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types) lines;
 
@@ -65,6 +65,7 @@ in {
           };
         package = mkPackageOption pkgs "nix-direnv" {};
       };
+      nushell.enable = mkEnableOption "direnv integration with nushell";
       zsh.enable = mkEnableOption "direnv integration with zsh";
     };
   };
@@ -81,6 +82,23 @@ in {
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
       mkAfter "${getExe cfg.package} hook fish | source"
+    );
+    rum.programs.nushell.extraConfig = mkIf cfg.integrations.nushell.enable (
+      # This worries me, because it may override $env.config.hooks.env_change.PWD if
+      # the user sets it. That said, it is the way direnv suggests doing it, and
+      # I cannot think of a better way. I have used mkBefore so that _this_ will
+      # be overriden rather than the user's settings, but it is still imperfect.
+      mkBefore ''
+        $env.config.hooks.env_change.PWD = [
+          { ||
+              if (which direnv | is-empty) {
+                return
+              }
+
+              direnv export json | from json | default {} | load-env
+          }
+        ]
+      ''
     );
     rum.programs.zsh.initConfig = mkIf cfg.integrations.zsh.enable (
       mkAfter "eval \"$(${getExe cfg.package} hook zsh)\""

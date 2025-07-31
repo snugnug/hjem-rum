@@ -20,9 +20,11 @@
         '';
         integrations.fish.enable = true;
         integrations.nix-direnv.enable = true;
+        integrations.nushell.enable = true;
         integrations.zsh.enable = true;
       };
       programs.fish.enable = true;
+      programs.nushell.enable = true;
       programs.zsh.enable = true;
     };
   };
@@ -50,6 +52,9 @@
       # Assert that the fish integration snippet is in place
       pattern = r'^/nix/store/[^/]+/bin/direnv hook fish | source$'
       machine.succeed(f"grep -E '{pattern}' %s" % "/home/bob/.config/fish/config.fish")
+
+      # Assert that the nushell integration snippet is in place
+      machine.succeed("grep \"direnv\" %s" % "/home/bob/.config/nushell/config.nu")
 
       # Assert that the zsh integration snippet is in place
       pattern = r'^eval "\$\(/nix/store/[^/]+/bin/direnv hook zsh\)"$'
