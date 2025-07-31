@@ -10,7 +10,8 @@
   '';
 in {
   name = "programs-nushell";
-  nodes.machine = {
+  nodes.machine = {self, ...}: {
+    hjem.extraModules = ["${self.modulesPath}/programs/nushell.nix"];
     hjem.users.bob = {
       environment.sessionVariables = {
         RUM_TEST = "HEY";

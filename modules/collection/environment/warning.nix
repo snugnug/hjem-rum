@@ -11,10 +11,10 @@
   # will evaluate to true, disabled will evaluate to false. Results
   # in a list of bools, allowing us to
   variableLoaders = [
-    config.rum.programs.zsh.enable
-    config.rum.programs.fish.enable
-    config.rum.programs.nushell.enable
-    config.rum.desktops.hyprland.enable
+    (config.rum.programs.zsh.enable or false)
+    (config.rum.programs.fish.enable or false)
+    (config.rum.programs.nushell.enable or false)
+    (config.rum.desktops.hyprland.enable or false)
   ];
 
   cfg = config.rum.environment;

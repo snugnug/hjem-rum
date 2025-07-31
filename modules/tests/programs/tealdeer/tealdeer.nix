@@ -15,7 +15,8 @@ let
   };
 in {
   name = "programs-tealdeer";
-  nodes.machine = {
+  nodes.machine = {self, ...}: {
+    hjem.extraModules = ["${self.modulesPath}/programs/tealdeer.nix"];
     hjem.users.bob.rum = {
       programs.tealdeer = {
         enable = true;

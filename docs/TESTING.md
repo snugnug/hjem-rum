@@ -4,6 +4,7 @@
 [nix.dev provides a useful guide]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
 [NixOS Manual]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
 [internal NixOS lib]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
+[README.md]: ../README.md#optional-importing
 
 Hjem Rum's testing system is designed with simplicity in mind, so we shy away
 from other testing frameworks and stick with `runTest`, from the
@@ -57,9 +58,8 @@ Our test system has some pre-defined things aiming at avoid boilerplate code:
 - A user named "bob" is already created, with no groups, `isNormalUser` set to
   true and no password.
 - Both Hjem and Hjem Rum are already imported by default.
-
-`self`, `lib` and `pkgs` are also passed to every test module, so you're free to
-use them as you will.
+- `self`, `lib` and `pkgs` are passed to every test module, so you're free to
+  use them as you will.
 
 The [ncmpcpp test module] was written to serve as an example for future tests,
 and provides comments for each step of the `testScript`. Care should be taken to
@@ -68,6 +68,12 @@ and avoid other possible footguns. The approach this module uses to test its
 configuration is to have a file for each configuration alongside it, which then
 gets passed to the test VM and gets evaluated with diff. You can use other
 approaches if it's more convenient, that's just a suggestion.
+
+You will need to import the module itself as well as any dependent modules. This
+is not done automatically as to check for dependency changes and to ensure our
+table of module dependencies remain up to date. If your test requires the
+importing of modules other than the program being tested, ensure that is noted
+in [README.md].
 
 You can also debug your tests through a Python REPL by running:
 

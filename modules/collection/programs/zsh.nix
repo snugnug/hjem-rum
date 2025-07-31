@@ -40,13 +40,6 @@
 
   cfg = config.rum.programs.zsh;
 in {
-  imports = [
-    (
-      mkRenamedOptionModule
-      ["rum" "programs" "zsh" "integrations" "starship" "enable"]
-      ["rum" "programs" "starship" "integrations" "zsh" "enable"]
-    )
-  ];
   options.rum.programs.zsh = {
     enable = mkEnableOption "zsh";
     package = mkPackageOption pkgs "zsh" {nullable = true;};

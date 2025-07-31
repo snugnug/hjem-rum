@@ -28,7 +28,7 @@ Usage: (import ./location-of-lib.nix) {test-script-here}
       defaults = {
         documentation.enable = lib.mkDefault false;
         imports = [self.inputs.hjem.nixosModules.default];
-        hjem.extraModules = [self.hjemModules.default];
+        hjem.extraModules = [self.hjemModules.bare]; # We import the bare module to check for module dependencies
         users.groups.bob = {};
         users.users.bob = {
           isNormalUser = true;

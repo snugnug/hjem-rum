@@ -13,7 +13,8 @@ let
   };
 in {
   name = "programs-flameshot";
-  nodes.machine = {
+  nodes.machine = {self, ...}: {
+    hjem.extraModules = ["${self.modulesPath}/programs/flameshot.nix"];
     hjem.users.bob.rum = {
       programs.flameshot = {
         enable = true;

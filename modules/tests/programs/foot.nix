@@ -13,11 +13,14 @@ let
   };
 in {
   name = "programs-foot";
-  nodes.machine = {
-    hjem.users.bob.rum = {
-      programs.foot = {
-        enable = true;
-        inherit settings;
+  nodes.machine = {self, ...}: {
+    hjem = {
+      extraModules = ["${self.modulesPath}/programs/foot.nix"];
+      users.bob.rum = {
+        programs.foot = {
+          enable = true;
+          inherit settings;
+        };
       };
     };
   };

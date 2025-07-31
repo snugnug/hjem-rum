@@ -1,6 +1,7 @@
 {
   name = "programs-git";
-  nodes.machine = {
+  nodes.machine = {self, ...}: {
+    hjem.extraModules = ["${self.modulesPath}/programs/git.nix"];
     hjem.users.bob.rum = {
       programs.git = {
         enable = true;

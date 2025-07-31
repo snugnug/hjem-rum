@@ -1,6 +1,12 @@
 {
   name = "programs-fzf";
-  nodes.machine = {
+  nodes.machine = {self, ...}: {
+    # TODO: Separate fish and zsh integration tests into their own tests
+    hjem.extraModules = [
+      "${self.modulesPath}/programs/fzf.nix"
+      "${self.modulesPath}/programs/fish.nix"
+      "${self.modulesPath}/programs/zsh.nix"
+    ];
     hjem.users.bob.rum = {
       programs.fzf = {
         enable = true;

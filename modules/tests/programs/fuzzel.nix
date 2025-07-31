@@ -1,6 +1,7 @@
 {
   name = "programs-fuzzel";
-  nodes.machine = {
+  nodes.machine = {self, ...}: {
+    hjem.extraModules = ["${self.modulesPath}/programs/fuzzel.nix"];
     hjem.users.bob.rum = {
       programs.fuzzel = {
         enable = true;

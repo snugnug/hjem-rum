@@ -4,6 +4,7 @@
   config,
   ...
 }: let
+  inherit (lib.attrsets) optionalAttrs;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
@@ -57,24 +58,27 @@ in {
       toml.generate "starship.toml" cfg.settings
     );
 
-    rum.programs = {
-      fish.config = mkIf cfg.integrations.fish.enable (
-        mkAfter ("starship init fish | source" + (optionalString cfg.transience.enable "\nenable_transience"))
-      );
-
-      nushell.extraConfig = mkIf cfg.integrations.nushell.enable (
-        mkAfter ''
-          use ${
-            pkgs.runCommand "starship-init-nu" {} ''
-              ${getExe cfg.package} init nu >> "$out"
-            ''
-          }
-        ''
-      );
-
-      zsh.initConfig = mkIf cfg.integrations.zsh.enable (
-        mkAfter ''eval "$(${getExe cfg.package} init zsh)"''
-      );
-    };
+    rum.programs =
+      (optionalAttrs (config.rum.programs.fish.enable or false) {
+        fish.config = mkIf cfg.integrations.fish.enable (
+          mkAfter ("starship init fish | source" + (optionalString cfg.transience.enable "\nenable_transience"))
+        );
+      })
+      // (optionalAttrs (config.rum.programs.nushell.enable or false) {
+        nushell.extraConfig = mkIf cfg.integrations.nushell.enable (
+          mkAfter ''
+            use ${
+              pkgs.runCommand "starship-init-nu" {} ''
+                ${getExe cfg.package} init nu >> "$out"
+              ''
+            }
+          ''
+        );
+      })
+      // (optionalAttrs (config.rum.programs.zsh.enable or false) {
+        zsh.initConfig = mkIf cfg.integrations.zsh.enable (
+          mkAfter ''eval "$(${getExe cfg.package} init zsh)"''
+        );
+      });
   };
 }

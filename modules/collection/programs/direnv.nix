@@ -4,6 +4,7 @@
   config,
   ...
 }: let
+  inherit (lib.attrsets) optionalAttrs;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
@@ -69,21 +70,27 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/direnv/direnv.toml".source = mkIf (cfg.settings != {}) (
-        toml.generate "direnv-config.toml" cfg.settings
+  config = let
+    fishIntegration = optionalAttrs (config.rum.programs.fish.enable or false) {
+      fish.config = mkIf cfg.integrations.fish.enable (
+        mkAfter "${getExe cfg.package} hook fish | source"
       );
-      ".config/direnv/direnvrc".text = mkIf (cfg.direnvrc != "") cfg.direnvrc;
-      ".config/direnv/lib/nix-direnv.sh".source = mkIf cfg.integrations.nix-direnv.enable "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";
     };
-
-    rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
-      mkAfter "${getExe cfg.package} hook fish | source"
-    );
-    rum.programs.zsh.initConfig = mkIf cfg.integrations.zsh.enable (
-      mkAfter "eval \"$(${getExe cfg.package} hook zsh)\""
-    );
-  };
+    zshIntegration = optionalAttrs (config.rum.programs.zsh.enable or false) {
+      zsh.initConfig = mkIf cfg.integrations.zsh.enable (
+        mkAfter "eval \"$(${getExe cfg.package} hook zsh)\""
+      );
+    };
+  in
+    mkIf cfg.enable {
+      packages = mkIf (cfg.package != null) [cfg.package];
+      files = {
+        ".config/direnv/direnv.toml".source = mkIf (cfg.settings != {}) (
+          toml.generate "direnv-config.toml" cfg.settings
+        );
+        ".config/direnv/direnvrc".text = mkIf (cfg.direnvrc != "") cfg.direnvrc;
+        ".config/direnv/lib/nix-direnv.sh".source = mkIf cfg.integrations.nix-direnv.enable "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";
+      };
+      rum.programs = fishIntegration // zshIntegration;
+    };
 }

@@ -37,7 +37,8 @@ let
   };
 in {
   name = "programs-ghostty";
-  nodes.machine = {
+  nodes.machine = {self, ...}: {
+    hjem.extraModules = ["${self.modulesPath}/programs/ghostty.nix"];
     hjem.users.bob.rum = {
       programs.ghostty = {
         enable = true;
