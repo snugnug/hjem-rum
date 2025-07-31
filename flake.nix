@@ -57,6 +57,7 @@
         inherit (ndg.packages.${pkgs.system}) ndg;
         inherit rumLib;
       };
+      hjr-deprecate = pkgs.callPackage ./packages/hjr-deprecate/package.nix {};
     });
     lib = rumLib;
 
