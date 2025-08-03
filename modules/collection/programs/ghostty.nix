@@ -21,7 +21,7 @@
     mapAttrs'
     (name: value:
       nameValuePair
-      ".config/ghostty/themes/${name}"
+      "ghostty/themes/${name}"
       {
         source = keyValue.generate "ghostty-${name}-theme" value;
       })
@@ -56,7 +56,7 @@ in {
         ];
       };
       description = ''
-        The configuration converted to INI and written to {file}`$HOME/.config/ghostty/config`.
+        The configuration converted to INI and written to {file}`$XDG_CONFIG_HOME/ghostty/config`.
         Please consult [Ghostty's option reference]
         for configuration options.
 
@@ -106,9 +106,9 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files =
+    xdg.config.files =
       {
-        ".config/ghostty/config".source = mkIf (cfg.settings != {}) (
+        "ghostty/config".source = mkIf (cfg.settings != {}) (
           keyValue.generate "ghostty-config" cfg.settings
         );
       }

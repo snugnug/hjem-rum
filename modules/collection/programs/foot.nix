@@ -40,7 +40,7 @@ in {
         };
       };
       description = ''
-        Settings are written as an INI file to {file}`$HOME/.config/foot/foot.ini`.
+        Settings are written as an INI file to {file}`$XDG_CONFIG_HOME/foot/foot.ini`.
 
         Refer to {manpage}`foot.ini(5)` or the [upstream template]
         for all available options.
@@ -52,7 +52,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/foot/foot.ini".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."foot/foot.ini".source = mkIf (cfg.settings != {}) (
       ini.generate "foot.ini" cfg.settings
     );
   };

@@ -42,7 +42,7 @@ in {
         statusbar_visibility = true;
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/ncmpcpp/config`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/ncmpcpp/config`.
         Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult [ncmpcpp's example configuration].
 
         [ncmpcpp's example configuration]: https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config
@@ -53,7 +53,7 @@ in {
       type = attrsOf (listOf ncmpcppBindingType);
       default = {};
       description = ''
-        Custom bindings configuration written to {file}`$HOME/.config/ncmpcpp/bindings`.
+        Custom bindings configuration written to {file}`$XDG_CONFIG_HOME/ncmpcpp/bindings`.
         Please reference {manpage}`ncmpcpp(1)` to configure it accordingly, or consult
         [ncmpcpp's example bindings file].
 
@@ -91,9 +91,9 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/ncmpcpp/config".text = mkIf (cfg.settings != {}) (toNcmpcppSettings cfg.settings);
-      ".config/ncmpcpp/bindings".text = mkIf (cfg.bindings != {}) (toNcmpcppBinding cfg.bindings);
+    xdg.config.files = {
+      "ncmpcpp/config".text = mkIf (cfg.settings != {}) (toNcmpcppSettings cfg.settings);
+      "ncmpcpp/bindings".text = mkIf (cfg.bindings != {}) (toNcmpcppBinding cfg.bindings);
     };
   };
 }

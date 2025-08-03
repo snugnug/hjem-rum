@@ -26,7 +26,7 @@ in {
         };
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/lsd/config.yaml`, defining lsd settings.
+        Configuration written to {file}`$XDG_CONFIG_HOME/lsd/config.yaml`, defining lsd settings.
         Please reference  [lsd's example configuration] to configure it accordingly.
 
         [lsd's example configuration]: https://github.com/lsd-rs/lsd#config-file-content
@@ -44,7 +44,7 @@ in {
         };
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/lsd/icons.yaml`, defining the icons used by lsd.
+        Configuration written to {file}`$XDG_CONFIG_HOME/lsd/icons.yaml`, defining the icons used by lsd.
         Please reference [lsd's icon theme example] to configure it accordingly.
 
         [lsd's icon theme example]: https://github.com/lsd-rs/lsd#icon-theme
@@ -63,7 +63,7 @@ in {
         };
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/lsd/colors.yaml`, defining the colors used by lsd.
+        Configuration written to {file}`$XDG_CONFIG_HOME/lsd/colors.yaml`, defining the colors used by lsd.
         Please reference [lsd's color theme example] to configure it accordingly.
 
         [lsd's color theme example]: https://github.com/lsd-rs/lsd#color-theme-file-content
@@ -73,13 +73,13 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/lsd/config.yaml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."lsd/config.yaml".source = mkIf (cfg.settings != {}) (
       yaml.generate "config.yaml" cfg.settings
     );
-    files.".config/lsd/icons.yaml".source = mkIf (cfg.icons != {}) (
+    xdg.config.files."lsd/icons.yaml".source = mkIf (cfg.icons != {}) (
       yaml.generate "icons.yaml" cfg.icons
     );
-    files.".config/lsd/colors.yaml".source = mkIf (cfg.colors != {}) (
+    xdg.config.files."lsd/colors.yaml".source = mkIf (cfg.colors != {}) (
       yaml.generate "colors.yaml" cfg.colors
     );
   };

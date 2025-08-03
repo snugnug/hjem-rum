@@ -28,7 +28,7 @@ in {
         };
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/flameshot/flameshot.ini`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/flameshot/flameshot.ini`.
         Please reference [flameshot's example config] for config options.
 
         [flameshot's example config]: https://github.com/flameshot-org/flameshot/blob/master/flameshot.example.ini
@@ -38,7 +38,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/flameshot/flameshot.ini".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."flameshot/flameshot.ini".source = mkIf (cfg.settings != {}) (
       ini.generate "flameshot.ini" cfg.settings
     );
   };

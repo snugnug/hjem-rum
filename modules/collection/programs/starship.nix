@@ -35,7 +35,7 @@ in {
       };
 
       description = ''
-        The configuration converted to TOML and written to {file}`$HOME/.config/starship.toml`.
+        The configuration converted to TOML and written to {file}`$XDG_CONFIG_HOME/starship.toml`.
         Please reference [Starship's documentation] for configuration options.
 
         [Starship's documentation]: https://starship.rs/config
@@ -53,7 +53,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/starship.toml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."starship.toml".source = mkIf (cfg.settings != {}) (
       toml.generate "starship.toml" cfg.settings
     );
 

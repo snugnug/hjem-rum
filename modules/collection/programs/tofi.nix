@@ -27,7 +27,7 @@ in {
       };
       description = ''
         The configuration converted into "key = value" and written to
-        {file}`$HOME/.config/tofi/config`. Please reference
+        {file}`$XDG_CONFIG_HOME/tofi/config`. Please reference
         {manpage}`tofi(5)`, or see an example at
         [tofi's default configuration].
 
@@ -38,6 +38,6 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/tofi/config".text = mkIf (cfg.settings != {}) (toKeyValue cfg.settings);
+    xdg.config.files."tofi/config".text = mkIf (cfg.settings != {}) (toKeyValue cfg.settings);
   };
 }
