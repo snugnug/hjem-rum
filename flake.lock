@@ -62,15 +62,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1748103964,
-        "narHash": "sha256-aRFl6I3x1aKzeOBaD/OJHYv+OQ+qE+3FR9uKhIvfW+A=",
+        "lastModified": 1750978454,
+        "narHash": "sha256-crUgQhd38aUl3n3vpEgjLk76EEhH7Zdr/sBlXysF0Is=",
         "owner": "feel-co",
         "repo": "ndg",
-        "rev": "c556c4cbcba61474bf8a342a31a2d94cbefd8986",
+        "rev": "15319452cf1fc6689a7120bcc21717ba0d4f5993",
         "type": "github"
       },
       "original": {
         "owner": "feel-co",
+        "ref": "colmark",
         "repo": "ndg",
         "type": "github"
       }
