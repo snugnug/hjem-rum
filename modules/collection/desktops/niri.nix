@@ -4,14 +4,14 @@
   lib,
   ...
 }: let
-  inherit (builtins) mapAttrs hasAttr concatStringsSep isBool isInt;
+  inherit (builtins) mapAttrs concatStringsSep isBool isInt;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption literalExpression;
   inherit (lib.strings) concatMapStringsSep;
   inherit (lib.trivial) pipe boolToString;
-  inherit (lib.types) listOf path attrsOf anything str lines submodule;
+  inherit (lib.types) listOf path attrsOf anything str lines submodule nullOr;
 
   toNiriSpawn = commands:
     concatMapStringsSep " " (arg: "\"${arg}\"") commands;
@@ -32,7 +32,7 @@
             (concatStringsSep " ")
           ];
           action =
-            if hasAttr "action" bindOptions
+            if isNull bindOptions.spawn
             then bindOptions.action
             else "spawn " + toNiriSpawn bindOptions.spawn;
         in "${bind} ${parameters} {${action};}"
@@ -60,7 +60,7 @@
   bindsModule = submodule {
     options = {
       spawn = mkOption {
-        type = listOf str;
+        type = nullOr (listOf str);
         default = null;
         example = ["foot" "-e" "fish"];
         description = ''
@@ -71,7 +71,7 @@
         '';
       };
       action = mkOption {
-        type = str;
+        type = nullOr str;
         default = null;
         example = "focus-column-left";
         description = ''
@@ -210,7 +210,11 @@ in {
         cfg.configFile
         (pkgs.writeText "generated-niri-config" (
           concatStringsSep "\n" [
-            (toNiriBinds cfg.binds)
+            ''
+              binds{
+                ${toNiriBinds cfg.binds}
+              }
+            ''
             (toNiriSpawnAtStartup cfg.spawn-at-startup)
             niriEnvironment
             cfg.extraConfig
