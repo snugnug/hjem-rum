@@ -204,16 +204,22 @@ in {
   };
 
   config = mkIf cfg.enable {
-    files.".config/niri/config.kdl".source = pkgs.concatText "niri-config.kdl" [
-      cfg.configFile
-      (pkgs.writeText "generated-niri-config" (
-        concatStringsSep "\n" [
-          (toNiriBinds cfg.binds)
-          (toNiriSpawnAtStartup cfg.spawn-at-startup)
-          niriEnvironment
-          cfg.extraConfig
-        ]
-      ))
-    ];
+    files.".config/niri/config.kdl".source = pkgs.concatTextFile {
+      name = "niri-config.kdl";
+      files = [
+        cfg.configFile
+        (pkgs.writeText "generated-niri-config" (
+          concatStringsSep "\n" [
+            (toNiriBinds cfg.binds)
+            (toNiriSpawnAtStartup cfg.spawn-at-startup)
+            niriEnvironment
+            cfg.extraConfig
+          ]
+        ))
+      ];
+      checkPhase = ''
+        ${getExe pkgs.niri} validate -c "$file"
+      '';
+    };
   };
 }
