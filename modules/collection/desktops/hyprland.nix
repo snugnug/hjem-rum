@@ -69,7 +69,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    files = let
+    xdg.config.files = let
       check = {
         plugins = cfg.plugins != [];
         settings = cfg.settings != {};
@@ -80,7 +80,7 @@ in {
         extraConfig = cfg.extraConfig != "";
       };
     in {
-      ".config/hypr/hyprland.conf".text = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) (
+      "hypr/hyprland.conf".text = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) (
         optionalString check.plugins (pluginsToHyprconf cfg.plugins cfg.importantPrefixes)
         + optionalString check.settings (toHyprconf {
           attrs = cfg.settings;
@@ -103,11 +103,11 @@ in {
       uwsm environment variables are advised to be separated
       (see https://wiki.hyprland.org/Configuring/Environment-variables/)
       */
-      ".config/uwsm/env".text =
+      "uwsm/env".text =
         mkIf check.variables.withUWSM
         (toEnvExport config.environment.sessionVariables);
 
-      ".config/uwsm/env-hyprland".text = let
+      "uwsm/env-hyprland".text = let
         /*
         this is needed as we're using a predicate so we don't create an empty file
         (improvements are welcome)

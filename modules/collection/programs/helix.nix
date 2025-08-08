@@ -14,7 +14,7 @@
   mkThemes = themes:
     mapAttrs' (
       name: value:
-        nameValuePair ".config/helix/themes/${name}.toml" {
+        nameValuePair "helix/themes/${name}.toml" {
           source = toml.generate "helix-theme-${name}.toml" value;
         }
     )
@@ -41,7 +41,7 @@ in {
       };
       description = ''
         The editor configuration converted into TOML and written to
-        {file}`$HOME/.config/helix/config.toml`. Please reference
+        {file}`$XDG_CONFIG_HOME/helix/config.toml`. Please reference
         [Helix's documentation] for config options.
 
         [Helix's documentation]: https://docs.helix-editor.com/editor.html
@@ -56,7 +56,7 @@ in {
       };
       description = ''
         The languages configurations converted into TOML and written to
-        {file}`$HOME/.config/helix/languages.toml`. Please reference
+        {file}`$XDG_CONFIG_HOME/helix/languages.toml`. Please reference
         [Helix's language documentation] for config options.
 
         [Helix's language documentation]: https://docs.helix-editor.com/languages.html
@@ -78,7 +78,7 @@ in {
       };
       description = ''
         The custom themes converted into TOML and written to
-        {file}`$HOME/.config/helix/themes/`. Please reference
+        {file}`$XDG_CONFIG_HOME/helix/themes/`. Please reference
         [Helix's theming documentation] for config options.
 
         [Helix's theming documentation]: https://docs.helix-editor.com/themes.html
@@ -90,11 +90,11 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     files =
       {
-        ".config/helix/config.toml".source = mkIf (cfg.settings != {}) (
+        "helix/config.toml".source = mkIf (cfg.settings != {}) (
           toml.generate "helix-config.toml" cfg.settings
         );
 
-        ".config/helix/languages.toml".source = mkIf (cfg.languages != {}) (
+        "helix/languages.toml".source = mkIf (cfg.languages != {}) (
           toml.generate "helix-languages.toml" cfg.languages
         );
       }

@@ -34,7 +34,7 @@ in {
       };
       description = ''
         The configuration converted into TOML and written to
-        {file}`$HOME/.config/alacritty/alacritty.toml`.
+        {file}`$XDG_CONFIG_HOME/alacritty/alacritty.toml`.
         Please reference [Alacritty's documentation]
         for config options.
 
@@ -45,7 +45,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/alacritty/alacritty.toml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."alacritty/alacritty.toml".source = mkIf (cfg.settings != {}) (
       toml.generate "alacritty.toml" cfg.settings
     );
   };

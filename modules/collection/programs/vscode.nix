@@ -27,7 +27,7 @@ in {
       };
       description = ''
         The configuration converted into JSON and written to
-        {file}`$HOME/.config/Code/User/settings.json`.
+        {file}`$XDG_CONFIG_HOME/Code/User/settings.json`.
 
         Please reference [Visual Studio Code's official documentation]
         for more information.
@@ -39,8 +39,8 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/Code/User/settings.json".source = mkIf (cfg.settings != {}) (
+    xdg.config.files = {
+      "Code/User/settings.json".source = mkIf (cfg.settings != {}) (
         json.generate "settings.json" cfg.settings
       );
     };

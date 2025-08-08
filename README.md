@@ -8,6 +8,7 @@
 [programs/nushell]: modules/collection/programs/nushell.nix
 [desktops/hyprland]: modules/collection/desktops/hyprland.nix
 [#17]: https://github.com/snugnug/hjem-rum/issues/17
+[#120]: https://github.com/snugnug/hjem-rum/pull/120
 [@eclairevoyant]: https://github.com/eclairevoyant
 [@NotAShelf]: https://github.com/NotAShelf
 [documentation]: snugnug.github.io/hjem-rum/
@@ -36,6 +37,11 @@ recreate the functionality that Home Manager's large collection of modules
 provides, allowing you to simply install and config a program.
 
 ## Setup
+
+> [!IMPORTANT]
+> [#120] introduces breaking changes, as we now use `xdg.config.files` in our
+> modules. If you are getting errors related to the option not existing, please
+> update your flake's Hjem input.
 
 To start using Hjem Rum, you must first import the flake and its modules into
 your system(s):

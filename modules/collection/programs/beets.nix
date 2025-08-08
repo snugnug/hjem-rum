@@ -37,7 +37,7 @@ in {
       inherit (yaml) type;
       default = {};
       description = ''
-        Beets configuration that is written to {file}`$HOME/.config/beets/config.yaml`.
+        Beets configuration that is written to {file}`$XDG_CONFIG_HOME/beets/config.yaml`.
         Refer to the beets [documentation] for available options.
 
         If you would like to use plugins, please consult the description of
@@ -69,7 +69,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/beets/config.yaml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."beets/config.yaml".source = mkIf (cfg.settings != {}) (
       yaml.generate "config.yaml" cfg.settings
     );
   };

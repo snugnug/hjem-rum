@@ -50,7 +50,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/hypr/hypridle.conf".text = mkIf (cfg.settings != {}) (toHyprconf {
+    xdg.config.files."hypr/hypridle.conf".text = mkIf (cfg.settings != {}) (toHyprconf {
       attrs = cfg.settings;
     });
   };

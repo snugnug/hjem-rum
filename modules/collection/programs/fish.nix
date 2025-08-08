@@ -85,9 +85,9 @@ in {
       type = attrsOf lines;
       description = ''
         Extra configuration files, they will all be written verbatim
-        to `.config/fish/conf.d/<name>.fish`.
+        to {file}`$XDG_CONFIG_HOME/fish/conf.d/<name>.fish`.
 
-        Those files are run before `.config/fish/config.fish` as per the [fish documentation].
+        Those files are run before {file}`$XDG_CONFIG_HOME/fish/config.fish` as per the [fish documentation].
 
         [fish documentation]: https://fishshell.com/docs/current/language.html#configuration-files
       '';
@@ -185,20 +185,20 @@ in {
       '')
     (filterAttrs (n: v: !(isVendored v)) cfg.plugins);
 
-    files =
+    xdg.config.files =
       {
-        ".config/fish/config.fish".source = mkIf (cfg.config != "") (writeFish "config.fish" cfg.config);
-        ".config/fish/conf.d/rum-environment-variables.fish".text = mkIf (env != {}) ''
+        "fish/config.fish".source = mkIf (cfg.config != "") (writeFish "config.fish" cfg.config);
+        "fish/conf.d/rum-environment-variables.fish".text = mkIf (env != {}) ''
           ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
         '';
-        ".config/fish/conf.d/rum-abbreviations.fish".text = mkIf (cfg.abbrs != {}) ''
+        "fish/conf.d/rum-abbreviations.fish".text = mkIf (cfg.abbrs != {}) ''
           ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${escapeShellArg (toString value)}") cfg.abbrs}
         '';
-        ".config/fish/conf.d/rum-aliases.fish".text = mkIf (cfg.aliases != {}) ''
+        "fish/conf.d/rum-aliases.fish".text = mkIf (cfg.aliases != {}) ''
           ${concatMapAttrsStringSep "\n" (name: value: "alias -- ${name} ${escapeShellArg (toString value)}") cfg.aliases}
         '';
       }
-      // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
-      // (mapAttrs' (name: val: nameValuePair ".config/fish/conf.d/${name}.fish" {source = writeFish "${name}.fish" val;}) cfg.earlyConfigFiles);
+      // (mapAttrs' (name: val: nameValuePair "fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
+      // (mapAttrs' (name: val: nameValuePair "fish/conf.d/${name}.fish" {source = writeFish "${name}.fish" val;}) cfg.earlyConfigFiles);
   };
 }

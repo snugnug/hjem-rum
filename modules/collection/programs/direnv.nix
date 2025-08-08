@@ -26,7 +26,7 @@ in {
         whitelist.prefix = ["~/src"];
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/direnv/direnv.toml`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/direnv/direnv.toml`.
         Please reference [direnv's documentation] for config options.
 
         [direnv's documentation]: https://direnv.net/man/direnv.toml.1.html
@@ -72,12 +72,12 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/direnv/direnv.toml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files = {
+      "direnv/direnv.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "direnv-config.toml" cfg.settings
       );
-      ".config/direnv/direnvrc".text = mkIf (cfg.direnvrc != "") cfg.direnvrc;
-      ".config/direnv/lib/nix-direnv.sh".source = mkIf cfg.integrations.nix-direnv.enable "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";
+      "direnv/direnvrc".text = mkIf (cfg.direnvrc != "") cfg.direnvrc;
+      "direnv/lib/nix-direnv.sh".source = mkIf cfg.integrations.nix-direnv.enable "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";
     };
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (

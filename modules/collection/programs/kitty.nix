@@ -29,7 +29,7 @@ in {
         font_family = "RobotoMono";
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/kitty/kitty.conf`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/kitty/kitty.conf`.
         Please reference [kitty's documentation] for config options.
 
         [kitty's documentation]: https://sw.kovidgoyal.net/kitty/conf/
@@ -42,7 +42,7 @@ in {
         default = null;
         example = "${pkgs.kitty-themes}/share/kitty-themes/themes/1984_light.conf";
         description = ''
-          Light theme to be linked to {file}`$HOME/.config/kitty/light-theme.auto.conf`.
+          Light theme to be linked to {file}`$XDG_CONFIG_HOME/kitty/light-theme.auto.conf`.
           This theme is set when your OS theme is set to light.
 
           Please reference [kitty-themes' repository] for available themes.
@@ -55,7 +55,7 @@ in {
         default = null;
         example = "${pkgs.kitty-themes}/share/kitty-themes/themes/1984_dark.conf";
         description = ''
-          Dark theme to be linked to {file}`$HOME/.config/kitty/dark-theme.auto.conf`.
+          Dark theme to be linked to {file}`$XDG_CONFIG_HOME/kitty/dark-theme.auto.conf`.
           This theme is set when your OS theme is set to dark.
 
           Please reference [kitty-themes' repository] for available themes.
@@ -68,7 +68,7 @@ in {
         default = null;
         example = "${pkgs.kitty-themes}/share/kitty-themes/themes/default.conf";
         description = ''
-          no-preference theme to be linked to {file}`$HOME/.config/kitty/no-preference-theme.auto.conf`.
+          no-preference theme to be linked to {file}`$XDG_CONFIG_HOME/kitty/no-preference-theme.auto.conf`.
           This theme is set when your OS does not specify any theme preference.
 
           Please reference [kitty-themes' repository] for available themes.
@@ -86,16 +86,16 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/kitty/kitty.conf".source = mkIf (cfg.settings != {}) (
+    xdg.config.files = {
+      "kitty/kitty.conf".source = mkIf (cfg.settings != {}) (
         kittyKeyValue.generate "kitty.conf" (
           cfg.settings
           // optionalAttrs (cfg.integrations.fish.enable || cfg.integrations.zsh.enable) {shell_integration = "no-rc";}
         )
       );
-      ".config/kitty/light-theme.auto.conf".source = mkIf (cfg.theme.light != null) cfg.theme.light;
-      ".config/kitty/dark-theme.auto.conf".source = mkIf (cfg.theme.dark != null) cfg.theme.dark;
-      ".config/kitty/no-preference-theme.auto.conf".source = mkIf (cfg.theme.no-preference != null) cfg.theme.no-preference;
+      "kitty/light-theme.auto.conf".source = mkIf (cfg.theme.light != null) cfg.theme.light;
+      "kitty/dark-theme.auto.conf".source = mkIf (cfg.theme.dark != null) cfg.theme.dark;
+      "kitty/no-preference-theme.auto.conf".source = mkIf (cfg.theme.no-preference != null) cfg.theme.no-preference;
     };
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
