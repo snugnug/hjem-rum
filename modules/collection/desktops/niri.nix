@@ -26,7 +26,9 @@
                 then boolToString value
                 else if isInt value
                 then toString value
-                else value
+                else if isNull value
+                then "null"
+                else ''"${value}"''
             ))
             (mapAttrsToList (name: value: "${name}=${value}"))
             (concatStringsSep " ")
@@ -46,16 +48,10 @@
     )
     spawn;
 
-  niriEnvironment = let
-    variables = pipe (config.environment.sessionVariables // cfg.extraVariables) [
-      (mapAttrsToList (n: v: n + " \"${v}\""))
-      (concatStringsSep "\n")
-    ];
-  in ''
-    environment {
-      ${variables}
-    }
-  '';
+  niriEnvironment = pipe (config.environment.sessionVariables // cfg.extraVariables) [
+    (mapAttrsToList (n: v: n + " \"${v}\""))
+    (concatStringsSep "\n")
+  ];
 
   bindsModule = submodule {
     options = {
@@ -184,10 +180,6 @@ in {
       example = literalExpression ''
         screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
-        output ${config.monitors.secondary.name} {
-          off
-        }
-
         switch-events {
           tablet-mode-on { spawn "${getExe pkgs.bash}" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
           tablet-mode-off { spawn "${getExe pkgs.bash}" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
@@ -211,12 +203,14 @@ in {
         (pkgs.writeText "generated-niri-config" (
           concatStringsSep "\n" [
             ''
-              binds{
+              environment {
+                ${niriEnvironment}
+              }
+              binds {
                 ${toNiriBinds cfg.binds}
               }
             ''
             (toNiriSpawnAtStartup cfg.spawn-at-startup)
-            niriEnvironment
             cfg.extraConfig
           ]
         ))
