@@ -33,8 +33,15 @@
             (mapAttrsToList (name: value: "${name}=${value}"))
             (concatStringsSep " ")
           ];
-          action =
-            if isNull bindOptions.spawn
+          action = let
+            spawnIsNull = isNull bindOptions.spawn;
+            actionIsNull = isNull bindOptions.action;
+          in
+            if spawnIsNull && actionIsNull
+            then throw "${bind} is missing an action or spawn to perform."
+            else if !spawnIsNull && !actionIsNull
+            then throw "${bind} cannot be assigned both an action and a spawn. Only one may be set."
+            else if spawnIsNull
             then bindOptions.action
             else "spawn " + toNiriSpawn bindOptions.spawn;
         in "${bind} ${parameters} {${action};}"
