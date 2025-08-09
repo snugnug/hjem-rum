@@ -1,0 +1,6 @@
+cursor_trail 5
+font_family RobotoMono
+map ctrl+backspace send_text all \x17
+map ctrl+k kitten /nix/store/kitten.py foo
+map ctrl+shift+t new_tab_with_cwd
+shell_integration no-rc

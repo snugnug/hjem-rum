@@ -1,0 +1,9 @@
+[General]
+disabledTrayIcon=true
+saveLastRegion=true
+showDesktopNotification=false
+showStartupLaunchMessage=false
+
+[Shortcuts]
+TYPE_ARROW=A
+TYPE_CIRCLE=C
