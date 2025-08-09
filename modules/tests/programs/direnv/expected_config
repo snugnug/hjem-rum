@@ -1,5 +1,0 @@
-[global]
-warn_timeout = "0s"
-
-[whitelist]
-prefix = ["~/src"]
