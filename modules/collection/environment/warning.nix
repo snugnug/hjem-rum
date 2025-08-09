@@ -14,7 +14,9 @@
     config.rum.programs.zsh.enable
     config.rum.programs.fish.enable
     config.rum.programs.nushell.enable
+
     config.rum.desktops.hyprland.enable
+    config.rum.desktops.niri.enable
   ];
 
   cfg = config.rum.environment;

@@ -83,7 +83,7 @@
         import ./modules/tests {
           inherit self pkgs;
           inherit (nixpkgs) lib;
-          testDirectory = ./modules/tests/programs;
+          testDirectory = ./modules/tests/collection;
         }
     );
 
