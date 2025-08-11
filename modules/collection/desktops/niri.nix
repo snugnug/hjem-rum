@@ -94,7 +94,7 @@
         description = ''
           [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
 
-          The paramaters to append to the bind. See [niri's wiki] for a complete list.
+          The parameters to append to the bind. See [niri's wiki] for a complete list.
         '';
       };
     };
@@ -122,6 +122,11 @@ in {
           };
         };
       };
+      description = ''
+        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+
+        A list of key bindings that will be added to the configuration file. See [niri's wiki] for a complete list.
+      '';
     };
     spawn-at-startup = mkOption {
       type = listOf (listOf str);
@@ -131,6 +136,11 @@ in {
           ["waybar"]
           ["${getExe pkgs.alacritty}" "-e" "fish"]
         ]
+      '';
+      description = ''
+        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous
+
+        A list of programs to be loaded with niri on startup. see [niri's wiki] for more details on the API.
       '';
     };
     extraVariables = mkOption {
