@@ -8,7 +8,7 @@
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkEnableOption mkOption literalExpression;
+  inherit (lib.options) mkEnableOption mkOption literalExpression mkPackageOption;
   inherit (lib.strings) concatMapStringsSep optionalString;
   inherit (lib.trivial) pipe boolToString;
   inherit (lib.types) listOf path attrsOf anything str lines submodule nullOr int oneOf;
@@ -116,6 +116,13 @@
 in {
   options.rum.desktops.niri = {
     enable = mkEnableOption "niri: A scrollable-tiling Wayland compositor";
+    package = mkPackageOption pkgs "niri" {
+      nullable = true;
+      extraDescription = ''
+        Only used to validate the generated config file. Set to `null` to
+        disable the check phase.
+      '';
+    };
     binds = mkOption {
       type = attrsOf bindsModule;
       default = {};
@@ -244,8 +251,8 @@ in {
           ]
         ))
       ];
-      checkPhase = ''
-        ${getExe pkgs.niri} validate -c "$file"
+      checkPhase = optionalString (cfg.package != null) ''
+        ${getExe cfg.package} validate -c "$file"
       '';
     };
   };
