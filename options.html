@@ -64,7 +64,7 @@
     <details class="toc-category">
       <summary title="rum.desktops">
         <span>rum.desktops</span>
-        <span class="toc-count">5</span>
+        <span class="toc-count">14</span>
       </summary>
       <ul>
         
@@ -105,6 +105,78 @@
         <li>
           <a href="#option-rum-desktops-hyprland-settings" title="rum.desktops.hyprland.settings">
             hyprland.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-binds" title="rum.desktops.niri.binds">
+            niri.binds
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-binds-&lt;name&gt;-action" title="rum.desktops.niri.binds.&lt;name&gt;.action">
+            niri.binds.&lt;name&gt;.action
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-binds-&lt;name&gt;-parameters" title="rum.desktops.niri.binds.&lt;name&gt;.parameters">
+            niri.binds.&lt;name&gt;.parameters
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-binds-&lt;name&gt;-spawn" title="rum.desktops.niri.binds.&lt;name&gt;.spawn">
+            niri.binds.&lt;name&gt;.spawn
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-configFile" title="rum.desktops.niri.configFile">
+            niri.configFile
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-enable" title="rum.desktops.niri.enable">
+            niri.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-extraConfig" title="rum.desktops.niri.extraConfig">
+            niri.extraConfig
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-extraVariables" title="rum.desktops.niri.extraVariables">
+            niri.extraVariables
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-desktops-niri-spawn-at-startup" title="rum.desktops.niri.spawn-at-startup">
+            niri.spawn-at-startup
             
             
           </a>
@@ -1476,6 +1548,183 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/hyprland.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/hyprland.nix&gt;</a></code></div>
 </div>
+<div class="option" id="option-rum-desktops-niri-binds">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-binds" class="option-anchor">rum.desktops.niri.binds</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of (submodule)</code></div>
+  <div class="option-description"><p>A list of key bindings that will be added to the configuration file. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for a complete list.</p>
+</div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  "Mod+D" = {
+    action = "close-window";
+    parameters = {
+      repeat = false;
+    };
+  };
+  "Mod+Return" = {
+    parameters = {
+      allow-when-locked = true;
+      cooldown-ms = 150;
+    };
+    spawn = [
+      "foot"
+      "-e"
+      "fish"
+    ];
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-binds-&lt;name&gt;-action">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-binds-&lt;name&gt;-action" class="option-anchor">rum.desktops.niri.binds.&lt;name&gt;.action</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or string</code></div>
+  <div class="option-description"><p>The non-spawn action to run on button-press. For spawning processes, please see
+<code class="nixos-option">binds.<keybind>.spawn</code>. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for a complete list.</p>
+</div>
+  <div class="option-default">Default: <code>null</code></div>
+  <div class="option-example">Example: <code>"focus-column-left"</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-binds-&lt;name&gt;-parameters">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-binds-&lt;name&gt;-parameters" class="option-anchor">rum.desktops.niri.binds.&lt;name&gt;.parameters</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of anything</code></div>
+  <div class="option-description"><p>The parameters to append to the bind. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for a complete list.</p>
+</div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  allow-when-locked = true;
+  cooldown-ms = 150;
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-binds-&lt;name&gt;-spawn">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-binds-&lt;name&gt;-spawn" class="option-anchor">rum.desktops.niri.binds.&lt;name&gt;.spawn</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or (list of string)</code></div>
+  <div class="option-description"><p>The spawn action to run on button-press. For other actions, please see
+<code class="nixos-option">binds.<keybind>.actions</code>. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for more information.</p>
+</div>
+  <div class="option-default">Default: <code>null</code></div>
+  <div class="option-example">Example: <pre><code>[
+  "foot"
+  "-e"
+  "fish"
+]</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-configFile">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-configFile" class="option-anchor">rum.desktops.niri.configFile</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>absolute path</code></div>
+  <div class="option-description"><p>Concat with generated files and symlinked to <code class="file-path">$HOME/niri/config.kdl</code>. See a full
+list of options in <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction">niri's wiki</a>.
+To add to environment, please use <code class="nixos-option">environment.sessionVariables</code>.</p>
+<p>You can also modularize your config by using <a href="options.html#option-pkgs-concatText" class="option-reference"><code>pkgs.concatText</code></a>:</p>
+<pre><code class="language-nix">  configFile = pkgs.concatText &quot;full-config.kdl&quot; [
+    input.kdl
+    rules.kdl
+  ];
+</code></pre><p>You could even optionally import certain files using something like this:</p>
+<pre><code class="language-nix">  # lib.flatten takes the elements of lists inside a list and moves them into one list
+  configFiles = pkgs.concatText &quot;full-config.kdl&quot; (lib.flatten [
+    ./config.kdl
+    (lib.optional (config.powersave.enable) ./laptop-config.kdl)
+    (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl
+  ]);
+  ;
+</code></pre><p>Be warned, however, that some KDL nodes (such as <code>binds</code>) cannot have duplicates. However, this
+should work great for <code>window-rule</code>s, <code>output</code>s, and other such situations.</p>
+</div>
+  <div class="option-default">Default: <code>[ ]</code></div>
+  <div class="option-example">Example: <code>"./config.kdl"</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-enable" class="option-anchor">rum.desktops.niri.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable niri: A scrollable-tiling Wayland compositor.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-extraConfig">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-extraConfig" class="option-anchor">rum.desktops.niri.extraConfig</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
+  <div class="option-description"><p>Lines of KDL code that are added to <code class="file-path">$HOME/.config/niri/config.kdl</code>.
+See a full list of options in <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction">niri's wiki</a>.
+To add to environment, please use <code class="nixos-option">environment.sessionVariables</code>.</p>
+</div>
+  <div class="option-default">Default: <code>""</code></div>
+  <div class="option-example">Example: <pre><code>screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+switch-events {
+  tablet-mode-on { spawn "${pkgs.bash.out}/bin/bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
+  tablet-mode-off { spawn "${pkgs.bash.out}/bin/bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
+}
+</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-extraVariables">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-extraVariables" class="option-anchor">rum.desktops.niri.extraVariables</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of string</code></div>
+  <div class="option-description"><p>Extra environmental variables to be added to Niri's <code>enviroment</code> node.
+This can be used to override variables set in <code class="nixos-option">enviroment.sessionVariables</code>.
+You can therefore set a variable to <code>null</code> to force unset it in Niri.</p>
+</div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  DISPLAY = ":0";
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-spawn-at-startup">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-spawn-at-startup" class="option-anchor">rum.desktops.niri.spawn-at-startup</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>list of list of string</code></div>
+  <div class="option-description"><p>A list of programs to be loaded with niri on startup. see <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous">niri's wiki</a> for more details on the API.</p>
+</div>
+  <div class="option-default">Default: <code>[ ]</code></div>
+  <div class="option-example">Example: <pre><code>[
+  ["waybar"]
+  ["${pkgs.alacritty.out}/bin/alacritty" "-e" "fish"]
+]
+</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
 <div class="option" id="option-rum-environment-hideWarning">
   <h3 class="option-name">
     <a href="#option-rum-environment-hideWarning" class="option-anchor">rum.environment.hideWarning</a>
@@ -1520,7 +1769,7 @@ Each entry should have one of the following formats:</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
-  <div class="option-description"><p>CSS to be written to <code class="file-path">$HOME/.config/gtk-3.0/gtk.css</code>.
+  <div class="option-description"><p>CSS to be written to <code class="file-path">$XDG_CONFIG_HOME/gtk-3.0/gtk.css</code>.
 You can either use this as lines or you can reference
 a CSS file from your theme's package (or both).</p>
 </div>
@@ -1534,7 +1783,7 @@ a CSS file from your theme's package (or both).</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
-  <div class="option-description"><p>CSS to be written to <code class="file-path">$HOME/.config/gtk-4.0/gtk.css</code>.
+  <div class="option-description"><p>CSS to be written to <code class="file-path">$XDG_CONFIG_HOME/gtk-4.0/gtk.css</code>.
 You can either use this as lines or you can reference
 a CSS file from your theme's package (or both).</p>
 </div>
@@ -1631,7 +1880,7 @@ to it, so there is no need to include that on every single option.</p>
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
   <div class="option-description"><p>The configuration converted into TOML and written to
-<code class="file-path">$HOME/.config/alacritty/alacritty.toml</code>.
+<code class="file-path">$XDG_CONFIG_HOME/alacritty/alacritty.toml</code>.
 Please reference <a href="https://alacritty.org/config-alacritty.html">Alacritty's documentation</a>
 for config options.</p>
 </div>
@@ -1690,8 +1939,8 @@ available plugins.</p>
     <span class="copy-link" title="Copy link to this option"></span>
     <span class="copy-feedback">Link copied!</span>
   </h3>
-  <div class="option-type">Type: <code>YAML value</code></div>
-  <div class="option-description"><p>Beets configuration that is written to <code class="file-path">$HOME/.config/beets/config.yaml</code>.
+  <div class="option-type">Type: <code>YAML 1.1 value</code></div>
+  <div class="option-description"><p>Beets configuration that is written to <code class="file-path">$XDG_CONFIG_HOME/beets/config.yaml</code>.
 Refer to the beets <a href="https://beets.readthedocs.io/en/stable/reference/config.html">documentation</a> for available options.</p>
 <p>If you would like to use plugins, please consult the description of
 <a href="#option-rum-programs-beets-package">rum.programs.beets.package</a> and the
@@ -1750,7 +1999,7 @@ Refer to the beets <a href="https://beets.readthedocs.io/en/stable/reference/con
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
   <div class="option-description"><p>The configuration converted into TOML and written to
-<code class="file-path">$HOME/.config/bottom/bottom.toml</code>.</p>
+<code class="file-path">$XDG_CONFIG_HOME/bottom/bottom.toml</code>.</p>
 <p>Please reference <a href="https://bottom.pages.dev/stable/configuration/config-file">bottom's config file documentation</a>
 for config options.</p>
 </div>
@@ -1887,7 +2136,7 @@ Find community-maintained examples in <a href="https://github.com/direnv/direnv/
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/direnv/direnv.toml</code>.
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/direnv/direnv.toml</code>.
 Please reference <a href="https://direnv.net/man/direnv.toml.1.html">direnv's documentation</a> for config options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -1947,8 +2196,8 @@ Please reference <a href="https://direnv.net/man/direnv.toml.1.html">direnv's do
   </h3>
   <div class="option-type">Type: <code>attribute set of strings concatenated with "\n"</code></div>
   <div class="option-description"><p>Extra configuration files, they will all be written verbatim
-to <code>.config/fish/conf.d/&lt;name&gt;.fish</code>.</p>
-<p>Those files are run before <code>.config/fish/config.fish</code> as per the <a href="https://fishshell.com/docs/current/language.html#configuration-files">fish documentation</a>.</p>
+to <code class="file-path">$XDG_CONFIG_HOME/fish/conf.d/<name>.fish</code>.</p>
+<p>Those files are run before <code class="file-path">$XDG_CONFIG_HOME/fish/config.fish</code> as per the <a href="https://fishshell.com/docs/current/language.html#configuration-files">fish documentation</a>.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
   <div class="option-example">Example: <pre><code>{
@@ -2084,7 +2333,7 @@ It will attempt to handle or source a variety of expected files from the derivat
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of section of an INI file (attrs of INI atom (null, bool, int, float or string))</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/flameshot/flameshot.ini</code>.
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/flameshot/flameshot.ini</code>.
 Please reference <a href="https://github.com/flameshot-org/flameshot/blob/master/flameshot.example.ini">flameshot's example config</a> for config options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2130,7 +2379,7 @@ Please reference <a href="https://github.com/flameshot-org/flameshot/blob/master
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of section of an INI file (attrs of INI atom (null, bool, int, float or string))</code></div>
-  <div class="option-description"><p>Settings are written as an INI file to <code class="file-path">$HOME/.config/foot/foot.ini</code>.</p>
+  <div class="option-description"><p>Settings are written as an INI file to <code class="file-path">$XDG_CONFIG_HOME/foot/foot.ini</code>.</p>
 <p>Refer to <a href="https://man.archlinux.org/man/foot.ini.5.en" class="manpage-reference">foot.ini(5)</a> or the <a href="https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes">upstream template</a>
 for all available options.</p>
 </div>
@@ -2283,7 +2532,7 @@ for all available options.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of section of an INI file (attrs of INI atom (null, bool, int, float or string))</code></div>
-  <div class="option-description"><p>Settings are written as an INI file to <code class="file-path">$HOME/.config/gammastep/config.ini</code>.
+  <div class="option-description"><p>Settings are written as an INI file to <code class="file-path">$XDG_CONFIG_HOME/gammastep/config.ini</code>.
 Refer to <a href="https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample">gammastep's example configuration</a> all available options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2335,7 +2584,7 @@ Refer to <a href="https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of (atom (null, bool, int, float or string) or a list of them for duplicate keys)</code></div>
-  <div class="option-description"><p>The configuration converted to INI and written to <code class="file-path">$HOME/.config/ghostty/config</code>.
+  <div class="option-description"><p>The configuration converted to INI and written to <code class="file-path">$XDG_CONFIG_HOME/ghostty/config</code>.
 Please consult <a href="https://ghostty.org/docs/config/reference">Ghostty's option reference</a>
 for configuration options.</p>
 </div>
@@ -2400,7 +2649,7 @@ for configuration options.</p>
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
   <div class="option-description"><p>Global user-level version of .gitattributes written to
-<code class="file-path">$HOME/.config/git/attributes</code>.</p>
+<code class="file-path">$XDG_CONFIG_HOME/git/attributes</code>.</p>
 </div>
   <div class="option-default">Default: <code>""</code></div>
   <div class="option-example">Example: <pre><code>''
@@ -2433,7 +2682,7 @@ for configuration options.</p>
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
   <div class="option-description"><p>Global user-level version of .gitignore written to
-<code class="file-path">$HOME/.config/git/ignore</code>.</p>
+<code class="file-path">$XDG_CONFIG_HOME/git/ignore</code>.</p>
 </div>
   <div class="option-default">Default: <code>""</code></div>
   <div class="option-example">Example: <pre><code>''
@@ -2544,7 +2793,7 @@ configuration options.</p>
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
   <div class="option-description"><p>The languages configurations converted into TOML and written to
-<code class="file-path">$HOME/.config/helix/languages.toml</code>. Please reference
+<code class="file-path">$XDG_CONFIG_HOME/helix/languages.toml</code>. Please reference
 <a href="https://docs.helix-editor.com/languages.html">Helix's language documentation</a> for config options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2577,7 +2826,7 @@ configuration options.</p>
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
   <div class="option-description"><p>The editor configuration converted into TOML and written to
-<code class="file-path">$HOME/.config/helix/config.toml</code>. Please reference
+<code class="file-path">$XDG_CONFIG_HOME/helix/config.toml</code>. Please reference
 <a href="https://docs.helix-editor.com/editor.html">Helix's documentation</a> for config options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2604,7 +2853,7 @@ configuration options.</p>
   </h3>
   <div class="option-type">Type: <code>attribute set of (TOML value)</code></div>
   <div class="option-description"><p>The custom themes converted into TOML and written to
-<code class="file-path">$HOME/.config/helix/themes/</code>. Please reference
+<code class="file-path">$XDG_CONFIG_HOME/helix/themes/</code>. Please reference
 <a href="https://docs.helix-editor.com/themes.html">Helix's theming documentation</a> for config options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2758,7 +3007,7 @@ configuration options.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of section of an INI file (attrs of INI atom (null, bool, int, float or string))</code></div>
-  <div class="option-description"><p>Settings are written as an INI file to <code class="file-path">$HOME/.config/keepassxc/keepassxc.ini</code>. Please reference
+  <div class="option-description"><p>Settings are written as an INI file to <code class="file-path">$XDG_CONFIG_HOME/keepassxc/keepassxc.ini</code>. Please reference
 <a href="https://keepassxc.org/docs/KeePassXC_UserGuide">KeePassXC's User Guide</a>.</p>
 <p>It also can be configured by toggling options through the GUI, but this does not seem documented.</p>
 </div>
@@ -2837,7 +3086,7 @@ configuration options.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of (atom (null, bool, int, float or string) or a list of them for duplicate keys)</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/kitty/kitty.conf</code>.
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/kitty/kitty.conf</code>.
 Please reference <a href="https://sw.kovidgoyal.net/kitty/conf/">kitty's documentation</a> for config options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2853,7 +3102,7 @@ Please reference <a href="https://sw.kovidgoyal.net/kitty/conf/">kitty's documen
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>null or absolute path</code></div>
-  <div class="option-description"><p>Dark theme to be linked to <code class="file-path">$HOME/.config/kitty/dark-theme.auto.conf</code>.
+  <div class="option-description"><p>Dark theme to be linked to <code class="file-path">$XDG_CONFIG_HOME/kitty/dark-theme.auto.conf</code>.
 This theme is set when your OS theme is set to dark.</p>
 <p>Please reference <a href="https://github.com/kovidgoyal/kitty-themes">kitty-themes' repository</a> for available themes.</p>
 </div>
@@ -2868,7 +3117,7 @@ This theme is set when your OS theme is set to dark.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>null or absolute path</code></div>
-  <div class="option-description"><p>Light theme to be linked to <code class="file-path">$HOME/.config/kitty/light-theme.auto.conf</code>.
+  <div class="option-description"><p>Light theme to be linked to <code class="file-path">$XDG_CONFIG_HOME/kitty/light-theme.auto.conf</code>.
 This theme is set when your OS theme is set to light.</p>
 <p>Please reference <a href="https://github.com/kovidgoyal/kitty-themes">kitty-themes' repository</a> for available themes.</p>
 </div>
@@ -2883,7 +3132,7 @@ This theme is set when your OS theme is set to light.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>null or absolute path</code></div>
-  <div class="option-description"><p>no-preference theme to be linked to <code class="file-path">$HOME/.config/kitty/no-preference-theme.auto.conf</code>.
+  <div class="option-description"><p>no-preference theme to be linked to <code class="file-path">$XDG_CONFIG_HOME/kitty/no-preference-theme.auto.conf</code>.
 This theme is set when your OS does not specify any theme preference.</p>
 <p>Please reference <a href="https://github.com/kovidgoyal/kitty-themes">kitty-themes' repository</a> for available themes.</p>
 </div>
@@ -2897,8 +3146,8 @@ This theme is set when your OS does not specify any theme preference.</p>
     <span class="copy-link" title="Copy link to this option"></span>
     <span class="copy-feedback">Link copied!</span>
   </h3>
-  <div class="option-type">Type: <code>YAML value</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/lsd/colors.yaml</code>, defining the colors used by lsd.
+  <div class="option-type">Type: <code>YAML 1.1 value</code></div>
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/lsd/colors.yaml</code>, defining the colors used by lsd.
 Please reference <a href="https://github.com/lsd-rs/lsd#color-theme-file-content">lsd's color theme example</a> to configure it accordingly.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2931,8 +3180,8 @@ Please reference <a href="https://github.com/lsd-rs/lsd#color-theme-file-content
     <span class="copy-link" title="Copy link to this option"></span>
     <span class="copy-feedback">Link copied!</span>
   </h3>
-  <div class="option-type">Type: <code>YAML value</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/lsd/icons.yaml</code>, defining the icons used by lsd.
+  <div class="option-type">Type: <code>YAML 1.1 value</code></div>
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/lsd/icons.yaml</code>, defining the icons used by lsd.
 Please reference <a href="https://github.com/lsd-rs/lsd#icon-theme">lsd's icon theme example</a> to configure it accordingly.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2963,8 +3212,8 @@ Please reference <a href="https://github.com/lsd-rs/lsd#icon-theme">lsd's icon t
     <span class="copy-link" title="Copy link to this option"></span>
     <span class="copy-feedback">Link copied!</span>
   </h3>
-  <div class="option-type">Type: <code>YAML value</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/lsd/config.yaml</code>, defining lsd settings.
+  <div class="option-type">Type: <code>YAML 1.1 value</code></div>
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/lsd/config.yaml</code>, defining lsd settings.
 Please reference  <a href="https://github.com/lsd-rs/lsd#config-file-content">lsd's example configuration</a> to configure it accordingly.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2983,7 +3232,7 @@ Please reference  <a href="https://github.com/lsd-rs/lsd#config-file-content">ls
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of list of (submodule)</code></div>
-  <div class="option-description"><p>Custom bindings configuration written to <code class="file-path">$HOME/.config/ncmpcpp/bindings</code>.
+  <div class="option-description"><p>Custom bindings configuration written to <code class="file-path">$XDG_CONFIG_HOME/ncmpcpp/bindings</code>.
 Please reference <a href="https://man.archlinux.org/man/ncmpcpp.1" class="manpage-reference">ncmpcpp(1)</a> to configure it accordingly, or consult
 <a href="https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/bindings">ncmpcpp's example bindings file</a>.</p>
 <p>The lists are separated between keys, for actions ran on keypresses, and commands, for actions ran
@@ -3108,7 +3357,7 @@ on commands. The option's example demonstrates this greatly.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of (signed integer or string or boolean)</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/ncmpcpp/config</code>.
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/ncmpcpp/config</code>.
 Please reference <a href="https://man.archlinux.org/man/ncmpcpp.1" class="manpage-reference">ncmpcpp(1)</a> to configure it accordingly, or consult <a href="https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config">ncmpcpp's example configuration</a>.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -3192,7 +3441,7 @@ Please reference <a href="https://man.archlinux.org/man/ncmpcpp.1" class="manpag
   </h3>
   <div class="option-type">Type: <code>attribute set of anything</code></div>
   <div class="option-description"><p>A set of aliases for nushell, converted into nu and written to
-<code class="file-path">$HOME/.config/nushell/config.nu</code>. Please note that we cannot
+<code class="file-path">$XDG_CONFIG_HOME/nushell/config.nu</code>. Please note that we cannot
 handle complex aliases that use <code>def</code> at this time.</p>
 <p>Please see <a href="https://www.nushell.sh/book/aliases.html">The Nushell Book</a> for a simple tutorial.</p>
 </div>
@@ -3223,9 +3472,9 @@ handle complex aliases that use <code>def</code> at this time.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
-  <div class="option-description"><p>Extra configuration to be written to <code class="file-path">$HOME/.config/nushell/env.nu</code>.
+  <div class="option-description"><p>Extra configuration to be written to <code class="file-path">$XDG_CONFIG_HOME/nushell/env.nu</code>.
 Please keep in mind that the upstream documentation generally advises against
-writing to this file, and instead suggests using <code class="file-path">$HOME/.config/nushell/config.nu</code>.</p>
+writing to this file, and instead suggests using <code class="file-path">$XDG_CONFIG_HOME/nushell/config.nu</code>.</p>
 <p>See <a href="https://www.nushell.sh/book/configuration.html">The Nushell Book</a> for more info.</p>
 </div>
   <div class="option-default">Default: <code>""</code></div>
@@ -3238,7 +3487,7 @@ writing to this file, and instead suggests using <code class="file-path">$HOME/.
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
-  <div class="option-description"><p>Extra configuration to be written to <code class="file-path">$HOME/.config/nushell/config.nu</code>.</p>
+  <div class="option-description"><p>Extra configuration to be written to <code class="file-path">$XDG_CONFIG_HOME/nushell/config.nu</code>.</p>
 <p>Please see <a href="https://www.nushell.sh/book/configuration.html">The Nushell Book</a> for more info.</p>
 </div>
   <div class="option-default">Default: <code>""</code></div>
@@ -3262,7 +3511,7 @@ writing to this file, and instead suggests using <code class="file-path">$HOME/.
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
   <div class="option-description"><p>Nushell may be used as a login shell, so this option writes to
-<code class="file-path">$HOME/.config/nushell/login.nu</code> to allow you to configure
+<code class="file-path">$XDG_CONFIG_HOME/nushell/login.nu</code> to allow you to configure
 nushell as your login shell.</p>
 <p>Please recognize that this is mainly for advanced users and is not
 for the faint of heart. Direct your questions and concerns to
@@ -3311,7 +3560,7 @@ nushell plugin registry.</p>
   <div class="option-type">Type: <code>attribute set of anything</code></div>
   <div class="option-description"><p>A set of options for nushell, flattened, prepended with <code>$env.config</code> to avoid overwriting
 (tables of config are overwritten if they occupy the same namespace). It is then written
-to <code class="file-path">$HOME/.config/nushell/config.nu</code>.</p>
+to <code class="file-path">$XDG_CONFIG_HOME/nushell/config.nu</code>.</p>
 <p>Please see <a href="https://www.nushell.sh/book/configuration.html">The Nushell Book</a> for configuration options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -3382,7 +3631,7 @@ package = pkgs.wrapOBS.override {
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
   <div class="option-description"><p>Sets of keymaps and actions converted into TOML and written to
-<code class="file-path">$HOME/.config/spotify-player/keymap.toml</code>.
+<code class="file-path">$XDG_CONFIG_HOME/spotify-player/keymap.toml</code>.
 See example for how to format declarations.</p>
 <p>Please reference <a href="https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps">spotify_player's keymaps documentation</a>
 for more information.</p>
@@ -3437,7 +3686,7 @@ baked into the package.</p>
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
   <div class="option-description"><p>The configuration converted into TOML and written to
-<code class="file-path">$HOME/.config/spotify-player/app.toml</code>.</p>
+<code class="file-path">$XDG_CONFIG_HOME/spotify-player/app.toml</code>.</p>
 <p>Please reference <a href="https://github.com/aome510/spotify-player/blob/master/docs/config.md#general">spotify_player's configuration documentation</a>
 for configuration options.</p>
 </div>
@@ -3461,7 +3710,7 @@ for configuration options.</p>
   </h3>
   <div class="option-type">Type: <code>list of (TOML value)</code></div>
   <div class="option-description"><p>The theme converted into TOML and written to
-<code class="file-path">$HOME/.config/spotify-player/themes.toml</code>.</p>
+<code class="file-path">$XDG_CONFIG_HOME/spotify-player/themes.toml</code>.</p>
 <p>Please reference <a href="https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes">spotify_player's theme documentation</a>
 for configuration options.</p>
 </div>
@@ -3580,7 +3829,7 @@ for configuration options.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
-  <div class="option-description"><p>The configuration converted to TOML and written to <code class="file-path">$HOME/.config/starship.toml</code>.
+  <div class="option-description"><p>The configuration converted to TOML and written to <code class="file-path">$XDG_CONFIG_HOME/starship.toml</code>.
 Please reference <a href="https://starship.rs/config">Starship's documentation</a> for configuration options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -3640,7 +3889,7 @@ Please reference <a href="https://starship.rs/config">Starship's documentation</
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>TOML value</code></div>
-  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/tealdeer/config.toml</code>.
+  <div class="option-description"><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/tealdeer/config.toml</code>.
 Please reference <a href="https://tealdeer-rs.github.io/tealdeer/config.html">tealdeer's documentation</a> for config options.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -3684,7 +3933,7 @@ Please reference <a href="https://tealdeer-rs.github.io/tealdeer/config.html">te
   </h3>
   <div class="option-type">Type: <code>attribute set of (string or absolute path or boolean or signed integer or floating point number)</code></div>
   <div class="option-description"><p>The configuration converted into "key = value" and written to
-<code class="file-path">$HOME/.config/tofi/config</code>. Please reference
+<code class="file-path">$XDG_CONFIG_HOME/tofi/config</code>. Please reference
 <a href="https://github.com/philj56/tofi/blob/master/doc/tofi.5.md" class="manpage-reference">tofi(5)</a>, or see an example at
 <a href="https://github.com/philj56/tofi/blob/master/doc/config">tofi's default configuration</a>.</p>
 </div>
@@ -3729,7 +3978,7 @@ Please reference <a href="https://tealdeer-rs.github.io/tealdeer/config.html">te
   </h3>
   <div class="option-type">Type: <code>JSON value</code></div>
   <div class="option-description"><p>The configuration converted into JSON and written to
-<code class="file-path">$HOME/.config/Code/User/settings.json</code>.</p>
+<code class="file-path">$XDG_CONFIG_HOME/Code/User/settings.json</code>.</p>
 <p>Please reference <a href="https://code.visualstudio.com/docs/getstarted/settings#_settings-json-file">Visual Studio Code's official documentation</a>
 for more information.</p>
 </div>
