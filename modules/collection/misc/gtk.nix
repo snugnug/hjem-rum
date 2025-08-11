@@ -63,7 +63,7 @@ in {
         type = lines;
         default = "";
         description = ''
-          CSS to be written to {file}`$HOME/.config/gtk-3.0/gtk.css`.
+          CSS to be written to {file}`$XDG_CONFIG_HOME/gtk-3.0/gtk.css`.
           You can either use this as lines or you can reference
           a CSS file from your theme's package (or both).
         '';
@@ -72,7 +72,7 @@ in {
         type = lines;
         default = "";
         description = ''
-          CSS to be written to {file}`$HOME/.config/gtk-4.0/gtk.css`.
+          CSS to be written to {file}`$XDG_CONFIG_HOME/gtk-4.0/gtk.css`.
           You can either use this as lines or you can reference
           a CSS file from your theme's package (or both).
         '';
@@ -105,20 +105,22 @@ in {
 
     inherit (cfg) packages;
 
-    files = (
+    files = optionalAttrs (cfg.settings != {}) {
+      ".gtkrc-2.0".text = toGtk2Text {inherit (cfg) settings;};
+    };
+    xdg.config.files = (
       optionalAttrs (cfg.settings != {}) {
-        ".gtkrc-2.0".text = toGtk2Text {inherit (cfg) settings;};
-        ".config/gtk-3.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
-        ".config/gtk-4.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
+        "gtk-3.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
+        "gtk-4.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
       }
       // optionalAttrs (cfg.css.gtk3 != "") {
-        ".config/gtk-3.0/gtk.css".text = cfg.css.gtk3;
+        "gtk-3.0/gtk.css".text = cfg.css.gtk3;
       }
       // optionalAttrs (cfg.css.gtk4 != "") {
-        ".config/gtk-4.0/gtk.css".text = cfg.css.gtk4;
+        "gtk-4.0/gtk.css".text = cfg.css.gtk4;
       }
       // optionalAttrs (cfg.bookmarks != []) {
-        ".config/gtk-3.0/bookmarks".text = concatStringsSep "\n" cfg.bookmarks;
+        "gtk-3.0/bookmarks".text = concatStringsSep "\n" cfg.bookmarks;
       }
     );
 

@@ -25,7 +25,7 @@ in {
         };
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/tealdeer/config.toml`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/tealdeer/config.toml`.
         Please reference [tealdeer's documentation] for config options.
 
         [tealdeer's documentation]: https://tealdeer-rs.github.io/tealdeer/config.html
@@ -35,7 +35,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/tealdeer/config.toml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."tealdeer/config.toml".source = mkIf (cfg.settings != {}) (
       toml.generate "tealdeer-config.toml" cfg.settings
     );
   };

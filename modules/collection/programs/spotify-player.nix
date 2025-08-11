@@ -50,7 +50,7 @@ in {
       };
       description = ''
         The configuration converted into TOML and written to
-        {file}`$HOME/.config/spotify-player/app.toml`.
+        {file}`$XDG_CONFIG_HOME/spotify-player/app.toml`.
 
         Please reference [spotify_player's configuration documentation]
         for configuration options.
@@ -101,7 +101,7 @@ in {
       ];
       description = ''
         The theme converted into TOML and written to
-        {file}`$HOME/.config/spotify-player/themes.toml`.
+        {file}`$XDG_CONFIG_HOME/spotify-player/themes.toml`.
 
         Please reference [spotify_player's theme documentation]
         for configuration options.
@@ -129,7 +129,7 @@ in {
       };
       description = ''
         Sets of keymaps and actions converted into TOML and written to
-        {file}`$HOME/.config/spotify-player/keymap.toml`.
+        {file}`$XDG_CONFIG_HOME/spotify-player/keymap.toml`.
         See example for how to format declarations.
 
         Please reference [spotify_player's keymaps documentation]
@@ -142,17 +142,17 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/spotify-player/app.toml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files = {
+      "spotify-player/app.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "spotify-player/app.toml" cfg.settings
       );
 
       # Passes each declared theme under the "themes" attr as needed
-      ".config/spotify-player/theme.toml".source = mkIf (cfg.themes != []) (
+      "spotify-player/theme.toml".source = mkIf (cfg.themes != []) (
         toml.generate "spotify-player/theme.toml" {inherit (cfg) themes;}
       );
 
-      ".config/spotify-player/keymap.toml".source = mkIf (cfg.keymap != {}) (
+      "spotify-player/keymap.toml".source = mkIf (cfg.keymap != {}) (
         toml.generate "spotify-player/keymap.toml" cfg.keymap
       );
     };

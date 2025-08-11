@@ -51,7 +51,7 @@ in {
       '';
       description = ''
         Global user-level version of .gitignore written to
-        {file}`$HOME/.config/git/ignore`.
+        {file}`$XDG_CONFIG_HOME/git/ignore`.
       '';
     };
 
@@ -67,7 +67,7 @@ in {
       '';
       description = ''
         Global user-level version of .gitattributes written to
-        {file}`$HOME/.config/git/attributes`.
+        {file}`$XDG_CONFIG_HOME/git/attributes`.
       '';
     };
 
@@ -94,8 +94,8 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files = {
-      ".config/git/config".source = mkIf (cfg.settings != {} || cfg.integrations.difftastic.enable) (
+    xdg.config.files = {
+      "git/config".source = mkIf (cfg.settings != {} || cfg.integrations.difftastic.enable) (
         gitIni.generate "config" (
           cfg.settings
           // (let
@@ -108,8 +108,8 @@ in {
             })
         )
       );
-      ".config/git/ignore".text = mkIf (cfg.ignore != {}) cfg.ignore;
-      ".config/git/attributes".text = mkIf (cfg.attributes != {}) cfg.attributes;
+      "git/ignore".text = mkIf (cfg.ignore != {}) cfg.ignore;
+      "git/attributes".text = mkIf (cfg.attributes != {}) cfg.attributes;
     };
   };
 }

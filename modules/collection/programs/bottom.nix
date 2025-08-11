@@ -28,7 +28,7 @@ in {
       };
       description = ''
         The configuration converted into TOML and written to
-        {file}`$HOME/.config/bottom/bottom.toml`.
+        {file}`$XDG_CONFIG_HOME/bottom/bottom.toml`.
 
         Please reference [bottom's config file documentation]
         for config options.
@@ -40,7 +40,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/bottom/bottom.toml".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."bottom/bottom.toml".source = mkIf (cfg.settings != {}) (
       toml.generate "bottom.toml" cfg.settings
     );
   };

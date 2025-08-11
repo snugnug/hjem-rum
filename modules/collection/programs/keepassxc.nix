@@ -34,7 +34,7 @@ in {
         };
       };
       description = ''
-        Settings are written as an INI file to {file}`$HOME/.config/keepassxc/keepassxc.ini`. Please reference
+        Settings are written as an INI file to {file}`$XDG_CONFIG_HOME/keepassxc/keepassxc.ini`. Please reference
         [KeePassXC's User Guide].
 
         It also can be configured by toggling options through the GUI, but this does not seem documented.
@@ -46,7 +46,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/keepassxc/keepassxc.ini".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."keepassxc/keepassxc.ini".source = mkIf (cfg.settings != {}) (
       ini.generate "keepassxc.ini" cfg.settings
     );
   };

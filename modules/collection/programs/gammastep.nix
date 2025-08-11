@@ -31,7 +31,7 @@ in {
         };
       };
       description = ''
-        Settings are written as an INI file to {file}`$HOME/.config/gammastep/config.ini`.
+        Settings are written as an INI file to {file}`$XDG_CONFIG_HOME/gammastep/config.ini`.
         Refer to [gammastep's example configuration] all available options.
 
         [gammastep's example configuration]: https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample
@@ -41,7 +41,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/gammastep/config.ini".source = mkIf (cfg.settings != {}) (
+    xdg.config.files."gammastep/config.ini".source = mkIf (cfg.settings != {}) (
       ini.generate "gammastep-config.ini" cfg.settings
     );
   };

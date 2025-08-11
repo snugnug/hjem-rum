@@ -67,7 +67,7 @@ in {
       description = ''
         A set of options for nushell, flattened, prepended with `$env.config` to avoid overwriting
         (tables of config are overwritten if they occupy the same namespace). It is then written
-        to {file}`$HOME/.config/nushell/config.nu`.
+        to {file}`$XDG_CONFIG_HOME/nushell/config.nu`.
 
         Please see [The Nushell Book] for configuration options.
 
@@ -84,7 +84,7 @@ in {
       };
       description = ''
         A set of aliases for nushell, converted into nu and written to
-        {file}`$HOME/.config/nushell/config.nu`. Please note that we cannot
+        {file}`$XDG_CONFIG_HOME/nushell/config.nu`. Please note that we cannot
         handle complex aliases that use `def` at this time.
 
         Please see [The Nushell Book] for a simple tutorial.
@@ -123,7 +123,7 @@ in {
         }
       '';
       description = ''
-        Extra configuration to be written to {file}`$HOME/.config/nushell/config.nu`.
+        Extra configuration to be written to {file}`$XDG_CONFIG_HOME/nushell/config.nu`.
 
         Please see [The Nushell Book] for more info.
 
@@ -137,9 +137,9 @@ in {
       description = ''
         [The Nushell Book]: https://www.nushell.sh/book/configuration.html
 
-        Extra configuration to be written to {file}`$HOME/.config/nushell/env.nu`.
+        Extra configuration to be written to {file}`$XDG_CONFIG_HOME/nushell/env.nu`.
         Please keep in mind that the upstream documentation generally advises against
-        writing to this file, and instead suggests using {file}`$HOME/.config/nushell/config.nu`.
+        writing to this file, and instead suggests using {file}`$XDG_CONFIG_HOME/nushell/config.nu`.
 
         See [The Nushell Book] for more info.
 
@@ -151,7 +151,7 @@ in {
       default = "";
       description = ''
         Nushell may be used as a login shell, so this option writes to
-        {file}`$HOME/.config/nushell/login.nu` to allow you to configure
+        {file}`$XDG_CONFIG_HOME/nushell/login.nu` to allow you to configure
         nushell as your login shell.
 
         Please recognize that this is mainly for advanced users and is not
@@ -165,7 +165,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = [cfg.package];
-    files = let
+    xdg.config.files = let
       checks = {
         settings = cfg.settings != {};
         aliases = cfg.aliases != {};
@@ -173,7 +173,7 @@ in {
         variables = config.environment.sessionVariables != {};
       };
     in {
-      ".config/nushell/config.nu".text = mkIf (checks.settings || checks.aliases || checks.extraConfig || checks.variables) (
+      "nushell/config.nu".text = mkIf (checks.settings || checks.aliases || checks.extraConfig || checks.variables) (
         concatStringsSep "\n" [
           (optionalString checks.settings (nu.generate.config cfg.settings))
           (optionalString checks.aliases (nu.generate.aliases cfg.aliases))
@@ -181,11 +181,11 @@ in {
           cfg.extraConfig
         ]
       );
-      ".config/nushell/env.nu".text = mkIf (cfg.envFile != "") cfg.envFile;
+      "nushell/env.nu".text = mkIf (cfg.envFile != "") cfg.envFile;
 
       # from https://github.com/nushell/nushell/discussions/12997#discussioncomment-9638977
       # also used in home manager
-      ".config/nushell/plugin.msgpackz".source = mkIf (cfg.plugins != []) (
+      "nushell/plugin.msgpackz".source = mkIf (cfg.plugins != []) (
         let
           msgPackz = pkgs.runCommand "nuPlugin-msgPackz" {} ''
             mkdir -p "$out"
@@ -197,7 +197,7 @@ in {
           '';
         in "${msgPackz}/plugin.msgpackz"
       );
-      ".config/nushell/login.nu".text = mkIf (cfg.loginFile != "") cfg.loginFile;
+      "nushell/login.nu".text = mkIf (cfg.loginFile != "") cfg.loginFile;
     };
   };
 }
