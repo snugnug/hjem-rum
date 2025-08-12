@@ -4,6 +4,8 @@
     hjem.users.bob = {
       environment.sessionVariables = {
         RUM_TEST = "HEY";
+        INTEGER = 1;
+        STRINGS = ["FOO" "BAR" "BAZ"];
       };
 
       rum.desktops.niri = {
@@ -83,6 +85,8 @@
       with subtest("Validate environment"):
         machine.succeed("grep 'RUM_TEST \"HEY\"' %s" % config)
         machine.succeed("grep 'RUM_TEST_TWO \"HELLO\"' %s" % config)
+        machine.succeed("grep 'INTEGER \"1\"' %s" % config)
+        machine.succeed("grep 'STRINGS \"FOO:BAR:BAZ\"' %s" % config)
 
       with subtest("Validate spawn-at-startup"):
         machine.succeed("grep 'spawn-at-startup \"waybar\"' %s" % config)

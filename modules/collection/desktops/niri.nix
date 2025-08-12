@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (builtins) mapAttrs concatStringsSep isBool isInt;
+  inherit (builtins) mapAttrs concatStringsSep isBool isInt isList;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
@@ -55,10 +55,16 @@
     )
     spawn;
 
-  niriEnvironment = pipe (config.environment.sessionVariables // cfg.extraVariables) [
-    (mapAttrsToList (n: v: n + " \"${v}\""))
-    (concatStringsSep "\n")
-  ];
+  niriEnvironment = let
+    toEnv = env:
+      if isList env
+      then concatMapStringsSep ":" toString env
+      else toString env;
+  in
+    pipe (config.environment.sessionVariables // cfg.extraVariables) [
+      (mapAttrsToList (n: v: n + " \"${toEnv v}\""))
+      (concatStringsSep "\n")
+    ];
 
   bindsModule = submodule {
     options = {
