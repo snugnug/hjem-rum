@@ -4,11 +4,16 @@
     hjem.users.bob = {
       environment.sessionVariables = {
         RUM_TEST = "HEY";
+        INTEGER = 1;
+        STRINGS = ["FOO" "BAR" "BAZ"];
       };
 
       rum.desktops.niri = {
         enable = true;
-        extraVariables.RUM_TEST_TWO = "HELLO";
+        extraVariables = {
+          RUM_TEST_TWO = "HELLO";
+          NULL = null;
+        };
         binds = {
           "Mod+T" = {
             action = "focus-column-left";
@@ -83,6 +88,9 @@
       with subtest("Validate environment"):
         machine.succeed("grep 'RUM_TEST \"HEY\"' %s" % config)
         machine.succeed("grep 'RUM_TEST_TWO \"HELLO\"' %s" % config)
+        machine.succeed("grep 'INTEGER \"1\"' %s" % config)
+        machine.succeed("grep 'STRINGS \"FOO:BAR:BAZ\"' %s" % config)
+        machine.succeed("grep 'NULL null' %s" % config)
 
       with subtest("Validate spawn-at-startup"):
         machine.succeed("grep 'spawn-at-startup \"waybar\"' %s" % config)
