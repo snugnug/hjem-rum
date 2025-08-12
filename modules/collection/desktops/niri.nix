@@ -168,8 +168,8 @@ in {
       '';
     };
     configFile = mkOption {
-      type = path;
-      default = [];
+      type = nullOr path;
+      default = null;
       example = "./config.kdl";
       description = ''
         [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
