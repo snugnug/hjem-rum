@@ -8,8 +8,8 @@
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkEnableOption mkOption literalExpression;
-  inherit (lib.strings) concatMapStringsSep;
+  inherit (lib.options) mkEnableOption mkOption literalExpression mkPackageOption;
+  inherit (lib.strings) concatMapStringsSep optionalString;
   inherit (lib.trivial) pipe boolToString;
   inherit (lib.types) listOf path attrsOf anything str lines submodule nullOr;
 
@@ -70,7 +70,7 @@
           [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
 
           The spawn action to run on button-press. For other actions, please see
-          {option}`binds.<keybind>.actions`. See [niri's wiki] for more information.
+          {option}`binds.<keybind>.action`. See [niri's wiki] for more information.
         '';
       };
       action = mkOption {
@@ -104,6 +104,13 @@
 in {
   options.rum.desktops.niri = {
     enable = mkEnableOption "niri: A scrollable-tiling Wayland compositor";
+    package = mkPackageOption pkgs "niri" {
+      nullable = true;
+      extraDescription = ''
+        Only used to validate the generated config file. Set to `null` to
+        disable the check phase.
+      '';
+    };
     binds = mkOption {
       type = attrsOf bindsModule;
       default = {};
@@ -156,8 +163,8 @@ in {
       '';
     };
     configFile = mkOption {
-      type = path;
-      default = [];
+      type = nullOr path;
+      default = null;
       example = "./config.kdl";
       description = ''
         [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
@@ -232,8 +239,8 @@ in {
           ]
         ))
       ];
-      checkPhase = ''
-        ${getExe pkgs.niri} validate -c "$file"
+      checkPhase = optionalString (cfg.package != null) ''
+        ${getExe cfg.package} validate -c "$file"
       '';
     };
   };
