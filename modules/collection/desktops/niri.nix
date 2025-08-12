@@ -82,7 +82,7 @@
           [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
 
           The spawn action to run on button-press. For other actions, please see
-          {option}`binds.<keybind>.actions`. See [niri's wiki] for more information.
+          {option}`binds.<keybind>.action`. See [niri's wiki] for more information.
         '';
       };
       action = mkOption {
