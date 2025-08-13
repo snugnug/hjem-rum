@@ -88,7 +88,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    files =
+    xdg.config.files =
       {
         "helix/config.toml".source = mkIf (cfg.settings != {}) (
           toml.generate "helix-config.toml" cfg.settings
