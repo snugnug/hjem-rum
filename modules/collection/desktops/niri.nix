@@ -237,7 +237,7 @@ in {
         cfg.config
       ];
       checkPhase = optionalString (cfg.package != null) ''
-        ${getExe cfg.package} validate -c "$file"
+        ${getExe cfg.package} validate -c "$target"
       '';
     };
   };
