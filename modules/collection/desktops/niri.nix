@@ -79,7 +79,7 @@
         default = null;
         example = ["foot" "-e" "fish"];
         description = ''
-          [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+          [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The spawn action to run on button-press. For other actions, please see
           {option}`binds.<keybind>.action`. See [niri's wiki] for more information.
@@ -90,7 +90,7 @@
         default = null;
         example = "focus-column-left";
         description = ''
-          [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+          [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The non-spawn action to run on button-press. For spawning processes, please see
           {option}`binds.<keybind>.spawn`. See [niri's wiki] for a complete list.
@@ -104,7 +104,7 @@
           cooldown-ms = 150;
         };
         description = ''
-          [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+          [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The parameters to append to the bind. See [niri's wiki] for a complete list.
         '';
@@ -142,7 +142,7 @@ in {
         };
       };
       description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
         A list of key bindings that will be added to the configuration file. See [niri's wiki] for a complete list.
       '';
@@ -157,7 +157,7 @@ in {
         ]
       '';
       description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#spawn-at-startup
 
         A list of programs to be loaded with niri on startup. see [niri's wiki] for more details on the API.
       '';
@@ -186,7 +186,7 @@ in {
         }
       '';
       description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Introduction.html
 
         Lines of KDL code that are added to {file}`$HOME/.config/niri/config.kdl`.
         See a full list of options in [niri's wiki].
