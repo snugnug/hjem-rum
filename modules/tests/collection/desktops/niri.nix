@@ -58,12 +58,7 @@ in {
           ["waybar"]
           ["foot" "-e" "fish"]
         ];
-        configFile = pkgs.writeText "test-config.kdl" ''
-          window-rule {
-            open-maximized true
-          }
-        '';
-        extraConfig = ''
+        config = ''
           switch-events {
             lid-close { spawn "notify-send" "The laptop lid is closed!"; }
             lid-open { spawn "notify-send" "The laptop lid is open!"; }
@@ -119,8 +114,7 @@ in {
       # Similar story here, if we tried to check the whole string,
       # python would throw a fit. So, instead, we just check for a snippet
       # If it was broken, the check phase on the file would let us know
-      with subtest("Validate plain file writing"):
-        machine.succeed("grep 'open-maximized true' %s" % config)
+      with subtest("Validate config"):
         machine.succeed("grep 'lid-close' %s" % config)
 
       with subtest("Validate skipping check phase"):
