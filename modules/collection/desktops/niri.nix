@@ -169,9 +169,11 @@ in {
         DISPLAY = ":0";
       };
       description = ''
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#environment
+
         Extra environmental variables to be added to Niri's `enviroment` node.
         This can be used to override variables set in {option}`enviroment.sessionVariables`.
-        You can therefore set a variable to `null` to force unset it in Niri.
+        You can therefore set a variable to `null` to force unset it in Niri. Learn more from [niri's wiki].
       '';
     };
     config = mkOption {
