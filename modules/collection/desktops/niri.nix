@@ -222,7 +222,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    files.".config/niri/config.kdl".source = pkgs.writeTextFile {
+    xdg.config.files."niri/config.kdl".source = pkgs.writeTextFile {
       name = "niri-config.kdl";
       text = concatStringsSep "\n" [
         ''
