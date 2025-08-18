@@ -1697,7 +1697,7 @@ switch-events {
     <span class="copy-link" title="Copy link to this option"></span>
     <span class="copy-feedback">Link copied!</span>
   </h3>
-  <div class="option-type">Type: <code>attribute set of string</code></div>
+  <div class="option-type">Type: <code>attribute set of (null or (list of (signed integer or string or absolute path)) or signed integer or string or absolute path)</code></div>
   <div class="option-description"><p>Extra environmental variables to be added to Niri's <code>enviroment</code> node.
 This can be used to override variables set in <code class="nixos-option">enviroment.sessionVariables</code>.
 You can therefore set a variable to <code>null</code> to force unset it in Niri.</p>
