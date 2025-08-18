@@ -174,43 +174,7 @@ in {
         You can therefore set a variable to `null` to force unset it in Niri.
       '';
     };
-    configFile = mkOption {
-      type = nullOr path;
-      default = null;
-      example = "./config.kdl";
-      description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
-
-        Concat with generated files and symlinked to {file}`$HOME/niri/config.kdl`. See a full
-        list of options in [niri's wiki].
-        To add to environment, please use {option}`environment.sessionVariables`.
-
-        You can also modularize your config by using `pkgs.concatText`:
-
-        ```nix
-          configFile = pkgs.concatText "full-config.kdl" [
-            input.kdl
-            rules.kdl
-          ];
-        ```
-
-        You could even optionally import certain files using something like this:
-
-        ```nix
-          # lib.flatten takes the elements of lists inside a list and moves them into one list
-          configFiles = pkgs.concatText "full-config.kdl" (lib.flatten [
-            ./config.kdl
-            (lib.optional (config.powersave.enable) ./laptop-config.kdl)
-            (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl)
-          ]);
-          ;
-        ```
-
-        Be warned, however, that some KDL nodes (such as `binds`) cannot have duplicates. However, this
-        should work great for `window-rule`s, `output`s, and other such situations.
-      '';
-    };
-    extraConfig = mkOption {
+    config = mkOption {
       type = lines;
       default = "";
       example = literalExpression ''
@@ -226,30 +190,49 @@ in {
 
         Lines of KDL code that are added to {file}`$HOME/.config/niri/config.kdl`.
         See a full list of options in [niri's wiki].
-        To add to environment, please use {option}`environment.sessionVariables`.
+        To add to environment, please see {option}`extraVariables`.
+
+        Here's an example of adding a file to your niri configuration:
+        ```nix
+          config = builtins.readFile ./config.kdl;
+        ```
+
+        Optionally, you can split your Niri configuration into multiple KDL files like so:
+
+        ```nix
+          config = (lib.conatMapStringsSep "\n" builtins.readFile [./config.kdl ./binds.kdl]);
+        ```
+
+        Finally, if you need to interpolate some Nix variables into your configuration:
+
+        ```nix
+          config = builtins.readFile ./config.kdl
+            +
+            # kdl
+            '''
+              focus-ring {
+                active-color ''${config.local.colors.border-active}
+              }
+            ''';
+        ```
       '';
     };
   };
 
   config = mkIf cfg.enable {
-    files.".config/niri/config.kdl".source = pkgs.concatTextFile {
+    files.".config/niri/config.kdl".source = pkgs.writeTextFile {
       name = "niri-config.kdl";
-      files = [
-        cfg.configFile
-        (pkgs.writeText "generated-niri-config" (
-          concatStringsSep "\n" [
-            ''
-              environment {
-                ${niriEnvironment}
-              }
-              binds {
-                ${toNiriBinds cfg.binds}
-              }
-            ''
-            (toNiriSpawnAtStartup cfg.spawn-at-startup)
-            cfg.extraConfig
-          ]
-        ))
+      text = concatStringsSep "\n" [
+        ''
+          environment {
+            ${niriEnvironment}
+          }
+          binds {
+            ${toNiriBinds cfg.binds}
+          }
+        ''
+        (toNiriSpawnAtStartup cfg.spawn-at-startup)
+        cfg.config
       ];
       checkPhase = optionalString (cfg.package != null) ''
         ${getExe cfg.package} validate -c "$file"
