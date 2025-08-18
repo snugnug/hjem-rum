@@ -171,8 +171,8 @@ in {
       description = ''
         [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#environment
 
-        Extra environmental variables to be added to Niri's `enviroment` node.
-        This can be used to override variables set in {option}`enviroment.sessionVariables`.
+        Extra environmental variables to be added to Niri's `environment` node.
+        This can be used to override variables set in {option}`environment.sessionVariables`.
         You can therefore set a variable to `null` to force unset it in Niri. Learn more from [niri's wiki].
       '';
     };
@@ -195,6 +195,7 @@ in {
         To add to environment, please see {option}`extraVariables`.
 
         Here's an example of adding a file to your niri configuration:
+
         ```nix
           config = builtins.readFile ./config.kdl;
         ```
@@ -202,7 +203,7 @@ in {
         Optionally, you can split your Niri configuration into multiple KDL files like so:
 
         ```nix
-          config = (lib.conatMapStringsSep "\n" builtins.readFile [./config.kdl ./binds.kdl]);
+          config = (lib.concatMapStringsSep "\n" builtins.readFile [./config.kdl ./binds.kdl]);
         ```
 
         Finally, if you need to interpolate some Nix variables into your configuration:
