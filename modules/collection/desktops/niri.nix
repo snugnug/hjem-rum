@@ -58,6 +58,8 @@
     )
     spawn;
 
+  niriVariables = config.environment.sessionVariables // cfg.extraVariables;
+
   niriEnvironment = let
     withQuotes = str: "\"${str}\"";
     toEnv = env:
@@ -67,7 +69,7 @@
       then "null"
       else withQuotes (toString env);
   in
-    pipe (config.environment.sessionVariables // cfg.extraVariables) [
+    pipe niriVariables [
       (mapAttrsToList (n: v: n + " ${toEnv v}"))
       (concatStringsSep "\n")
     ];
@@ -226,14 +228,16 @@ in {
     xdg.config.files."niri/config.kdl".source = pkgs.writeTextFile {
       name = "niri-config.kdl";
       text = concatStringsSep "\n" [
-        ''
+        (optionalString (niriVariables != {}) ''
           environment {
             ${niriEnvironment}
           }
+        '')
+        (optionalString (cfg.binds != {}) ''
           binds {
             ${toNiriBinds cfg.binds}
           }
-        ''
+        '')
         (toNiriSpawnAtStartup cfg.spawn-at-startup)
         cfg.config
       ];
