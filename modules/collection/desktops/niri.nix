@@ -205,7 +205,7 @@ in {
           config = builtins.readFile ./config.kdl;
         ```
 
-        Optionally, you can split your Niri configuration into multiple KDL files like so:
+        Optionally, you can split your niri configuration into multiple KDL files like so:
 
         ```nix
           config = (lib.concatMapStringsSep "\n" builtins.readFile [./config.kdl ./binds.kdl]);
