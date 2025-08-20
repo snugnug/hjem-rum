@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  osConfig,
   lib,
   hjem-lib,
   ...
@@ -114,13 +115,19 @@
 in {
   options.rum.desktops.niri = {
     enable = mkEnableOption "niri: A scrollable-tiling Wayland compositor";
-    package = mkPackageOption pkgs "niri" {
-      nullable = true;
-      extraDescription = ''
-        Only used to validate the generated config file. Set to `null` to
-        disable the check phase.
-      '';
-    };
+    package =
+      mkPackageOption pkgs "niri" {
+        nullable = true;
+        extraDescription = ''
+          Only used to validate the generated config file. Set to `null` to
+          disable the check phase.
+        '';
+      }
+      // {
+        # This is not above because mkPackageOption's implementation will evaluate `osConfig`, causing eval failures for documentation and checks.
+        default = osConfig.programs.niri.package;
+        defaultText = literalExpression "osConfig.programs.niri.package";
+      };
     binds = mkOption {
       type = attrsOf bindsModule;
       default = {};
