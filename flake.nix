@@ -23,7 +23,7 @@
     treefmt-nix,
     ndg,
     ...
-  }: let
+  } @ inputs: let
     supportedSystems = ["x86_64-linux" "aarch64-linux"];
 
     forAllSystems = function:
@@ -48,7 +48,7 @@
     hjemModules = {
       hjem-rum = import ./modules/hjem.nix {
         inherit (nixpkgs) lib;
-        inherit rumLib;
+        inherit rumLib inputs;
       };
       default = self.hjemModules.hjem-rum;
     };

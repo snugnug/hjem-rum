@@ -2,19 +2,18 @@
   pkgs,
   config,
   lib,
+  hjem-lib,
   ...
 }: let
-  inherit (builtins) mapAttrs concatStringsSep isBool isInt isList;
+  inherit (builtins) mapAttrs concatStringsSep isBool isInt;
+  inherit (hjem-lib) toEnv;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption literalExpression mkPackageOption;
   inherit (lib.strings) concatMapStringsSep optionalString;
   inherit (lib.trivial) pipe boolToString;
-  inherit (lib.types) listOf path attrsOf anything str lines submodule nullOr int oneOf;
-
-  # TODO: use Hjem's exported type when it gets upstreamed
-  hjemEnvType = oneOf [(listOf (oneOf [int str path])) int str path];
+  inherit (lib.types) listOf attrsOf anything str lines submodule nullOr;
 
   toNiriSpawn = commands:
     concatMapStringsSep " " (arg: "\"${arg}\"") commands;
@@ -61,16 +60,13 @@
   niriVariables = config.environment.sessionVariables // cfg.extraVariables;
 
   niriEnvironment = let
-    withQuotes = str: "\"${str}\"";
-    toEnv = env:
-      if isList env
-      then withQuotes (concatMapStringsSep ":" toString env)
-      else if isNull env
+    toNiriEnv = var:
+      if isNull var
       then "null"
-      else withQuotes (toString env);
+      else "\"${toEnv var}\"";
   in
     pipe niriVariables [
-      (mapAttrsToList (n: v: n + " ${toEnv v}"))
+      (mapAttrsToList (n: v: n + " ${toNiriEnv v}"))
       (concatStringsSep "\n")
     ];
 
@@ -165,7 +161,7 @@ in {
       '';
     };
     extraVariables = mkOption {
-      type = attrsOf (nullOr hjemEnvType);
+      type = hjem-lib.envVarType;
       default = {};
       example = {
         DISPLAY = ":0";
