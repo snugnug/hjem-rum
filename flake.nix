@@ -22,8 +22,9 @@
     nixpkgs,
     treefmt-nix,
     ndg,
+    hjem,
     ...
-  }: let
+  } @ inputs: let
     supportedSystems = ["x86_64-linux" "aarch64-linux"];
 
     forAllSystems = function:
@@ -32,6 +33,7 @@
       (system: function nixpkgs.legacyPackages.${system});
 
     rumLib = import ./modules/lib/default.nix {inherit (nixpkgs) lib;};
+
     treefmtEval = forAllSystems (pkgs:
       treefmt-nix.lib.evalModule pkgs
       {
@@ -49,6 +51,7 @@
       hjem-rum = import ./modules/hjem.nix {
         inherit (nixpkgs) lib;
         inherit rumLib;
+        inherit inputs;
       };
       default = self.hjemModules.hjem-rum;
     };
@@ -56,6 +59,7 @@
       docs = pkgs.callPackage ./docs/package.nix {
         inherit (ndg.packages.${pkgs.system}) ndg;
         inherit rumLib;
+        inherit inputs;
       };
     });
     lib = rumLib;
