@@ -1647,7 +1647,7 @@ To add to environment, please use <code class="nixos-option">environment.session
   configFiles = pkgs.concatText &quot;full-config.kdl&quot; (lib.flatten [
     ./config.kdl
     (lib.optional (config.powersave.enable) ./laptop-config.kdl)
-    (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl
+    (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl)
   ]);
   ;
 </code></pre><p>Be warned, however, that some KDL nodes (such as <code>binds</code>) cannot have duplicates. However, this
