@@ -194,7 +194,7 @@ in {
           configFiles = pkgs.concatText "full-config.kdl" (lib.flatten [
             ./config.kdl
             (lib.optional (config.powersave.enable) ./laptop-config.kdl)
-            (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl
+            (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl)
           ]);
           ;
         ```
