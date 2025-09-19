@@ -1,20 +1,20 @@
 {
   pkgs,
   config,
+  osConfig,
   lib,
+  hjem-lib,
   ...
 }: let
-  inherit (builtins) mapAttrs concatStringsSep isBool isInt isList;
+  inherit (builtins) mapAttrs concatStringsSep isBool isInt;
+  inherit (hjem-lib) toEnv;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkEnableOption mkOption literalExpression;
+  inherit (lib.options) mkEnableOption mkOption literalExpression mkPackageOption;
   inherit (lib.strings) concatMapStringsSep optionalString;
   inherit (lib.trivial) pipe boolToString;
-  inherit (lib.types) listOf path attrsOf anything str lines submodule nullOr int oneOf;
-
-  # TODO: use Hjem's exported type when it gets upstreamed
-  hjemEnvType = oneOf [(listOf (oneOf [int str path])) int str path];
+  inherit (lib.types) listOf attrsOf anything str lines submodule nullOr;
 
   toNiriSpawn = commands:
     concatMapStringsSep " " (arg: "\"${arg}\"") commands;
@@ -58,17 +58,16 @@
     )
     spawn;
 
+  niriVariables = config.environment.sessionVariables // cfg.extraVariables;
+
   niriEnvironment = let
-    withQuotes = str: "\"${str}\"";
-    toEnv = env:
-      if isList env
-      then withQuotes (concatMapStringsSep ":" toString env)
-      else if isNull env
+    toNiriEnv = var:
+      if isNull var
       then "null"
-      else withQuotes (toString env);
+      else "\"${toEnv var}\"";
   in
-    pipe (config.environment.sessionVariables // cfg.extraVariables) [
-      (mapAttrsToList (n: v: n + " ${toEnv v}"))
+    pipe niriVariables [
+      (mapAttrsToList (n: v: n + " ${toNiriEnv v}"))
       (concatStringsSep "\n")
     ];
 
@@ -79,10 +78,10 @@
         default = null;
         example = ["foot" "-e" "fish"];
         description = ''
-          [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+          [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The spawn action to run on button-press. For other actions, please see
-          {option}`binds.<keybind>.actions`. See [niri's wiki] for more information.
+          {option}`binds.<keybind>.action`. See [niri's wiki] for more information.
         '';
       };
       action = mkOption {
@@ -90,7 +89,7 @@
         default = null;
         example = "focus-column-left";
         description = ''
-          [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+          [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The non-spawn action to run on button-press. For spawning processes, please see
           {option}`binds.<keybind>.spawn`. See [niri's wiki] for a complete list.
@@ -104,7 +103,7 @@
           cooldown-ms = 150;
         };
         description = ''
-          [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+          [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The parameters to append to the bind. See [niri's wiki] for a complete list.
         '';
@@ -116,6 +115,19 @@
 in {
   options.rum.desktops.niri = {
     enable = mkEnableOption "niri: A scrollable-tiling Wayland compositor";
+    package =
+      mkPackageOption pkgs "niri" {
+        nullable = true;
+        extraDescription = ''
+          Only used to validate the generated config file. Set to `null` to
+          disable the check phase.
+        '';
+      }
+      // {
+        # This is not above because mkPackageOption's implementation will evaluate `osConfig`, causing eval failures for documentation and checks.
+        default = osConfig.programs.niri.package;
+        defaultText = literalExpression "osConfig.programs.niri.package";
+      };
     binds = mkOption {
       type = attrsOf bindsModule;
       default = {};
@@ -135,7 +147,7 @@ in {
         };
       };
       description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
         A list of key bindings that will be added to the configuration file. See [niri's wiki] for a complete list.
       '';
@@ -150,60 +162,26 @@ in {
         ]
       '';
       description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#spawn-at-startup
 
         A list of programs to be loaded with niri on startup. see [niri's wiki] for more details on the API.
       '';
     };
     extraVariables = mkOption {
-      type = attrsOf (nullOr hjemEnvType);
+      type = hjem-lib.envVarType;
       default = {};
       example = {
         DISPLAY = ":0";
       };
       description = ''
-        Extra environmental variables to be added to Niri's `enviroment` node.
-        This can be used to override variables set in {option}`enviroment.sessionVariables`.
-        You can therefore set a variable to `null` to force unset it in Niri.
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#environment
+
+        Extra environmental variables to be added to Niri's `environment` node.
+        This can be used to override variables set in {option}`environment.sessionVariables`.
+        You can therefore set a variable to `null` to force unset it in Niri. Learn more from [niri's wiki].
       '';
     };
-    configFile = mkOption {
-      type = path;
-      default = [];
-      example = "./config.kdl";
-      description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
-
-        Concat with generated files and symlinked to {file}`$HOME/niri/config.kdl`. See a full
-        list of options in [niri's wiki].
-        To add to environment, please use {option}`environment.sessionVariables`.
-
-        You can also modularize your config by using `pkgs.concatText`:
-
-        ```nix
-          configFile = pkgs.concatText "full-config.kdl" [
-            input.kdl
-            rules.kdl
-          ];
-        ```
-
-        You could even optionally import certain files using something like this:
-
-        ```nix
-          # lib.flatten takes the elements of lists inside a list and moves them into one list
-          configFiles = pkgs.concatText "full-config.kdl" (lib.flatten [
-            ./config.kdl
-            (lib.optional (config.powersave.enable) ./laptop-config.kdl)
-            (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl)
-          ]);
-          ;
-        ```
-
-        Be warned, however, that some KDL nodes (such as `binds`) cannot have duplicates. However, this
-        should work great for `window-rule`s, `output`s, and other such situations.
-      '';
-    };
-    extraConfig = mkOption {
+    config = mkOption {
       type = lines;
       default = "";
       example = literalExpression ''
@@ -215,37 +193,59 @@ in {
         }
       '';
       description = ''
-        [niri's wiki]: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Introduction.html
 
         Lines of KDL code that are added to {file}`$HOME/.config/niri/config.kdl`.
         See a full list of options in [niri's wiki].
-        To add to environment, please use {option}`environment.sessionVariables`.
+        To add to environment, please see {option}`extraVariables`.
+
+        Here's an example of adding a file to your niri configuration:
+
+        ```nix
+          config = builtins.readFile ./config.kdl;
+        ```
+
+        Optionally, you can split your niri configuration into multiple KDL files like so:
+
+        ```nix
+          config = (lib.concatMapStringsSep "\n" builtins.readFile [./config.kdl ./binds.kdl]);
+        ```
+
+        Finally, if you need to interpolate some Nix variables into your configuration:
+
+        ```nix
+          config = builtins.readFile ./config.kdl
+            +
+            # kdl
+            '''
+              focus-ring {
+                active-color ''${config.local.colors.border-active}
+              }
+            ''';
+        ```
       '';
     };
   };
 
   config = mkIf cfg.enable {
-    files.".config/niri/config.kdl".source = pkgs.concatTextFile {
+    xdg.config.files."niri/config.kdl".source = pkgs.writeTextFile {
       name = "niri-config.kdl";
-      files = [
-        cfg.configFile
-        (pkgs.writeText "generated-niri-config" (
-          concatStringsSep "\n" [
-            ''
-              environment {
-                ${niriEnvironment}
-              }
-              binds {
-                ${toNiriBinds cfg.binds}
-              }
-            ''
-            (toNiriSpawnAtStartup cfg.spawn-at-startup)
-            cfg.extraConfig
-          ]
-        ))
+      text = concatStringsSep "\n" [
+        (optionalString (niriVariables != {}) ''
+          environment {
+            ${niriEnvironment}
+          }
+        '')
+        (optionalString (cfg.binds != {}) ''
+          binds {
+            ${toNiriBinds cfg.binds}
+          }
+        '')
+        (toNiriSpawnAtStartup cfg.spawn-at-startup)
+        cfg.config
       ];
-      checkPhase = ''
-        ${getExe pkgs.niri} validate -c "$file"
+      checkPhase = optionalString (cfg.package != null) ''
+        ${getExe cfg.package} validate -c "$target"
       '';
     };
   };

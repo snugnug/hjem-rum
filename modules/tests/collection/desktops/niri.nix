@@ -1,6 +1,23 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  inherit (lib.modules) mkForce;
+in {
   name = "desktops-niri";
   nodes.machine = {
+    specialisation.nullPackage.configuration = {
+      hjem.users.bob = {
+        clobberFiles = mkForce true; # Enable clobber to clobber the generated file
+        rum.desktops.niri = {
+          # Create an action that is valid in the module but invalid in niri.
+          # This ensures that the check phase is indeed skipped.
+          binds."Mod+9".action = "bad-action";
+          package = null;
+        };
+      };
+    };
     hjem.users.bob = {
       environment.sessionVariables = {
         RUM_TEST = "HEY";
@@ -41,12 +58,7 @@
           ["waybar"]
           ["foot" "-e" "fish"]
         ];
-        configFile = pkgs.writeText "test-config.kdl" ''
-          window-rule {
-            open-maximized true
-          }
-        '';
-        extraConfig = ''
+        config = ''
           switch-events {
             lid-close { spawn "notify-send" "The laptop lid is closed!"; }
             lid-open { spawn "notify-send" "The laptop lid is open!"; }
@@ -60,7 +72,10 @@
   # that our abstracted options are writing to that generated file, otherwise
   # we could run into a case where the file is valid but some of our settings
   # aren't actually being written and tested.
-  testScript =
+  testScript = {nodes, ...}: let
+    baseSystem = nodes.machine.system.build.toplevel;
+    specialisations = "${baseSystem}/specialisation";
+  in
     #python
     ''
       config = "/home/bob/.config/niri/config.kdl"
@@ -99,8 +114,11 @@
       # Similar story here, if we tried to check the whole string,
       # python would throw a fit. So, instead, we just check for a snippet
       # If it was broken, the check phase on the file would let us know
-      with subtest("Validate plain file writing"):
-        machine.succeed("grep 'open-maximized true' %s" % config)
+      with subtest("Validate config"):
         machine.succeed("grep 'lid-close' %s" % config)
+
+      with subtest("Validate skipping check phase"):
+        machine.succeed("${specialisations}/nullPackage/bin/switch-to-configuration test")
+        machine.succeed("grep 'bad-action' %s" % config)
     '';
 }
