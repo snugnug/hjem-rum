@@ -72,6 +72,7 @@
       },
       "original": {
         "owner": "feel-co",
+        "ref": "colmark",
         "repo": "ndg",
         "type": "github"
       }

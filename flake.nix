@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ndg = {
-      url = "github:feel-co/ndg";
+      url = "github:feel-co/ndg?ref=colmark";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -42,8 +42,11 @@
         programs.deno.enable = true;
         programs.shfmt.enable = true;
 
-        settings = {
-          deno.includes = ["*.md"];
+        settings.formatter = {
+          deno = {
+            # Exclude the footer because we specifically need ' over "
+            excludes = ["docs/footer.html"];
+          };
         };
       });
   in {
@@ -54,10 +57,17 @@
       };
       default = self.hjemModules.hjem-rum;
     };
-    packages = forAllSystems (pkgs: {
+    packages = forAllSystems (pkgs: let
       docs = pkgs.callPackage ./docs/package.nix {
         inherit (ndg.packages.${pkgs.system}) ndg;
         inherit rumLib inputs;
+      };
+    in {
+      inherit docs;
+      docsLinkCheck = pkgs.testers.lycheeLinkCheck {
+        site = docs;
+        remap."rum.snugnug.org" = docs;
+        extraConfig.exclude = [];
       };
     });
     lib = rumLib;
