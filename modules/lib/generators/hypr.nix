@@ -3,7 +3,7 @@
   toHyprconf = {
     attrs,
     indentLevel ? 0,
-    importantPrefixes ? ["$"],
+    importantPrefixes ? ["source" "$"],
   }: let
     inherit (builtins) all isAttrs isList removeAttrs;
     inherit (lib.attrsets) filterAttrs mapAttrsToList;
