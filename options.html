@@ -143,8 +143,8 @@
         </li>
         
         <li>
-          <a href="#option-rum-desktops-niri-configFile" title="rum.desktops.niri.configFile">
-            niri.configFile
+          <a href="#option-rum-desktops-niri-config" title="rum.desktops.niri.config">
+            niri.config
             
             
           </a>
@@ -159,16 +159,16 @@
         </li>
         
         <li>
-          <a href="#option-rum-desktops-niri-extraConfig" title="rum.desktops.niri.extraConfig">
-            niri.extraConfig
+          <a href="#option-rum-desktops-niri-extraVariables" title="rum.desktops.niri.extraVariables">
+            niri.extraVariables
             
             
           </a>
         </li>
         
         <li>
-          <a href="#option-rum-desktops-niri-extraVariables" title="rum.desktops.niri.extraVariables">
-            niri.extraVariables
+          <a href="#option-rum-desktops-niri-package" title="rum.desktops.niri.package">
+            niri.package
             
             
           </a>
@@ -1555,7 +1555,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of (submodule)</code></div>
-  <div class="option-description"><p>A list of key bindings that will be added to the configuration file. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for a complete list.</p>
+  <div class="option-description"><p>A list of key bindings that will be added to the configuration file. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for a complete list.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
   <div class="option-example">Example: <pre><code>{
@@ -1587,7 +1587,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   </h3>
   <div class="option-type">Type: <code>null or string</code></div>
   <div class="option-description"><p>The non-spawn action to run on button-press. For spawning processes, please see
-<code class="nixos-option">binds.<keybind>.spawn</code>. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for a complete list.</p>
+<code class="nixos-option">binds.<keybind>.spawn</code>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for a complete list.</p>
 </div>
   <div class="option-default">Default: <code>null</code></div>
   <div class="option-example">Example: <code>"focus-column-left"</code></div>
@@ -1600,7 +1600,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of anything</code></div>
-  <div class="option-description"><p>The parameters to append to the bind. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for a complete list.</p>
+  <div class="option-description"><p>The parameters to append to the bind. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for a complete list.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
   <div class="option-example">Example: <pre><code>{
@@ -1617,7 +1617,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   </h3>
   <div class="option-type">Type: <code>null or (list of string)</code></div>
   <div class="option-description"><p>The spawn action to run on button-press. For other actions, please see
-<code class="nixos-option">binds.<keybind>.actions</code>. See <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings">niri's wiki</a> for more information.</p>
+<code class="nixos-option">binds.<keybind>.action</code>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for more information.</p>
 </div>
   <div class="option-default">Default: <code>null</code></div>
   <div class="option-example">Example: <pre><code>[
@@ -1627,34 +1627,38 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
 ]</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
 </div>
-<div class="option" id="option-rum-desktops-niri-configFile">
+<div class="option" id="option-rum-desktops-niri-config">
   <h3 class="option-name">
-    <a href="#option-rum-desktops-niri-configFile" class="option-anchor">rum.desktops.niri.configFile</a>
+    <a href="#option-rum-desktops-niri-config" class="option-anchor">rum.desktops.niri.config</a>
     <span class="copy-link" title="Copy link to this option"></span>
     <span class="copy-feedback">Link copied!</span>
   </h3>
-  <div class="option-type">Type: <code>absolute path</code></div>
-  <div class="option-description"><p>Concat with generated files and symlinked to <code class="file-path">$HOME/niri/config.kdl</code>. See a full
-list of options in <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction">niri's wiki</a>.
-To add to environment, please use <code class="nixos-option">environment.sessionVariables</code>.</p>
-<p>You can also modularize your config by using <a href="options.html#option-pkgs-concatText" class="option-reference"><code>pkgs.concatText</code></a>:</p>
-<pre><code class="language-nix">  configFile = pkgs.concatText &quot;full-config.kdl&quot; [
-    input.kdl
-    rules.kdl
-  ];
-</code></pre><p>You could even optionally import certain files using something like this:</p>
-<pre><code class="language-nix">  # lib.flatten takes the elements of lists inside a list and moves them into one list
-  configFiles = pkgs.concatText &quot;full-config.kdl&quot; (lib.flatten [
-    ./config.kdl
-    (lib.optional (config.powersave.enable) ./laptop-config.kdl)
-    (lib.optional (config.programs.firefox.enable) ./firefox-rules.kdl)
-  ]);
-  ;
-</code></pre><p>Be warned, however, that some KDL nodes (such as <code>binds</code>) cannot have duplicates. However, this
-should work great for <code>window-rule</code>s, <code>output</code>s, and other such situations.</p>
-</div>
-  <div class="option-default">Default: <code>[ ]</code></div>
-  <div class="option-example">Example: <code>"./config.kdl"</code></div>
+  <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
+  <div class="option-description"><p>Lines of KDL code that are added to <code class="file-path">$HOME/.config/niri/config.kdl</code>.
+See a full list of options in <a href="https://yalter.github.io/niri/Configuration%3A-Introduction.html">niri's wiki</a>.
+To add to environment, please see <code class="nixos-option">extraVariables</code>.</p>
+<p>Here's an example of adding a file to your niri configuration:</p>
+<pre><code class="language-nix">  config = builtins.readFile ./config.kdl;
+</code></pre><p>Optionally, you can split your niri configuration into multiple KDL files like so:</p>
+<pre><code class="language-nix">  config = (lib.concatMapStringsSep &quot;\n&quot; builtins.readFile [./config.kdl ./binds.kdl]);
+</code></pre><p>Finally, if you need to interpolate some Nix variables into your configuration:</p>
+<pre><code class="language-nix">  config = builtins.readFile ./config.kdl
+    +
+    # kdl
+    &#39;&#39;
+      focus-ring {
+        active-color ${config.local.colors.border-active}
+      }
+    &#39;&#39;;
+</code></pre></div>
+  <div class="option-default">Default: <code>""</code></div>
+  <div class="option-example">Example: <pre><code>screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+switch-events {
+  tablet-mode-on { spawn "${pkgs.bash.out}/bin/bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
+  tablet-mode-off { spawn "${pkgs.bash.out}/bin/bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
+}
+</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-desktops-niri-enable">
@@ -1670,27 +1674,6 @@ should work great for <code>window-rule</code>s, <code>output</code>s, and other
   <div class="option-example">Example: <code>true</code></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
 </div>
-<div class="option" id="option-rum-desktops-niri-extraConfig">
-  <h3 class="option-name">
-    <a href="#option-rum-desktops-niri-extraConfig" class="option-anchor">rum.desktops.niri.extraConfig</a>
-    <span class="copy-link" title="Copy link to this option"></span>
-    <span class="copy-feedback">Link copied!</span>
-  </h3>
-  <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
-  <div class="option-description"><p>Lines of KDL code that are added to <code class="file-path">$HOME/.config/niri/config.kdl</code>.
-See a full list of options in <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction">niri's wiki</a>.
-To add to environment, please use <code class="nixos-option">environment.sessionVariables</code>.</p>
-</div>
-  <div class="option-default">Default: <code>""</code></div>
-  <div class="option-example">Example: <pre><code>screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-switch-events {
-  tablet-mode-on { spawn "${pkgs.bash.out}/bin/bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
-  tablet-mode-off { spawn "${pkgs.bash.out}/bin/bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
-}
-</code></pre></div>
-  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
-</div>
 <div class="option" id="option-rum-desktops-niri-extraVariables">
   <h3 class="option-name">
     <a href="#option-rum-desktops-niri-extraVariables" class="option-anchor">rum.desktops.niri.extraVariables</a>
@@ -1698,14 +1681,27 @@ switch-events {
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of (null or (list of (signed integer or string or absolute path)) or signed integer or string or absolute path)</code></div>
-  <div class="option-description"><p>Extra environmental variables to be added to Niri's <code>enviroment</code> node.
-This can be used to override variables set in <code class="nixos-option">enviroment.sessionVariables</code>.
-You can therefore set a variable to <code>null</code> to force unset it in Niri.</p>
+  <div class="option-description"><p>Extra environmental variables to be added to Niri's <code>environment</code> node.
+This can be used to override variables set in <code class="nixos-option">environment.sessionVariables</code>.
+You can therefore set a variable to <code>null</code> to force unset it in Niri. Learn more from <a href="https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#environment">niri's wiki</a>.</p>
 </div>
   <div class="option-default">Default: <code>{ }</code></div>
   <div class="option-example">Example: <pre><code>{
   DISPLAY = ":0";
 }</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-desktops-niri-package">
+  <h3 class="option-name">
+    <a href="#option-rum-desktops-niri-package" class="option-anchor">rum.desktops.niri.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or package</code></div>
+  <div class="option-description"><p>The niri package to use. Only used to validate the generated config file. Set to <code>null</code> to
+disable the check phase.</p>
+</div>
+  <div class="option-default">Default: <code>osConfig.programs.niri.package</code></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/desktops/niri.nix" target="_blank">&lt;hjem-rum/modules/collection/desktops/niri.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-desktops-niri-spawn-at-startup">
@@ -1715,7 +1711,7 @@ You can therefore set a variable to <code>null</code> to force unset it in Niri.
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>list of list of string</code></div>
-  <div class="option-description"><p>A list of programs to be loaded with niri on startup. see <a href="https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous">niri's wiki</a> for more details on the API.</p>
+  <div class="option-description"><p>A list of programs to be loaded with niri on startup. see <a href="https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#spawn-at-startup">niri's wiki</a> for more details on the API.</p>
 </div>
   <div class="option-default">Default: <code>[ ]</code></div>
   <div class="option-example">Example: <pre><code>[
