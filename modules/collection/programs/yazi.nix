@@ -77,10 +77,10 @@ in {
       "yazi/yazi.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "yazi-config.toml" cfg.settings
       );
-      "yazi/keymap.toml".source = mkIf (cfg.settings != {}) (
+      "yazi/keymap.toml".source = mkIf (cfg.keymap != {}) (
         toml.generate "yazi-keymap-config.toml" cfg.keymap
       );
-      "yazi/theme.toml".source = mkIf (cfg.settings != {}) (
+      "yazi/theme.toml".source = mkIf (cfg.theme != {}) (
         toml.generate "yazi-theme-config.toml" cfg.theme
       );
     };
