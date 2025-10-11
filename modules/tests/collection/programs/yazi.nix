@@ -1,6 +1,8 @@
-{
+{pkgs, ...}: {
   name = "programs-yazi";
   nodes.machine = {
+    environment.systemPackages = [pkgs.taplo];
+
     hjem.users.bob.rum = {
       programs.yazi = {
         enable = true;
@@ -42,5 +44,10 @@
       machine.succeed("[ -r %s ]" % yaziConfPath)
       machine.succeed("[ -r %s ]" % keymapConfPath)
       machine.succeed("[ -r %s ]" % themeConfPath)
+
+      # Checks if the yazi config files are valid
+      machine.succeed("su bob -c 'taplo check --schema https://yazi-rs.github.io/schemas/yazi.json %s'" % yaziConfPath)
+      machine.succeed("su bob -c 'taplo check --schema https://yazi-rs.github.io/schemas/keymap.json %s'" % keymapConfPath)
+      machine.succeed("su bob -c 'taplo check --schema https://yazi-rs.github.io/schemas/theme.json %s'" % themeConfPath)
     '';
 }
