@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib.options) literalExpression mkOption mkEnableOption;
-  inherit (lib.types) listOf package lines str;
+  inherit (lib.types) listOf package lines str path;
   inherit (lib.modules) mkIf mkRenamedOptionModule;
   inherit (lib.lists) optionals;
   inherit (lib.attrsets) optionalAttrs;
@@ -58,6 +58,17 @@ in {
         [official GTK documentation]: https://docs.gtk.org/gtk3/class.Settings.html
       '';
     };
+    gtk2Location = mkOption {
+      type = path;
+      default = ".gtkrc-2.0";
+      defaultText = "$HOME/.gtkrc-2.0";
+      example = ".config/gtk-2.0/gtkrc";
+      description = ''
+        The location relative to {env}`$HOME` to write the GTK-2.0 settings to.
+        By default, apps search at {file}`$HOME/.gtkrc-2.0`, but the environmental
+        variable {env}`GTK2_RC_FILES` can be set to a different location.
+      '';
+    };
     css = {
       gtk3 = mkOption {
         type = lines;
@@ -106,12 +117,12 @@ in {
     inherit (cfg) packages;
 
     files = optionalAttrs (cfg.settings != {}) {
-      ".gtkrc-2.0".text = toGtk2Text {inherit (cfg) settings;};
+      ${cfg.gtk2Location}.text = toGtk2Text {inherit (cfg) settings;};
     };
     xdg.config.files = (
       optionalAttrs (cfg.settings != {}) {
-        "gtk-3.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
-        "gtk-4.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
+        ".config/gtk-3.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
+        ".config/gtk-4.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
       }
       // optionalAttrs (cfg.css.gtk3 != "") {
         "gtk-3.0/gtk.css".text = cfg.css.gtk3;
@@ -126,7 +137,7 @@ in {
 
     # Set sessionVariables to load
     environment.sessionVariables = {
-      GTK2_RC_FILES = "${config.directory}/.gtkrc-2.0";
+      GTK2_RC_FILES = "${config.directory}/${cfg.gtk2Location}";
       GTK_THEME = mkIf (hasAttr "theme-name" cfg.settings) cfg.settings.theme-name;
     };
   };
