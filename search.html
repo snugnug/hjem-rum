@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hjem Rum - Search</title>
+    <script>
+      // Apply sidebar state immediately to prevent flash
+      (function () {
+        if (localStorage.getItem("sidebar-collapsed") === "true") {
+          document.documentElement.classList.add("sidebar-collapsed");
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="assets/style.css" />
+    <script defer src="assets/main.js"></script>
     <script defer src="assets/search.js"></script>
   </head>
   <body>
@@ -78,154 +87,6 @@
       </footer>
     </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Sidebar Toggle
-        const sidebarToggle = document.querySelector(".sidebar-toggle");
-        if (sidebarToggle) {
-          sidebarToggle.addEventListener("click", function () {
-            document.body.classList.toggle("sidebar-collapsed");
-
-            // Save state to localStorage
-            const isCollapsed =
-              document.body.classList.contains("sidebar-collapsed");
-            localStorage.setItem("sidebar-collapsed", isCollapsed);
-          });
-
-          // Restore sidebar state from localStorage
-          const isCollapsed =
-            localStorage.getItem("sidebar-collapsed") === "true";
-          if (isCollapsed) {
-            document.body.classList.add("sidebar-collapsed");
-          }
-        }
-
-        // Process footnotes
-        const content = document.querySelector(".content");
-        const footnoteContainer = document.querySelector(
-          ".footnotes-container",
-        );
-
-        // Find all footnote references and create a footnotes section
-        const footnoteRefs = content.querySelectorAll('a[href^="#fn"]');
-        if (footnoteRefs.length > 0) {
-          const footnotesDiv = document.createElement("div");
-          footnotesDiv.className = "footnotes";
-
-          const footnotesHeading = document.createElement("h2");
-          footnotesHeading.textContent = "Footnotes";
-          footnotesDiv.appendChild(footnotesHeading);
-
-          const footnotesList = document.createElement("ol");
-          footnoteContainer.appendChild(footnotesDiv);
-          footnotesDiv.appendChild(footnotesList);
-
-          // Add footnotes
-          document.querySelectorAll(".footnote").forEach((footnote) => {
-            const id = footnote.id;
-            const content = footnote.innerHTML;
-
-            const li = document.createElement("li");
-            li.id = id;
-            li.innerHTML = content;
-
-            // Add backlink
-            const backlink = document.createElement("a");
-            backlink.href = "#fnref:" + id.replace("fn:", "");
-            backlink.className = "footnote-backlink";
-            backlink.textContent = "↩";
-            li.appendChild(backlink);
-
-            footnotesList.appendChild(li);
-          });
-        }
-      });
-
-      // Load search data
-      fetch("assets/search-data.json")
-        .then((response) => response.json())
-        .then((data) => {
-          // Store search data globally
-          window.searchData = data;
-
-          // Set up event listener
-          document
-            .getElementById("search-page-input")
-            .addEventListener("input", performSearch);
-
-          // Perform search if URL has query
-          const params = new URLSearchParams(window.location.search);
-          const query = params.get("q");
-          if (query) {
-            document.getElementById("search-page-input").value = query;
-            performSearch({ target: { value: query } });
-          }
-        })
-        .catch((error) => {
-          console.error("Error loading search data:", error);
-          document.getElementById("search-page-results").innerHTML =
-            "<p>Error loading search data</p>";
-        });
-
-      function performSearch(e) {
-        const query = e.target.value.toLowerCase().trim();
-        const resultsContainer = document.getElementById("search-page-results");
-
-        if (query.length < 2) {
-          resultsContainer.innerHTML =
-            "<p>Please enter at least 2 characters to search</p>";
-          return;
-        }
-
-        // Search logic
-        const results = window.searchData.filter(
-          (doc) =>
-            doc.title.toLowerCase().includes(query) ||
-            doc.content.toLowerCase().includes(query),
-        );
-
-        // Display results
-        if (results.length > 0) {
-          let html = '<ul class="search-results-list">';
-          for (const result of results) {
-            const preview = generatePreview(result.content, query);
-            html += `<li class="search-result-item">
-              <a href="${result.path}">
-                <div class="search-result-title">${result.title}</div>
-                <div class="search-result-preview">${preview}</div>
-              </a>
-            </li>`;
-          }
-          html += "</ul>";
-          resultsContainer.innerHTML = html;
-        } else {
-          resultsContainer.innerHTML = "<p>No results found</p>";
-        }
-
-        // Update URL with query
-        const url = new URL(window.location.href);
-        url.searchParams.set("q", query);
-        window.history.replaceState({}, "", url.toString());
-      }
-
-      function generatePreview(content, query) {
-        const maxLength = 150;
-        const lowerContent = content.toLowerCase();
-        const index = lowerContent.indexOf(query);
-
-        if (index === -1) return content.slice(0, maxLength) + "...";
-
-        const start = Math.max(0, index - 50);
-        const end = Math.min(content.length, index + query.length + 50);
-        let preview = content.slice(start, end);
-
-        if (start > 0) preview = "..." + preview;
-        if (end < content.length) preview += "...";
-
-        return preview;
-      }
-    </script>
-    <script src="assets/search.js"></script>
-
+    
   </body>
 </html>
