@@ -90,13 +90,13 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files =
       {
-        "helix/config.toml".source = mkIf (cfg.settings != {}) (
-          toml.generate "helix-config.toml" cfg.settings
-        );
+        "helix/config.toml" = mkIf (cfg.settings != {}) {
+          source = toml.generate "helix-config.toml" cfg.settings;
+        };
 
-        "helix/languages.toml".source = mkIf (cfg.languages != {}) (
-          toml.generate "helix-languages.toml" cfg.languages
-        );
+        "helix/languages.toml" = mkIf (cfg.languages != {}) {
+          source = toml.generate "helix-languages.toml" cfg.languages;
+        };
       }
       // optionalAttrs (cfg.themes != {}) (mkThemes cfg.themes);
   };

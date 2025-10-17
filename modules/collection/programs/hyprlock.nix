@@ -46,8 +46,10 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    xdg.config.files."hypr/hyprlock.conf".text = mkIf (cfg.settings != {}) (toHyprconf {
-      attrs = cfg.settings;
-    });
+    xdg.config.files."hypr/hyprlock.conf" = mkIf (cfg.settings != {}) {
+      text = toHyprconf {
+        attrs = cfg.settings;
+      };
+    };
   };
 }

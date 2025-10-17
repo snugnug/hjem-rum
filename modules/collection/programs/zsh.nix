@@ -90,14 +90,13 @@ in {
         initConfig = cfg.initConfig != "";
       };
     in {
-      ".zshenv".source = mkIf check.environment config.environment.loadEnv;
-      ".zshrc".text =
-        # this makes it less verbose to check if any boolean in `check` is true
-        mkIf (any id (attrValues check))
-        (
+      ".zshenv" = mkIf check.environment {source = config.environment.loadEnv;};
+      # this makes it less verbose to check if any boolean in `check` is true
+      ".zshrc" = mkIf (any id (attrValues check)) {
+        text =
           optionalString check.plugins (mkPlugins cfg.plugins)
-          + optionalString check.initConfig cfg.initConfig
-        );
+          + optionalString check.initConfig cfg.initConfig;
+      };
     };
   };
 }

@@ -74,15 +74,15 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
 
     xdg.config.files = {
-      "yazi/yazi.toml".source = mkIf (cfg.settings != {}) (
-        toml.generate "yazi-config.toml" cfg.settings
-      );
-      "yazi/keymap.toml".source = mkIf (cfg.keymap != {}) (
-        toml.generate "yazi-keymap-config.toml" cfg.keymap
-      );
-      "yazi/theme.toml".source = mkIf (cfg.theme != {}) (
-        toml.generate "yazi-theme-config.toml" cfg.theme
-      );
+      "yazi/yazi.toml" = mkIf (cfg.settings != {}) {
+        source = toml.generate "yazi-config.toml" cfg.settings;
+      };
+      "yazi/keymap.toml" = mkIf (cfg.keymap != {}) {
+        source = toml.generate "yazi-keymap-config.toml" cfg.keymap;
+      };
+      "yazi/theme.toml" = mkIf (cfg.theme != {}) {
+        source = toml.generate "yazi-theme-config.toml" cfg.theme;
+      };
     };
   };
 }

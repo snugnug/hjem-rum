@@ -46,8 +46,8 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    xdg.config.files."keepassxc/keepassxc.ini".source = mkIf (cfg.settings != {}) (
-      ini.generate "keepassxc.ini" cfg.settings
-    );
+    xdg.config.files."keepassxc/keepassxc.ini" = mkIf (cfg.settings != {}) {
+      source = ini.generate "keepassxc.ini" cfg.settings;
+    };
   };
 }

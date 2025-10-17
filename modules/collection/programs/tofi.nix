@@ -38,6 +38,6 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    xdg.config.files."tofi/config".text = mkIf (cfg.settings != {}) (toKeyValue cfg.settings);
+    xdg.config.files."tofi/config" = mkIf (cfg.settings != {}) {text = toKeyValue cfg.settings;};
   };
 }
