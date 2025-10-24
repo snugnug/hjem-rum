@@ -100,8 +100,8 @@ in {
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
       mkAfter ''
-        source ${cfg.package.shell_integration}/fish/vendor_conf.d/kitty-shell-integration.fish"
-        set --prepend fish_complete_path ${cfg.package.shell_integration}/fish/vendor_completions.d"
+        source "${cfg.package.shell_integration}/fish/vendor_conf.d/kitty-shell-integration.fish"
+        set --prepend fish_complete_path "${cfg.package.shell_integration}/fish/vendor_completions.d"
       ''
     );
     rum.programs.zsh.initConfig = mkIf cfg.integrations.zsh.enable (
