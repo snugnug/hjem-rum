@@ -173,20 +173,20 @@ in {
         variables = config.environment.sessionVariables != {};
       };
     in {
-      "nushell/config.nu".text = mkIf (checks.settings || checks.aliases || checks.extraConfig || checks.variables) (
-        concatStringsSep "\n" [
+      "nushell/config.nu" = mkIf (checks.settings || checks.aliases || checks.extraConfig || checks.variables) {
+        text = concatStringsSep "\n" [
           (optionalString checks.settings (nu.generate.config cfg.settings))
           (optionalString checks.aliases (nu.generate.aliases cfg.aliases))
           (optionalString checks.variables (nu.generate.variables config.environment.sessionVariables))
           cfg.extraConfig
-        ]
-      );
-      "nushell/env.nu".text = mkIf (cfg.envFile != "") cfg.envFile;
+        ];
+      };
+      "nushell/env.nu" = mkIf (cfg.envFile != "") {text = cfg.envFile;};
 
       # from https://github.com/nushell/nushell/discussions/12997#discussioncomment-9638977
       # also used in home manager
-      "nushell/plugin.msgpackz".source = mkIf (cfg.plugins != []) (
-        let
+      "nushell/plugin.msgpackz" = mkIf (cfg.plugins != []) {
+        source = let
           msgPackz = pkgs.runCommand "nuPlugin-msgPackz" {} ''
             mkdir -p "$out"
             ${getExe cfg.package} \
@@ -195,9 +195,9 @@ in {
               concatStringsSep "\n" (map (plugin: "plugin add ${getExe plugin}") cfg.plugins)
             }'
           '';
-        in "${msgPackz}/plugin.msgpackz"
-      );
-      "nushell/login.nu".text = mkIf (cfg.loginFile != "") cfg.loginFile;
+        in "${msgPackz}/plugin.msgpackz";
+      };
+      "nushell/login.nu" = mkIf (cfg.loginFile != "") {text = cfg.loginFile;};
     };
   };
 }

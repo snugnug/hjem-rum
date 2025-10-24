@@ -108,9 +108,9 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files =
       {
-        "ghostty/config".source = mkIf (cfg.settings != {}) (
-          keyValue.generate "ghostty-config" cfg.settings
-        );
+        "ghostty/config" = mkIf (cfg.settings != {}) {
+          source = keyValue.generate "ghostty-config" cfg.settings;
+        };
       }
       // optionalAttrs (cfg.themes != {}) (mkThemes cfg.themes);
   };

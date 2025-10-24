@@ -80,34 +80,33 @@ in {
         extraConfig = cfg.extraConfig != "";
       };
     in {
-      "hypr/hyprland.conf".text = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) (
-        optionalString check.plugins (pluginsToHyprconf cfg.plugins cfg.importantPrefixes)
-        + optionalString check.settings (toHyprconf {
-          attrs = cfg.settings;
-          inherit (cfg) importantPrefixes;
-        })
-        + optionalString check.variables.noUWSM (toHyprconf {
-          attrs.env =
-            # https://wiki.hyprland.org/Configuring/Environment-variables/#xdg-specifications
-            [
-              "XDG_CURRENT_DESKTOP,Hyprland"
-              "XDG_SESSION_TYPE,wayland"
-              "XDG_SESSION_DESKTOP,Hyprland"
-            ]
-            ++ mapAttrsToList (key: value: "${key},${value}") config.environment.sessionVariables;
-        })
-        + optionalString check.extraConfig cfg.extraConfig
-      );
+      "hypr/hyprland.conf" = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) {
+        text =
+          optionalString check.plugins (pluginsToHyprconf cfg.plugins cfg.importantPrefixes)
+          + optionalString check.settings (toHyprconf {
+            attrs = cfg.settings;
+            inherit (cfg) importantPrefixes;
+          })
+          + optionalString check.variables.noUWSM (toHyprconf {
+            attrs.env =
+              # https://wiki.hyprland.org/Configuring/Environment-variables/#xdg-specifications
+              [
+                "XDG_CURRENT_DESKTOP,Hyprland"
+                "XDG_SESSION_TYPE,wayland"
+                "XDG_SESSION_DESKTOP,Hyprland"
+              ]
+              ++ mapAttrsToList (key: value: "${key},${value}") config.environment.sessionVariables;
+          })
+          + optionalString check.extraConfig cfg.extraConfig;
+      };
 
       /*
       uwsm environment variables are advised to be separated
       (see https://wiki.hyprland.org/Configuring/Environment-variables/)
       */
-      "uwsm/env".text =
-        mkIf check.variables.withUWSM
-        (toEnvExport config.environment.sessionVariables);
+      "uwsm/env" = mkIf check.variables.withUWSM {text = toEnvExport config.environment.sessionVariables;};
 
-      "uwsm/env-hyprland".text = let
+      "uwsm/env-hyprland" = let
         /*
         this is needed as we're using a predicate so we don't create an empty file
         (improvements are welcome)
@@ -116,7 +115,7 @@ in {
           filterKeysPrefixes ["HYPRLAND_" "AQ_"] config.environment.sessionVariables;
       in
         mkIf (check.variables.withUWSM && filteredVars != {})
-        (toEnvExport filteredVars);
+        {text = toEnvExport filteredVars;};
     };
   };
 }

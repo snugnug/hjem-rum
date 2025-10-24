@@ -87,15 +87,15 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
-      "kitty/kitty.conf".source = mkIf (cfg.settings != {}) (
-        kittyKeyValue.generate "kitty.conf" (
+      "kitty/kitty.conf" = mkIf (cfg.settings != {}) {
+        source = kittyKeyValue.generate "kitty.conf" (
           cfg.settings
           // optionalAttrs (cfg.integrations.fish.enable || cfg.integrations.zsh.enable) {shell_integration = "no-rc";}
-        )
-      );
-      "kitty/light-theme.auto.conf".source = mkIf (cfg.theme.light != null) cfg.theme.light;
-      "kitty/dark-theme.auto.conf".source = mkIf (cfg.theme.dark != null) cfg.theme.dark;
-      "kitty/no-preference-theme.auto.conf".source = mkIf (cfg.theme.no-preference != null) cfg.theme.no-preference;
+        );
+      };
+      "kitty/light-theme.auto.conf" = mkIf (cfg.theme.light != null) {source = cfg.theme.light;};
+      "kitty/dark-theme.auto.conf" = mkIf (cfg.theme.dark != null) {source = cfg.theme.dark;};
+      "kitty/no-preference-theme.auto.conf" = mkIf (cfg.theme.no-preference != null) {source = cfg.theme.no-preference;};
     };
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (

@@ -95,8 +95,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
-      "git/config".source = mkIf (cfg.settings != {} || cfg.integrations.difftastic.enable) (
-        gitIni.generate "config" (
+      "git/config" = mkIf (cfg.settings != {} || cfg.integrations.difftastic.enable) {
+        source = gitIni.generate "config" (
           cfg.settings
           // (let
             difft-command = concatStringsSep " " ([(getExe cfg.integrations.difftastic.package)] ++ cfg.integrations.difftastic.flags);
@@ -106,10 +106,10 @@ in {
               diff.tool = "difftastic";
               difftool.difftastic.cmd = "${difft-command} $LOCAL $REMOTE";
             })
-        )
-      );
-      "git/ignore".text = mkIf (cfg.ignore != {}) cfg.ignore;
-      "git/attributes".text = mkIf (cfg.attributes != {}) cfg.attributes;
+        );
+      };
+      "git/ignore" = mkIf (cfg.ignore != {}) {text = cfg.ignore;};
+      "git/attributes" = mkIf (cfg.attributes != {}) {text = cfg.attributes;};
     };
   };
 }

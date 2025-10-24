@@ -92,8 +92,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
-      "ncmpcpp/config".text = mkIf (cfg.settings != {}) (toNcmpcppSettings cfg.settings);
-      "ncmpcpp/bindings".text = mkIf (cfg.bindings != {}) (toNcmpcppBinding cfg.bindings);
+      "ncmpcpp/config" = mkIf (cfg.settings != {}) {text = toNcmpcppSettings cfg.settings;};
+      "ncmpcpp/bindings" = mkIf (cfg.bindings != {}) {text = toNcmpcppBinding cfg.bindings;};
     };
   };
 }

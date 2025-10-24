@@ -73,11 +73,11 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
-      "direnv/direnv.toml".source = mkIf (cfg.settings != {}) (
-        toml.generate "direnv-config.toml" cfg.settings
-      );
-      "direnv/direnvrc".text = mkIf (cfg.direnvrc != "") cfg.direnvrc;
-      "direnv/lib/nix-direnv.sh".source = mkIf cfg.integrations.nix-direnv.enable "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";
+      "direnv/direnv.toml" = mkIf (cfg.settings != {}) {
+        source = toml.generate "direnv-config.toml" cfg.settings;
+      };
+      "direnv/direnvrc" = mkIf (cfg.direnvrc != "") {text = cfg.direnvrc;};
+      "direnv/lib/nix-direnv.sh" = mkIf cfg.integrations.nix-direnv.enable {source = "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";};
     };
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (

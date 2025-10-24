@@ -247,15 +247,17 @@ avoid this:
 ```nix
 config = mkIf cfg.enable {
   packages = [cfg.package];
-  files.".config/alacritty/alacritty.toml".source = mkIf (cfg.settings != {}) (
-    toml.generate "alacritty.toml" cfg.settings
-  );
+  files.".config/alacritty/alacritty.toml" = mkIf (cfg.settings != {}) {source = toml.generate "alacritty.toml" cfg.settings;};
 };
 ```
 
 Here all that is needed is a simple `mkIf` with a condition of the `settings`
-option not being left empty. In a case where you write to multiple files, you
-can use `optionalAttrs`, like so:
+option not being left empty. We put options like `source` and `text` inside the
+`mkIf` block so that the file will not appear in the evaluation results if
+`settings` is empty.
+
+In a case where you write to multiple files, you can use `optionalAttrs`, like
+so:
 
 ```nix
 files = (
@@ -282,7 +284,7 @@ One last case is in the Hyprland module, where several checks and several
 options are needed to compile into one file. Here is how it is done:
 
 ```nix
-files = let
+xdg.config.files = let
   check = {
     plugins = cfg.plugins != [];
     settings = cfg.settings != {};
@@ -293,34 +295,33 @@ files = let
     extraConfig = cfg.extraConfig != "";
   };
 in {
-  ".config/hypr/hyprland.conf".text = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) (
-    optionalString check.plugins (pluginsToHyprconf cfg.plugins cfg.importantPrefixes)
-    + optionalString check.settings (toHyprconf {
-      attrs = cfg.settings;
-      inherit (cfg) importantPrefixes;
-    })
-    + optionalString check.variables.noUWSM (toHyprconf {
-      attrs.env =
-        # https://wiki.hyprland.org/Configuring/Environment-variables/#xdg-specifications
-        [
-          "XDG_CURRENT_DESKTOP,Hyprland"
-          "XDG_SESSION_TYPE,wayland"
-          "XDG_SESSION_DESKTOP,Hyprland"
-        ]
-        ++ mapAttrsToList (key: value: "${key},${value}") config.environment.sessionVariables;
-    })
-    + optionalString check.extraConfig cfg.extraConfig
-  );
+  "hypr/hyprland.conf" = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) {
+    text =
+      optionalString check.plugins (pluginsToHyprconf cfg.plugins cfg.importantPrefixes)
+      + optionalString check.settings (toHyprconf {
+        attrs = cfg.settings;
+        inherit (cfg) importantPrefixes;
+      })
+      + optionalString check.variables.noUWSM (toHyprconf {
+        attrs.env =
+          # https://wiki.hyprland.org/Configuring/Environment-variables/#xdg-specifications
+          [
+            "XDG_CURRENT_DESKTOP,Hyprland"
+            "XDG_SESSION_TYPE,wayland"
+            "XDG_SESSION_DESKTOP,Hyprland"
+          ]
+          ++ mapAttrsToList (key: value: "${key},${value}") config.environment.sessionVariables;
+      })
+      + optionalString check.extraConfig cfg.extraConfig;
+  };
 
   /*
   uwsm environment variables are advised to be separated
   (see https://wiki.hyprland.org/Configuring/Environment-variables/)
   */
-  ".config/uwsm/env".text =
-    mkIf check.variables.withUWSM
-    (toEnvExport config.environment.sessionVariables);
+  "uwsm/env" = mkIf check.variables.withUWSM {text = toEnvExport config.environment.sessionVariables;};
 
-  ".config/uwsm/env-hyprland".text = let
+  "uwsm/env-hyprland" = let
     /*
     this is needed as we're using a predicate so we don't create an empty file
     (improvements are welcome)
@@ -329,7 +330,7 @@ in {
       filterKeysPrefixes ["HYPRLAND_" "AQ_"] config.environment.sessionVariables;
   in
     mkIf (check.variables.withUWSM && filteredVars != {})
-    (toEnvExport filteredVars);
+    {text = toEnvExport filteredVars;};
 };
 ```
 

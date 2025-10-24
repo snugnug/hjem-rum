@@ -169,15 +169,15 @@ in {
     packages = [cfg.package];
     files =
       {
-        ".config/zed/settings.json".source = mkIf (cfg.settings != {}) (
-          json.generate "zed-settings.json" cfg.settings
-        );
-        ".config/zed/keymap.json".source = mkIf (cfg.keymap != {}) (
-          json.generate "zed-keymap.json" cfg.keymap
-        );
-        ".config/zed/tasks.json".source = mkIf (cfg.tasks != {}) (
-          json.generate "zed-tasks.json" cfg.tasks
-        );
+        ".config/zed/settings.json" = mkIf (cfg.settings != {}) {
+          source = json.generate "zed-settings.json" cfg.settings;
+        };
+        ".config/zed/keymap.json" = mkIf (cfg.keymap != {}) {
+          source = json.generate "zed-keymap.json" cfg.keymap;
+        };
+        ".config/zed/tasks.json" = mkIf (cfg.tasks != {}) {
+          source = json.generate "zed-tasks.json" cfg.tasks;
+        };
       }
       // (mapAttrs' (name: value:
         nameValuePair ".config/zed/snippets/${name}.json" {

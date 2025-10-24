@@ -69,8 +69,8 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    xdg.config.files."beets/config.yaml".source = mkIf (cfg.settings != {}) (
-      yaml.generate "config.yaml" cfg.settings
-    );
+    xdg.config.files."beets/config.yaml" = mkIf (cfg.settings != {}) {
+      source = yaml.generate "config.yaml" cfg.settings;
+    };
   };
 }

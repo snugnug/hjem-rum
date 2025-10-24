@@ -40,9 +40,9 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
-      "Code/User/settings.json".source = mkIf (cfg.settings != {}) (
-        json.generate "settings.json" cfg.settings
-      );
+      "Code/User/settings.json" = mkIf (cfg.settings != {}) {
+        source = json.generate "settings.json" cfg.settings;
+      };
     };
   };
 }
