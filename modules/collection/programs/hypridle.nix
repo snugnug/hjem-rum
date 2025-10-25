@@ -39,7 +39,7 @@ in {
         ];
       };
       description = ''
-        Is written to {file}`$HOME/hypr/hypridle.conf`.
+        Is written to {file}`$XDG_CONFIG_HOME/hypr/hypridle.conf`.
 
         Configuration options can be found on the [Hyprland Wiki].
 

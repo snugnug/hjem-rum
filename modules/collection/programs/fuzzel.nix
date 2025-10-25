@@ -27,7 +27,7 @@ in {
         colors.background = "ffffffff";
       };
       description = ''
-        Is written to {file}`$HOME/fuzzel/fuzzel.ini`.
+        Is written to {file}`$XDG_CONFIG_HOME/fuzzel/fuzzel.ini`.
 
         Please reference {manpage}`fuzzel.ini(5)` for configuration options.
       '';
