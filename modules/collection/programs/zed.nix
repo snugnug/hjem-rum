@@ -6,7 +6,7 @@
 }: let
   inherit (lib.attrsets) mapAttrs' nameValuePair;
   inherit (lib.modules) mkIf;
-  inherit (lib.options) literalExample mkOption mkEnableOption mkPackageOption;
+  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
   inherit (lib.types) attrsOf;
 
   json = pkgs.formats.json {};
