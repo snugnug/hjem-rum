@@ -60,6 +60,8 @@ in {
         assert "vi" in extraVar, "Config does not contain extraConfig string"
         tableBasic = machine.succeed("su bob -c 'nu -c \"\$env.config.table.mode\" --config %s'" % configFile)
         assert "basic" in tableBasic, "Config does not contain table.mode = \"basic\""
+        tableModeType = machine.succeed("su bob -c 'nu -c \"\$env.config.table.mode | describe\" --config %s'" % configFile)
+        assert "string" in tableModeType, "The type validated by nu was not a string"
 
       with subtest("Verify aliases."):
         machine.succeed("su bob -c 'nu -c \"ll\" --config %s'" % configFile)
