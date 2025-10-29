@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib.options) literalExpression mkOption mkEnableOption;
-  inherit (lib.types) listOf package lines str path;
+  inherit (lib.types) listOf package lines str;
   inherit (lib.modules) mkIf mkRenamedOptionModule;
   inherit (lib.lists) optionals;
   inherit (lib.attrsets) optionalAttrs;
@@ -59,7 +59,7 @@ in {
       '';
     };
     gtk2Location = mkOption {
-      type = path;
+      type = str;
       default = ".gtkrc-2.0";
       defaultText = "$HOME/.gtkrc-2.0";
       example = ".config/gtk-2.0/gtkrc";
