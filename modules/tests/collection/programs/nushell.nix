@@ -27,6 +27,9 @@ in {
             max_size = "1_000_000";
             sync_on_enter = true;
           };
+          table = {
+            mode = "basic";
+          };
         };
         aliases = {
           ll = "ls -l";
@@ -55,6 +58,8 @@ in {
         assert "false" in var, "Config does not contain show_banner = false"
         extraVar = machine.succeed("su bob -c 'nu -c \"\$env.config.buffer_editor\" --config %s'" % configFile)
         assert "vi" in extraVar, "Config does not contain extraConfig string"
+        tableBasic = machine.succeed("su bob -c 'nu -c \"\$env.config.table.mode\" --config %s'" % configFile)
+        assert "basic" in tableBasic, "Config does not contain table.mode = \"basic\""
 
       with subtest("Verify aliases."):
         machine.succeed("su bob -c 'nu -c \"ll\" --config %s'" % configFile)
