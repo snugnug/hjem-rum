@@ -1691,7 +1691,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
-  <div class="option-description"><html><head></head><body><p>Lines of KDL code that are added to <code class="file-path">$HOME/.config/niri/config.kdl</code>.
+  <div class="option-description"><html><head></head><body><p>Lines of KDL code that are added to <code class="file-path">$XDG_CONFIG_HOME/niri/config.kdl</code>.
 See a full list of options in <a href="https://yalter.github.io/niri/Configuration%3A-Introduction.html">niri's wiki</a>.
 To add to environment, please see <a class="option-reference" href="options.html#option-extraVariables"><code>extraVariables</code></a>.</p>
 <p>Here's an example of adding a file to your niri configuration:</p>
@@ -2506,7 +2506,7 @@ for all available options.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of section of an INI file (attrs of INI atom (null, bool, int, float or string))</code></div>
-  <div class="option-description"><html><head></head><body><p>Is written to <code class="file-path">$HOME/fuzzel/fuzzel.ini</code>.</p>
+  <div class="option-description"><html><head></head><body><p>Is written to <code class="file-path">$XDG_CONFIG_HOME/fuzzel/fuzzel.ini</code>.</p>
 <p>Please reference <a href="https://man.archlinux.org/man/fuzzel.ini.5" class="manpage-reference">fuzzel.ini(5)</a> for configuration options.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -2973,7 +2973,7 @@ configuration options.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>Hyprland configuration value</code></div>
-  <div class="option-description"><html><head></head><body><p>Is written to <code class="file-path">$HOME/hypr/hypridle.conf</code>.</p>
+  <div class="option-description"><html><head></head><body><p>Is written to <code class="file-path">$XDG_CONFIG_HOME/hypr/hypridle.conf</code>.</p>
 <p>Configuration options can be found on the <a href="https://wiki.hyprland.org/Hypr-Ecosystem/hypridle">Hyprland Wiki</a>.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -3028,7 +3028,7 @@ configuration options.</p>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>Hyprland configuration value</code></div>
-  <div class="option-description"><html><head></head><body><p>Is written to <code class="file-path">$HOME/hypr/hyprlock.conf</code>.</p>
+  <div class="option-description"><html><head></head><body><p>Is written to <code class="file-path">$XDG_CONFIG_HOME/hypr/hyprlock.conf</code>.</p>
 <p>Configuration options can be found on the <a href="https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock">Hyprland Wiki</a>.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -4171,7 +4171,7 @@ Please reference <a href="https://yazi-rs.github.io/docs/configuration/theme">ya
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>JSON value</code></div>
-  <div class="option-description"><html><head></head><body><p>Configuration written to <code class="file-path">$HOME/.config/zed/keymap.json</code>.
+  <div class="option-description"><html><head></head><body><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/zed/keymap.json</code>.
 Please reference <a href="https://zed.dev/docs/key-bindings">zed's documentation</a> for config options.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -4210,7 +4210,7 @@ Please reference <a href="https://zed.dev/docs/key-bindings">zed's documentation
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>JSON value</code></div>
-  <div class="option-description"><html><head></head><body><p>Configuration written to <code class="file-path">$HOME/.config/zed/settings.json</code>.
+  <div class="option-description"><html><head></head><body><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/zed/settings.json</code>.
 Please reference <a href="https://zed.dev/docs/configuring-zed">zed's documentation</a> for config options.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -4250,7 +4250,7 @@ Please reference <a href="https://zed.dev/docs/configuring-zed">zed's documentat
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of (JSON value)</code></div>
-  <div class="option-description"><html><head></head><body><p>Custom scoped snippets written to <code class="file-path">$HOME/.config/zed/snippets/*.json</code>
+  <div class="option-description"><html><head></head><body><p>Custom scoped snippets written to <code class="file-path">$XDG_CONFIG_HOME/zed/snippets/*.json</code>
 Please reference <a href="https://zed.dev/docs/snippets">zed's documentation</a> for more details.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -4275,7 +4275,7 @@ Please reference <a href="https://zed.dev/docs/snippets">zed's documentation</a>
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>JSON value</code></div>
-  <div class="option-description"><html><head></head><body><p>Configuration written to <code class="file-path">$HOME/.config/zed/tasks.json</code>.
+  <div class="option-description"><html><head></head><body><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/zed/tasks.json</code>.
 Please reference <a href="https://zed.dev/docs/tasks">zed's documentation</a> for config options.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -4305,7 +4305,7 @@ Please reference <a href="https://zed.dev/docs/tasks">zed's documentation</a> fo
     <span class="copy-feedback">Link copied!</span>
   </h3>
   <div class="option-type">Type: <code>attribute set of (JSON value)</code></div>
-  <div class="option-description"><html><head></head><body><p>Custom themes written to <code class="file-path">$HOME/.config/zed/themes/*.json</code>
+  <div class="option-description"><html><head></head><body><p>Custom themes written to <code class="file-path">$XDG_CONFIG_HOME/zed/themes/*.json</code>
 Please reference <a href="https://zed.dev/docs/extensions/themes">zed's documentation</a> for more details.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
