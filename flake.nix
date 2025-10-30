@@ -10,6 +10,7 @@
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.ndg.follows = "ndg";
     };
     ndg = {
       url = "github:feel-co/ndg";
