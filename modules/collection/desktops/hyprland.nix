@@ -52,7 +52,7 @@ in {
 
     importantPrefixes = mkOption {
       type = listOf str;
-      default = ["$" "bezier" "name"];
+      default = ["source" "$" "bezier" "name"];
       example = ["$" "bezier"];
       description = ''
         List of prefix of attributes to source at the top of the config.
