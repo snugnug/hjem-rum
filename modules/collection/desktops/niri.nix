@@ -195,7 +195,7 @@ in {
       description = ''
         [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Introduction.html
 
-        Lines of KDL code that are added to {file}`$HOME/.config/niri/config.kdl`.
+        Lines of KDL code that are added to {file}`$XDG_CONFIG_HOME/niri/config.kdl`.
         See a full list of options in [niri's wiki].
         To add to environment, please see {option}`extraVariables`.
 

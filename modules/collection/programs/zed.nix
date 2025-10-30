@@ -42,7 +42,7 @@ in {
         };
       };
       description = ''
-        Configuration written to {file}`$HOME/.config/zed/settings.json`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/zed/settings.json`.
         Please reference [zed's documentation] for config options.
 
         [zed's documentation]: https://zed.dev/docs/configuring-zed
@@ -67,7 +67,7 @@ in {
         }
       ];
       description = ''
-        Configuration written to {file}`$HOME/.config/zed/keymap.json`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/zed/keymap.json`.
         Please reference [zed's documentation] for config options.
 
         [zed's documentation]: https://zed.dev/docs/key-bindings
@@ -87,7 +87,7 @@ in {
         };
       };
       description = ''
-        Custom scoped snippets written to {file}`$HOME/.config/zed/snippets/*.json`
+        Custom scoped snippets written to {file}`$XDG_CONFIG_HOME/zed/snippets/*.json`
         Please reference [zed's documentation] for more details.
 
         [zed's documentation]: https://zed.dev/docs/snippets
@@ -131,7 +131,7 @@ in {
         };
       };
       description = ''
-        Custom themes written to {file}`$HOME/.config/zed/themes/*.json`
+        Custom themes written to {file}`$XDG_CONFIG_HOME/zed/themes/*.json`
         Please reference [zed's documentation] for more details.
 
         [zed's documentation]: https://zed.dev/docs/extensions/themes
@@ -157,7 +157,7 @@ in {
         }
       ];
       description = ''
-        Configuration written to {file}`$HOME/.config/zed/tasks.json`.
+        Configuration written to {file}`$XDG_CONFIG_HOME/zed/tasks.json`.
         Please reference [zed's documentation] for config options.
 
         [zed's documentation]: https://zed.dev/docs/tasks
@@ -167,25 +167,25 @@ in {
 
   config = mkIf cfg.enable {
     packages = [cfg.package];
-    files =
+    xdg.config.files =
       {
-        ".config/zed/settings.json" = mkIf (cfg.settings != {}) {
+        "zed/settings.json" = mkIf (cfg.settings != {}) {
           source = json.generate "zed-settings.json" cfg.settings;
         };
-        ".config/zed/keymap.json" = mkIf (cfg.keymap != {}) {
+        "zed/keymap.json" = mkIf (cfg.keymap != {}) {
           source = json.generate "zed-keymap.json" cfg.keymap;
         };
-        ".config/zed/tasks.json" = mkIf (cfg.tasks != {}) {
+        "zed/tasks.json" = mkIf (cfg.tasks != {}) {
           source = json.generate "zed-tasks.json" cfg.tasks;
         };
       }
       // (mapAttrs' (name: value:
-        nameValuePair ".config/zed/snippets/${name}.json" {
+        nameValuePair "zed/snippets/${name}.json" {
           source = json.generate "zed-${name}-snippet.json" value;
         })
       cfg.snippets)
       // (mapAttrs' (name: value:
-        nameValuePair ".config/zed/themes/${name}.json" {
+        nameValuePair "zed/themes/${name}.json" {
           source = json.generate "zed-${name}-theme.json" value;
         })
       cfg.themes);
