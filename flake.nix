@@ -67,7 +67,7 @@
         default = pkgs.mkShell {
           packages = with pkgs; [
             pre-commit
-            python312Packages.commitizen
+            commitizen
           ];
           inputsFrom = [
             treefmtEval.${pkgs.system}.config.build.devShell
