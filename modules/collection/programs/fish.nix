@@ -190,18 +190,15 @@ in {
         "fish/config.fish" = mkIf (cfg.config != "") {source = writeFish "config.fish" cfg.config;};
         "fish/conf.d/rum-environment-variables.fish" = mkIf (env != {}) {
           text = ''
-            ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${name} ${toString value}") env}
-          '';
+            ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${escapeShellArg name} ${escapeShellArg (toString value)}") env}          '';
         };
         "fish/conf.d/rum-abbreviations.fish" = mkIf (cfg.abbrs != {}) {
           text = ''
-            ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${escapeShellArg (toString value)}") cfg.abbrs}
-          '';
+            ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${escapeShellArg name} ${escapeShellArg (toString value)}") cfg.abbrs}          '';
         };
         "fish/conf.d/rum-aliases.fish" = mkIf (cfg.aliases != {}) {
           text = ''
-            ${concatMapAttrsStringSep "\n" (name: value: "alias -- ${name} ${escapeShellArg (toString value)}") cfg.aliases}
-          '';
+            ${concatMapAttrsStringSep "\n" (name: value: "alias -- ${escapeShellArg name} ${escapeShellArg (toString value)}") cfg.aliases}          '';
         };
       }
       // (mapAttrs' (name: val: nameValuePair "fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
