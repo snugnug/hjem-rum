@@ -39,9 +39,17 @@ provides, allowing you to simply install and config a program.
 ## Setup
 
 > [!IMPORTANT]
-> [#120] introduces breaking changes, as we now use `xdg.config.files` in our
-> modules. If you are getting errors related to the option not existing, please
-> update your flake's Hjem input.
+> As mentioned above, Hjem is unstable software, which means that there will be
+> API breakage in case of version mismatches between your flake's version and
+> Hjem Rum's, as we test our code against the version of Hjem currently in
+> `flake.lock`.
+>
+> As such, we recommend flake users to follow our Hjem input (an example is
+> given below).
+>
+> This will guarantee that our modules will evaluate and work as intended, but
+> it also means that you will also not get the newest and freshest options from
+> Hjem, as we do update the input rather cautiously.
 
 To start using Hjem Rum, you must first import the flake and its modules into
 your system(s):
@@ -50,12 +58,16 @@ your system(s):
 # flake.nix
 inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hjem = {
-        url = "github:feel-co/hjem";
-        # You may want hjem to use your defined nixpkgs input to
-        # minimize redundancies.
-        inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # We recommend following our Hjem input
+    hjem.follows = "hjem-rum/hjem";
+
+    # You can also manage your own Hjem version, but this may come with breakage (read the admonition above)
+    # hjem = {
+    #     url = "github:feel-co/hjem";
+    #     # You may want hjem to use your defined nixpkgs input to
+    #     # minimize redundancies.
+    #     inputs.nixpkgs.follows = "nixpkgs";
+    # };
     hjem-rum = {
         url = "github:snugnug/hjem-rum";
         # You may want hjem-rum to use your defined nixpkgs input to
