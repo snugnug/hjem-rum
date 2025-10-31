@@ -28,7 +28,14 @@
     };
   };
 
-  testScript =
+  testScript = let
+    schemaSrc = pkgs.fetchFromGitHub {
+      owner = "yazi-rs";
+      repo = "schemas";
+      rev = "c70a80ea3d2acaeeb8b8b0dfcd86360320df4348";
+      hash = "sha256-vVN1glI+4mxmvurEclzCPt434Hn0p/SPzm50tpk2lHE=";
+    };
+  in
     #python
     ''
       # Waiting for our user to load.
@@ -46,8 +53,8 @@
       machine.succeed("[ -r %s ]" % themeConfPath)
 
       # Checks if the yazi config files are valid
-      machine.succeed("su bob -c 'taplo check --schema https://yazi-rs.github.io/schemas/yazi.json %s'" % yaziConfPath)
-      machine.succeed("su bob -c 'taplo check --schema https://yazi-rs.github.io/schemas/keymap.json %s'" % keymapConfPath)
-      machine.succeed("su bob -c 'taplo check --schema https://yazi-rs.github.io/schemas/theme.json %s'" % themeConfPath)
+      machine.succeed("su bob -c 'taplo check --schema file://${schemaSrc}/schemas/yazi.json %s'" % yaziConfPath)
+      machine.succeed("su bob -c 'taplo check --schema file://${schemaSrc}/schemas/keymap.json %s'" % keymapConfPath)
+      machine.succeed("su bob -c 'taplo check --schema file://${schemaSrc}/schemas/theme.json %s'" % themeConfPath)
     '';
 }
