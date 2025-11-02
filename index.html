@@ -291,7 +291,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">151</span>
+        <span class="toc-count">158</span>
       </summary>
       <ul>
         
@@ -940,6 +940,62 @@
         <li>
           <a href='#option-rum-programs-lsd-settings' title="rum.programs.lsd.settings">
             lsd.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-mpv-bindings' title="rum.programs.mpv.bindings">
+            mpv.bindings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-mpv-config' title="rum.programs.mpv.config">
+            mpv.config
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-mpv-enable' title="rum.programs.mpv.enable">
+            mpv.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-mpv-package' title="rum.programs.mpv.package">
+            mpv.package
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-mpv-profiles' title="rum.programs.mpv.profiles">
+            mpv.profiles
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-mpv-scriptOpts' title="rum.programs.mpv.scriptOpts">
+            mpv.scriptOpts
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-mpv-scripts' title="rum.programs.mpv.scripts">
+            mpv.scripts
             
             
           </a>
@@ -3297,6 +3353,132 @@ Please reference  <a href="https://github.com/lsd-rs/lsd#config-file-content">ls
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/lsd.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/lsd.nix&gt;</a></code></div>
 </div>
+<div class="option" id="option-rum-programs-mpv-bindings">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-mpv-bindings" class="option-anchor">rum.programs.mpv.bindings</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of string</code></div>
+  <div class="option-description"><html><head></head><body><p>Inputs converted and written to
+<code class="file-path">$XDG_CONFIG_HOME/mpv/input.conf</code>.</p>
+<p>See the manpage <span class="manpage-reference">mpv(1)</span>
+for more information.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  "Alt+0" = "set window-scale 0.5";
+  WHEEL_DOWN = "seek -10";
+  WHEEL_UP = "seek 10";
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/mpv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/mpv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-mpv-config">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-mpv-config" class="option-anchor">rum.programs.mpv.config</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of ((string or (signed integer or floating point number) convertible to it) or (string or boolean convertible to it) or list of ((string or (signed integer or floating point number) convertible to it) or (string or boolean convertible to it)))</code></div>
+  <div class="option-description"><html><head></head><body><p>Configuration converted and written to
+<code class="file-path">$XDG_CONFIG_HOME/mpv/mpv.conf</code>.</p>
+<p>See the manpage <span class="manpage-reference">mpv(1)</span>
+for the full list of options.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  autofit-larger = "100%x100%";
+  hwdec = true;
+  osd-playing-msg = "File: \${filename}";
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/mpv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/mpv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-mpv-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-mpv-enable" class="option-anchor">rum.programs.mpv.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><html><head></head><body><p>Whether to enable mpv.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/mpv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/mpv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-mpv-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-mpv-package" class="option-anchor">rum.programs.mpv.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or package</code></div>
+  <div class="option-description"><html><head></head><body><p>The mpv package to use.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>pkgs.mpv</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/mpv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/mpv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-mpv-profiles">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-mpv-profiles" class="option-anchor">rum.programs.mpv.profiles</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of attribute set of ((string or (signed integer or floating point number) convertible to it) or (string or boolean convertible to it) or list of ((string or (signed integer or floating point number) convertible to it) or (string or boolean convertible to it)))</code></div>
+  <div class="option-description"><html><head></head><body><p>Profiles converted and written to
+<code class="file-path">$XDG_CONFIG_HOME/mpv/mpv.conf</code>.</p>
+<p>See the manpage <span class="manpage-reference">mpv(1)</span>
+for more information.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  big-cache = {
+    cache = true;
+    demuxer-max-bytes = "512Mib";
+    demuxer-readhead-secs = 20;
+  };
+  reduce-judder = {
+    interpolation = true;
+    video-sync = "display-resample";
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/mpv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/mpv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-mpv-scriptOpts">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-mpv-scriptOpts" class="option-anchor">rum.programs.mpv.scriptOpts</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of attribute set of ((string or (signed integer or floating point number) convertible to it) or (string or boolean convertible to it) or list of ((string or (signed integer or floating point number) convertible to it) or (string or boolean convertible to it)))</code></div>
+  <div class="option-description"><html><head></head><body><p>Script options converted and written to
+<code class="file-path">$XDG_CONFIG_HOME/mpv/script-opts/&lt;name&gt;.conf</code>.</p>
+<p>See the manpage <span class="manpage-reference">mpv(1)</span>
+for the full list of options of builtin scripts.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  osc = {
+    scalewindowed = 2.0;
+    vidscale = false;
+    visibility = "always";
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/mpv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/mpv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-mpv-scripts">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-mpv-scripts" class="option-anchor">rum.programs.mpv.scripts</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>list of package</code></div>
+  <div class="option-description"><html><head></head><body><p>List of scripts to use with mpv.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>[ ]</code></div>
+  <div class="option-example">Example: <code>with pkgs.mpvScripts; [ sponsorblock mpris ]</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/mpv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/mpv.nix&gt;</a></code></div>
+</div>
 <div class="option" id="option-rum-programs-ncmpcpp-bindings">
   <h3 class="option-name">
     <a href="#option-rum-programs-ncmpcpp-bindings" class="option-anchor">rum.programs.ncmpcpp.bindings</a>
@@ -3671,7 +3853,7 @@ to <code class="file-path">$XDG_CONFIG_HOME/nushell/config.nu</code>.</p>
 </body></html></div>
   <div class="option-default">Default: <code>pkgs.obs-studio</code></div>
   <div class="option-example">Example: <pre><code># OBS has a special "package" to wrap the obs-studio package with plugins
-package = pkgs.wrapOBS.override {
+package = pkgs.wrapOBS.override { obs-studio = pkgs.obs-studio; } {
   # These plugins will get installed and wrapped into obs-studio for use
   plugins = with pkgs.obs-studio-plugins; [
     wlrobs
