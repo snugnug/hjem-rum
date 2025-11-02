@@ -1,0 +1,7 @@
+srgb = true
+vsync = false
+wsl = false
+
+[font]
+normal = "JetBrainsMono NFM SemiBold"
+size = 13
