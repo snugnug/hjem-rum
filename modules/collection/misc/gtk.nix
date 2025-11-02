@@ -121,8 +121,8 @@ in {
     };
     xdg.config.files = (
       optionalAttrs (cfg.settings != {}) {
-        ".config/gtk-3.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
-        ".config/gtk-4.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
+        "gtk-3.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
+        "gtk-4.0/settings.ini".text = toGtkINI {Settings = cfg.settings;};
       }
       // optionalAttrs (cfg.css.gtk3 != "") {
         "gtk-3.0/gtk.css".text = cfg.css.gtk3;
