@@ -1,5 +1,5 @@
 {
-  name = "mpv";
+  name = "programs-mpv";
   nodes.machine = {
     hjem.users.bob.rum = {
       programs.mpv = {
