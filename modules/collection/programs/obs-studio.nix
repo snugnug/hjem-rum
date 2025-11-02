@@ -19,7 +19,7 @@ in {
       '';
       example = ''
         # OBS has a special "package" to wrap the obs-studio package with plugins
-        package = pkgs.wrapOBS.override {
+        package = pkgs.wrapOBS.override { obs-studio = pkgs.obs-studio; } {
           # These plugins will get installed and wrapped into obs-studio for use
           plugins = with pkgs.obs-studio-plugins; [
             wlrobs
