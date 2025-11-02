@@ -7,12 +7,12 @@
   inherit (lib.options) mkEnableOption mkPackageOption mkOption literalExpression;
   inherit (lib.modules) mkIf;
   inherit (lib.types) attrsOf anything lines listOf package;
-  inherit (lib.strings) concatStringsSep optionalString;
+  inherit (lib.strings) concatStringsSep optionalString match;
   inherit (lib.attrsets) mapAttrsToList mapAttrs attrValues;
   inherit (lib.lists) flatten;
   inherit (lib.trivial) boolToString;
   inherit (lib.meta) getExe;
-  inherit (builtins) isBool isAttrs isList;
+  inherit (builtins) isBool isAttrs isList isInt isFloat;
 
   nu.generate = {
     config = settings: let
@@ -24,7 +24,11 @@
               then boolToString v
               else if isAttrs v
               then nuFormat attrs.${n}
-              else toString v;
+              else if isInt v || isFloat v
+              then toString v
+              else if match "^[0-9_]+$" (toString v) != null
+              then toString v
+              else "\"${toString v}\"";
           in
             if isList v'
             then
