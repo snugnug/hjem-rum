@@ -60,6 +60,23 @@ in {
       '';
     };
 
+    systemdVariables = mkOption {
+      type = listOf str;
+      default = [
+        "DISPLAY"
+        "HYPRLAND_INSTANCE_SIGNATURE"
+        "WAYLAND_DISPLAY"
+        "XDG_CURRENT_DESKTOP"
+      ];
+      example = ["--all"];
+      description = ''
+        Environment variables to be imported in the systemd & d-bus user
+        environment via dbus-update-activation-environment.
+
+        Set to `["--all"]` to import all environment variables if necessary.
+      '';
+    };
+
     extraConfig = mkOption {
       type = lines;
       default = "";
@@ -80,8 +97,10 @@ in {
       extraConfig = cfg.extraConfig != "";
     };
 
+    systemdVariables = lib.concatStringsSep " " cfg.systemdVariables;
+
     systemdSessionCommand = lib.concatStringsSep "; " [
-      "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all"
+      "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd ${systemdVariables}"
       "systemctl --user stop hyprland-session.service"
       "systemctl --user start hyprland-session.service"
     ];
@@ -128,9 +147,8 @@ in {
       };
 
       /*
-      since this is what home-manager does as well it is advised to disable systemd
-      integration if the user is using uwsm
-      we can just check if withUWSM is true and just not create the service
+      it's advised to disable systemd integration if uwsm is being used
+      we can just create the systemd unit it if uwsm isn't being used by default
       (see https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm)
       */
       systemd.services.hyprland-session = mkIf (!osConfig.programs.hyprland.withUWSM) {
