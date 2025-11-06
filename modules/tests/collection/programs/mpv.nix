@@ -1,5 +1,5 @@
 {
-  name = "mpv";
+  name = "programs-mpv";
   nodes.machine = {
     hjem.users.bob.rum = {
       programs.mpv = {
@@ -41,7 +41,7 @@
 
       # Assert that the bindings are in place
       pattern = 'WHEEL_UP seek 10'
-      machine.succeed(f"grep -E '{pattern}' %s" % "/home/bob/.config/mpv/bindings.conf")
+      machine.succeed(f"grep -E '{pattern}' %s" % "/home/bob/.config/mpv/input.conf")
 
       # Assert that the script's options are in place
       pattern = 'vidscale=no'
