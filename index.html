@@ -291,7 +291,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">158</span>
+        <span class="toc-count">161</span>
       </summary>
       <ul>
         
@@ -1052,6 +1052,30 @@
         <li>
           <a href='#option-rum-programs-ncmpcpp-settings' title="rum.programs.ncmpcpp.settings">
             ncmpcpp.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-neovide-enable' title="rum.programs.neovide.enable">
+            neovide.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-neovide-package' title="rum.programs.neovide.package">
+            neovide.package
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-neovide-settings' title="rum.programs.neovide.settings">
+            neovide.settings
             
             
           </a>
@@ -3622,6 +3646,55 @@ Please reference <a href="https://man.archlinux.org/man/ncmpcpp.1" class="manpag
   statusbar_visibility = true;
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/ncmpcpp.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/ncmpcpp.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-neovide-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-neovide-enable" class="option-anchor">rum.programs.neovide.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><html><head></head><body><p>Whether to enable neovide.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/neovide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/neovide.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-neovide-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-neovide-package" class="option-anchor">rum.programs.neovide.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or package</code></div>
+  <div class="option-description"><html><head></head><body><p>The neovide package to use.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>pkgs.neovide</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/neovide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/neovide.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-neovide-settings">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-neovide-settings" class="option-anchor">rum.programs.neovide.settings</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>TOML value</code></div>
+  <div class="option-description"><html><head></head><body><p>Configuration written to <code class="file-path">$XDG_CONFIG_HOME/neovide/config.toml</code>.
+Please reference <a href="https://neovide.dev/config-file.html">neovide's documentation</a> for config options.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  font = {
+    normal = [ ];
+    size = 14.0;
+  };
+  srgb = false;
+  theme = "auto";
+  title-hidden = true;
+  vsync = true;
+  wsl = false;
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/neovide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/neovide.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-programs-nix-your-shell-enable">
   <h3 class="option-name">
