@@ -6,7 +6,7 @@
   hjem-lib,
   ...
 }: let
-  inherit (builtins) mapAttrs concatStringsSep isBool isInt;
+  inherit (builtins) map mapAttrs concatStringsSep isBool isInt;
   inherit (hjem-lib) toEnv;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
@@ -14,7 +14,7 @@
   inherit (lib.options) mkEnableOption mkOption literalExpression mkPackageOption;
   inherit (lib.strings) concatMapStringsSep optionalString;
   inherit (lib.trivial) pipe boolToString;
-  inherit (lib.types) listOf attrsOf anything str lines submodule nullOr;
+  inherit (lib.types) listOf attrsOf anything str lines submodule nullOr path;
 
   toNiriSpawn = commands:
     concatMapStringsSep " " (arg: "\"${arg}\"") commands;
@@ -128,6 +128,19 @@ in {
         default = osConfig.programs.niri.package;
         defaultText = literalExpression "osConfig.programs.niri.package";
       };
+
+    includes = mkOption {
+      type = listOf path;
+      default = [];
+      example = literalExpression ''
+        [ ./spawn.kdl ./binds.kdl ]
+      '';
+      description = ''
+        [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Include.html
+
+        A list of other files that will be included in the configuration file. See [niri's wiki] for more information.
+      '';
+    };
     binds = mkOption {
       type = attrsOf bindsModule;
       default = {};
@@ -231,6 +244,10 @@ in {
     xdg.config.files."niri/config.kdl".source = pkgs.writeTextFile {
       name = "niri-config.kdl";
       text = concatStringsSep "\n" [
+        (pipe cfg.includes [
+          (map (include: "include \"${include}\""))
+          (concatStringsSep "\n")
+        ])
         (optionalString (niriVariables != {}) ''
           environment {
             ${niriEnvironment}
