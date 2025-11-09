@@ -1,0 +1,6 @@
+[buffer]
+autofocus = true
+images = true
+
+[page]
+C-k = "() => pager.load('ddg:')"
