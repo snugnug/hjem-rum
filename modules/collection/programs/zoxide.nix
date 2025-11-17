@@ -42,26 +42,19 @@ in {
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != true) [cfg.package];
-    files = {
-      ".zshrc" = mkIf (config.rum.programs.zsh.enable && cfg.integrations.zsh.enable) {
-        text = mkAfter ''eval "$(${getExe cfg.package} init zsh ${toFlags})"'';
-      };
-    };
-    xdg.config.files = {
-      /*
-      Needs to be added to the end of the shell configuration files, hence the `mkIf` and `mkAfter`.
-      https://github.com/ajeetdsouza/zoxide#installation
-      */
-      "fish/config.fish" = mkIf (config.rum.programs.fish.enable && cfg.integrations.fish.enable) {
-        text = mkAfter "${getExe cfg.package} init fish ${toFlags} | source";
-      };
-      "nushell/config.nu" = mkIf (config.rum.programs.nushell.enable && cfg.integrations.nushell.enable) {
-        text = mkAfter ''
-          source ${
-            pkgs.runCommand "zoxide-init-nu" {} ''${getExe cfg.package} init nushell ${toFlags} >> "$out"''
-          }
-        '';
-      };
-    };
+
+    rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
+      mkAfter "${getExe cfg.package} init fish ${toFlags} | source"
+    );
+    rum.programs.zsh.initConfig = mkIf cfg.integrations.zsh.enable (
+      mkAfter ''eval "$(${getExe cfg.package} init zsh ${toFlags})"''
+    );
+    rum.programs.nushell.extraConfig = mkIf cfg.integrations.nushell.enable (
+      mkAfter ''
+        source ${
+          pkgs.runCommand "zoxide-init-nu" {} ''${getExe cfg.package} init nushell ${toFlags} >> "$out"''
+        }
+      ''
+    );
   };
 }
