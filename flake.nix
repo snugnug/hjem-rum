@@ -11,10 +11,12 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ndg = {
-      url = "github:feel-co/ndg";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    # Avoid overriding the Nixpkgs of NDG, or otherwise it will have to be rebuilt.
+    # Alternative here is using the binary releases, but it is bound to get into
+    # Nixpkgs eventually, so for now the duplicate Nixpkgs is *acceptable*.
+    # FIXME: remove when NDG is in Nixpkgs
+    ndg.url = "github:feel-co/ndg?ref=v2.5.1"; # pin NDG to benefit from binary cache
   };
 
   outputs = {

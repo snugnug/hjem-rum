@@ -119,7 +119,8 @@
         --module-options ${configJSON}/share/doc/nixos/options.json \
         --manpage-urls ${./manpage-urls.json} \
         --options-depth 2 \
-        --generate-search true \
+        --generate-search \
+        --highlight-code \
         --output-dir "$out"
     '';
 in
