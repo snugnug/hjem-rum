@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hjem Rum - Search</title>
+     
     <script>
       // Apply sidebar state immediately to prevent flash
       (function () {
@@ -14,20 +15,31 @@
     </script>
     <link rel="stylesheet" href="assets/style.css" />
     <script defer src="assets/main.js"></script>
+    <script>
+      window.searchNamespace = window.searchNamespace || {};
+      window.searchNamespace.rootPath = "";
+    </script>
     <script defer src="assets/search.js"></script>
   </head>
   <body>
     <div class="container">
       <header>
         <div class="header-left">
-          <h1 class="site-title"><a href="index.html">Hjem Rum</a></h1>
+          <h1 class="site-title">
+            <a href="index.html">Hjem Rum</a>
+          </h1>
         </div>
         <nav class="header-nav">
-          <ul>
-            <li ><a href="options.html">Options</a></li>
-            <li class="active"><a href="search.html">Search</a></li>
-          </ul>
-        </nav>
+  <ul>
+    <li >
+      <a href="options.html">Options</a>
+    </li>
+    
+    <li><a href="search.html">Search</a></li>
+    
+  </ul>
+</nav>
+
         <div class="search-container">
           <input type="text" id="search-input" placeholder="Search..." />
           <div id="search-results" class="search-results"></div>
@@ -83,8 +95,9 @@
       </div>
 
       <footer>
-        <p></p>
-      </footer>
+  <p>Generated with ndg</p>
+</footer>
+
     </div>
 
     

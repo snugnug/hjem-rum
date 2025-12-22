@@ -1,8 +1,8 @@
 // Polyfill for requestIdleCallback for Safari and unsupported browsers
 if (typeof window.requestIdleCallback === "undefined") {
   window.requestIdleCallback = function (cb) {
-    var start = Date.now();
-    var idlePeriod = 50;
+    const start = Date.now();
+    const idlePeriod = 50;
     return setTimeout(function () {
       cb({
         didTimeout: false,
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // Make the entire heading clickable
-      heading.addEventListener("click", function (e) {
+      heading.addEventListener("click", function () {
         const id = this.id;
         history.pushState(null, null, "#" + id);
 
@@ -379,39 +379,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Mobile Search Popup
-  const mobileSearchPopup = document.getElementById("mobile-search-popup");
-  const mobileSearchInput = document.getElementById("mobile-search-input");
-  const closeMobileSearchBtn = document.getElementById("close-mobile-search");
-  const mobileSearchResults = document.getElementById("mobile-search-results");
-
-  if (closeMobileSearchBtn && mobileSearchPopup) {
-    closeMobileSearchBtn.addEventListener("click", () => {
-      mobileSearchPopup.classList.remove("active");
-    });
-
-    // Close on escape key
-    document.addEventListener("keydown", (event) => {
-      if (
-        event.key === "Escape" &&
-        mobileSearchPopup.classList.contains("active")
-      ) {
-        mobileSearchPopup.classList.remove("active");
-      }
-    });
-
-    // Close on outside click
-    document.addEventListener("click", (event) => {
-      if (
-        mobileSearchPopup.classList.contains("active") &&
-        !mobileSearchPopup
-          .querySelector(".mobile-search-container")
-          .contains(event.target)
-      ) {
-        mobileSearchPopup.classList.remove("active");
-      }
-    });
-  }
+  
 
   // Options filter functionality
   const optionsFilter = document.getElementById("options-filter");

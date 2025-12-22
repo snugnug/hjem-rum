@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hjem Rum - Options</title>
+     
     <script>
       // Apply sidebar state immediately to prevent flash
       (function () {
@@ -22,17 +23,21 @@
     <div class="container">
       <header>
         <div class="header-left">
-          <h1 class="site-title"><a href="index.html">Hjem Rum</a></h1>
+          <h1 class="site-title">
+            <a href="index.html">Hjem Rum</a>
+          </h1>
         </div>
         <nav class="header-nav">
-          <ul>
-            <li class="active"><a href="options.html">Options</a></li>
-            
-            <li><a href="search.html">Search</a></li>
-            
-          </ul>
-        </nav>
-        
+  <ul>
+    <li class="active">
+      <a href="options.html">Options</a>
+    </li>
+    
+    <li><a href="search.html">Search</a></li>
+    
+  </ul>
+</nav>
+ 
         <div class="search-container">
           <input type="text" id="search-input" placeholder="Search..." />
           <div id="search-results" class="search-results"></div>
@@ -1724,7 +1729,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   </h3>
   <div class="option-type">Type: <code>null or string</code></div>
   <div class="option-description"><html><head></head><body><p>The non-spawn action to run on button-press. For spawning processes, please see
-<a class="option-reference" href="options.html#option-binds-<keybind>-spawn"><code>binds.&lt;keybind&gt;.spawn</code></a>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for a complete list.</p>
+<code class="nixos-option">binds.&lt;keybind&gt;.spawn</code>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for a complete list.</p>
 </body></html></div>
   <div class="option-default">Default: <code>null</code></div>
   <div class="option-example">Example: <code>"focus-column-left"</code></div>
@@ -1754,7 +1759,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   </h3>
   <div class="option-type">Type: <code>null or (list of string)</code></div>
   <div class="option-description"><html><head></head><body><p>The spawn action to run on button-press. For other actions, please see
-<a class="option-reference" href="options.html#option-binds-<keybind>-action"><code>binds.&lt;keybind&gt;.action</code></a>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for more information.</p>
+<code class="nixos-option">binds.&lt;keybind&gt;.action</code>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for more information.</p>
 </body></html></div>
   <div class="option-default">Default: <code>null</code></div>
   <div class="option-example">Example: <pre><code>[
@@ -1773,23 +1778,13 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
   <div class="option-description"><html><head></head><body><p>Lines of KDL code that are added to <code class="file-path">$XDG_CONFIG_HOME/niri/config.kdl</code>.
 See a full list of options in <a href="https://yalter.github.io/niri/Configuration%3A-Introduction.html">niri's wiki</a>.
-To add to environment, please see <a class="option-reference" href="options.html#option-extraVariables"><code>extraVariables</code></a>.</p>
+To add to environment, please see <code class="nixos-option">extraVariables</code>.</p>
 <p>Here's an example of adding a file to your niri configuration:</p>
-<pre><code class="language-nix">  config = builtins.readFile ./config.kdl;
-</code></pre>
+<pre class="highlight"><code class="language-nix">&nbsp;&nbsp;<span style="color:rgb(97,175,239);">config</span>&nbsp;<span style="color:rgb(171,178,191);">=</span>&nbsp;<span style="color:rgb(209,154,102);">builtins</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(86,182,194);">readFile</span>&nbsp;<span style="color:rgb(232,102,113);">./config.kdl</span><span style="color:rgb(132,139,152);">;</span><br></code></pre>
 <p>Optionally, you can split your niri configuration into multiple KDL files like so:</p>
-<pre><code class="language-nix">  config = (lib.concatMapStringsSep "\n" builtins.readFile [./config.kdl ./binds.kdl]);
-</code></pre>
+<pre class="highlight"><code class="language-nix">&nbsp;&nbsp;<span style="color:rgb(97,175,239);">config</span>&nbsp;<span style="color:rgb(171,178,191);">=</span>&nbsp;<span style="color:rgb(132,139,152);">(</span><span style="color:rgb(171,178,191);">lib</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(97,175,239);">concatMapStringsSep</span>&nbsp;<span style="color:rgb(152,195,121);">"</span><span style="color:rgb(232,102,113);">\n</span><span style="color:rgb(152,195,121);">"</span>&nbsp;<span style="color:rgb(209,154,102);">builtins</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(86,182,194);">readFile</span>&nbsp;<span style="color:rgb(132,139,152);">[</span><span style="color:rgb(232,102,113);">./config.kdl</span>&nbsp;<span style="color:rgb(232,102,113);">./binds.kdl</span><span style="color:rgb(132,139,152);">]</span><span style="color:rgb(132,139,152);">)</span><span style="color:rgb(132,139,152);">;</span><br></code></pre>
 <p>Finally, if you need to interpolate some Nix variables into your configuration:</p>
-<pre><code class="language-nix">  config = builtins.readFile ./config.kdl
-    +
-    # kdl
-    ''
-      focus-ring {
-        active-color ${config.local.colors.border-active}
-      }
-    '';
-</code></pre>
+<pre class="highlight"><code class="language-nix">&nbsp;&nbsp;<span style="color:rgb(97,175,239);">config</span>&nbsp;<span style="color:rgb(171,178,191);">=</span>&nbsp;<span style="color:rgb(209,154,102);">builtins</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(86,182,194);">readFile</span>&nbsp;<span style="color:rgb(232,102,113);">./config.kdl</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgb(171,178,191);">+</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgb(92,99,112);font-style: italic;">#&nbsp;kdl</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:rgb(152,195,121);">''</span><span style="color:rgb(152,195,121);"></span><br><span style="color:rgb(152,195,121);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;focus-ring&nbsp;{</span><br><span style="color:rgb(152,195,121);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;active-color&nbsp;</span><span style="color:rgb(232,102,113);">${</span><span style="color:rgb(171,178,191);">config</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(86,182,194);">local</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(86,182,194);">colors</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(86,182,194);">border-active</span><span style="color:rgb(232,102,113);">}</span><span style="color:rgb(152,195,121);"></span><br><span style="color:rgb(152,195,121);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span><br><span style="color:rgb(152,195,121);">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color:rgb(152,195,121);">''</span><span style="color:rgb(132,139,152);">;</span><br></code></pre>
 </body></html></div>
   <div class="option-default">Default: <code>""</code></div>
   <div class="option-example">Example: <pre><code>screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -1822,7 +1817,7 @@ switch-events {
   </h3>
   <div class="option-type">Type: <code>attribute set of (null or (list of (signed integer or string or absolute path)) or signed integer or string or absolute path)</code></div>
   <div class="option-description"><html><head></head><body><p>Extra environmental variables to be added to Niri's <code>environment</code> node.
-This can be used to override variables set in <a class="option-reference" href="options.html#option-environment-sessionVariables"><code>environment.sessionVariables</code></a>.
+This can be used to override variables set in <code class="nixos-option">environment.sessionVariables</code>.
 You can therefore set a variable to <code>null</code> to force unset it in Niri. Learn more from <a href="https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#environment">niri's wiki</a>.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
@@ -4804,8 +4799,9 @@ done at this level, for the sake of organization.</p>
       </div>
 
       <footer>
-        <p></p>
-      </footer>
+  <p>Generated with ndg</p>
+</footer>
+
     </div>
 
     
