@@ -2,12 +2,7 @@
   name = "programs-nix-your-shell";
   nodes.machine = {
     hjem.users.bob.rum = {
-      programs.nix-your-shell = {
-        enable = true;
-        integrations.fish.enable = true;
-        integrations.zsh.enable = true;
-        integrations.nushell.enable = true;
-      };
+      programs.nix-your-shell.enable = true;
       programs.fish.enable = true;
       programs.zsh.enable = true;
       programs.nushell.enable = true;
