@@ -50,7 +50,7 @@ in {
       {
         assertion = !attrNamesHasPrefix "FZF_" cfg.env;
         message = ''
-          Each env variable in `rum.programs.fzf.env` is automatically prefixed with `FZF_`. Adding this prefix manually will cause it to be added twice, causing the actual env variable to not apply.
+          Each env variable in {option}`rum.programs.fzf.env` is automatically prefixed with `FZF_`. Adding this prefix manually will cause it to be added twice, causing the actual env variable to not apply.
         '';
       }
     ];
