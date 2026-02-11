@@ -44,7 +44,7 @@ in {
       example = {
         autofit-larger = "100%x100%";
         hwdec = true;
-        osd-playing-msg = "File: $\{filename}";
+        osd-playing-msg = "File: \${filename}";
       };
     };
 
