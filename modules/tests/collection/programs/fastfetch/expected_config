@@ -1,0 +1,17 @@
+{
+  "display": {
+    "constants": [
+      "██ "
+    ]
+  },
+  "logo": {
+    "source": "nixos_old_small"
+  },
+  "modules": [
+    {
+      "key": "{$1}Distro",
+      "keyColor": "38;5;210",
+      "type": "os"
+    }
+  ]
+}
