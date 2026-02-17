@@ -296,7 +296,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">161</span>
+        <span class="toc-count">164</span>
       </summary>
       <ul>
         
@@ -441,6 +441,30 @@
         <li>
           <a href='#option-rum-programs-direnv-settings' title="rum.programs.direnv.settings">
             direnv.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-fastfetch-enable' title="rum.programs.fastfetch.enable">
+            fastfetch.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-fastfetch-package' title="rum.programs.fastfetch.package">
+            fastfetch.package
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum-programs-fastfetch-settings' title="rum.programs.fastfetch.settings">
+            fastfetch.settings
             
             
           </a>
@@ -2297,6 +2321,61 @@ Please reference <a href="https://direnv.net/man/direnv.toml.1.html">direnv's do
   };
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-fastfetch-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-fastfetch-enable" class="option-anchor">rum.programs.fastfetch.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><html><head></head><body><p>Whether to enable Fastfetch.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/fastfetch.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/fastfetch.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-fastfetch-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-fastfetch-package" class="option-anchor">rum.programs.fastfetch.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or package</code></div>
+  <div class="option-description"><html><head></head><body><p>The fastfetch package to use.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>pkgs.fastfetch</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/fastfetch.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/fastfetch.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-fastfetch-settings">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-fastfetch-settings" class="option-anchor">rum.programs.fastfetch.settings</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>JSON value</code></div>
+  <div class="option-description"><html><head></head><body><p>The configuration written to <code class="file-path">$XDG_CONFIG_HOME/fastfetch/config.jsonc</code>.
+Please reference <a href="https://gitlab.com/CarterLi/fastfetch/-/wikis/Json-Schema">Json Schema</a> for more information.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  display = {
+    constants = [
+      "██ "
+    ];
+  };
+  logo = {
+    source = "nixos_old_small";
+  };
+  modules = [
+    {
+      key = "{$1}Distro";
+      keyColor = "38;5;210";
+      type = "os";
+    }
+  ];
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/fastfetch.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/fastfetch.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-programs-fish-abbrs">
   <h3 class="option-name">
