@@ -1,0 +1,9 @@
+[options]
+suppress_default_binds=true
+[aliases]
+[binds]
+<Ctrl+r>=rotate by 90
+<Shift+T>=slideshow -1
+<period>=next_frame
+<space>=toggle_playing
+t=slideshow +1
