@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   osConfig,
   config,
   rumLib,
@@ -59,6 +60,23 @@ in {
       '';
     };
 
+    systemdVariables = mkOption {
+      type = listOf str;
+      default = [
+        "DISPLAY"
+        "HYPRLAND_INSTANCE_SIGNATURE"
+        "WAYLAND_DISPLAY"
+        "XDG_CURRENT_DESKTOP"
+      ];
+      example = ["--all"];
+      description = ''
+        Environment variables to be imported in the systemd & d-bus user
+        environment via dbus-update-activation-environment.
+
+        Set to `["--all"]` to import all environment variables if necessary.
+      '';
+    };
+
     extraConfig = mkOption {
       type = lines;
       default = "";
@@ -68,54 +86,77 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    xdg.config.files = let
-      check = {
-        plugins = cfg.plugins != [];
-        settings = cfg.settings != {};
-        variables = {
-          noUWSM = config.environment.sessionVariables != {} && !osConfig.programs.hyprland.withUWSM;
-          withUWSM = config.environment.sessionVariables != {} && osConfig.programs.hyprland.withUWSM;
-        };
-        extraConfig = cfg.extraConfig != "";
+  config = let
+    check = {
+      plugins = cfg.plugins != [];
+      settings = cfg.settings != {};
+      variables = {
+        noUWSM = config.environment.sessionVariables != {} && !osConfig.programs.hyprland.withUWSM;
+        withUWSM = config.environment.sessionVariables != {} && osConfig.programs.hyprland.withUWSM;
       };
-    in {
-      "hypr/hyprland.conf" = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) {
-        text =
-          optionalString check.plugins (pluginsToHyprconf cfg.plugins cfg.importantPrefixes)
-          + optionalString check.settings (toHyprconf {
-            attrs = cfg.settings;
-            inherit (cfg) importantPrefixes;
-          })
-          + optionalString check.variables.noUWSM (toHyprconf {
-            attrs.env =
-              # https://wiki.hyprland.org/Configuring/Environment-variables/#xdg-specifications
-              [
-                "XDG_CURRENT_DESKTOP,Hyprland"
-                "XDG_SESSION_TYPE,wayland"
-                "XDG_SESSION_DESKTOP,Hyprland"
-              ]
-              ++ mapAttrsToList (key: value: "${key},${value}") config.environment.sessionVariables;
-          })
-          + optionalString check.extraConfig cfg.extraConfig;
+      extraConfig = cfg.extraConfig != "";
+    };
+
+    systemdVariables = lib.concatStringsSep " " cfg.systemdVariables;
+
+    systemdSessionCommand = lib.concatStringsSep "; " [
+      "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd ${systemdVariables}"
+      "systemctl --user stop hyprland-session.service"
+      "systemctl --user start hyprland-session.service"
+    ];
+  in
+    mkIf cfg.enable {
+      xdg.config.files = {
+        "hypr/hyprland.conf" = mkIf (check.plugins || check.settings || check.variables.noUWSM || check.extraConfig) {
+          text =
+            optionalString check.plugins (pluginsToHyprconf cfg.plugins cfg.importantPrefixes)
+            + optionalString check.settings (toHyprconf {
+              attrs = cfg.settings;
+              inherit (cfg) importantPrefixes;
+            })
+            + optionalString check.variables.noUWSM (toHyprconf {
+              attrs.env =
+                # https://wiki.hyprland.org/Configuring/Environment-variables/#xdg-specifications
+                [
+                  "XDG_CURRENT_DESKTOP,Hyprland"
+                  "XDG_SESSION_TYPE,wayland"
+                  "XDG_SESSION_DESKTOP,Hyprland"
+                ]
+                ++ mapAttrsToList (key: value: "${key},${value}") config.environment.sessionVariables;
+            })
+            + optionalString (!osConfig.programs.hyprland.withUWSM) "exec-once = ${systemdSessionCommand}\n"
+            + optionalString check.extraConfig cfg.extraConfig;
+        };
+
+        /*
+        uwsm environment variables are advised to be separated
+        (see https://wiki.hyprland.org/Configuring/Environment-variables/)
+        */
+        "uwsm/env" = mkIf check.variables.withUWSM {text = toEnvExport config.environment.sessionVariables;};
+
+        "uwsm/env-hyprland" = let
+          /*
+          this is needed as we're using a predicate so we don't create an empty file
+          (improvements are welcome)
+          */
+          filteredVars =
+            filterKeysPrefixes ["HYPRLAND_" "AQ_"] config.environment.sessionVariables;
+        in
+          mkIf (check.variables.withUWSM && filteredVars != {})
+          {text = toEnvExport filteredVars;};
       };
 
       /*
-      uwsm environment variables are advised to be separated
-      (see https://wiki.hyprland.org/Configuring/Environment-variables/)
+      it's advised to disable systemd integration if uwsm is being used
+      we can just create the systemd unit it if uwsm isn't being used by default
+      (see https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm)
       */
-      "uwsm/env" = mkIf check.variables.withUWSM {text = toEnvExport config.environment.sessionVariables;};
-
-      "uwsm/env-hyprland" = let
-        /*
-        this is needed as we're using a predicate so we don't create an empty file
-        (improvements are welcome)
-        */
-        filteredVars =
-          filterKeysPrefixes ["HYPRLAND_" "AQ_"] config.environment.sessionVariables;
-      in
-        mkIf (check.variables.withUWSM && filteredVars != {})
-        {text = toEnvExport filteredVars;};
+      systemd.services.hyprland-session = mkIf (!osConfig.programs.hyprland.withUWSM) {
+        description = "Hyprland compositor session";
+        documentation = ["man:systemd.special(7)"];
+        bindsTo = ["graphical-session.target"];
+        wants = ["graphical-session-pre.target"];
+        after = ["graphical-session-pre.target"];
+      };
     };
-  };
 }
