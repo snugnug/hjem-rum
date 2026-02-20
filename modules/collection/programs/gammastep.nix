@@ -44,5 +44,17 @@ in {
     xdg.config.files."gammastep/config.ini" = mkIf (cfg.settings != {}) {
       source = ini.generate "gammastep-config.ini" cfg.settings;
     };
+
+    systemd.services.gammastep = {
+      after = ["graphical-session.target"];
+      description = "Screen color temperature manager";
+      documentation = ["https://gitlab.com/chinstrap/gammastep"];
+      partOf = ["graphical-session.target"];
+      serviceConfig = {
+        ExecStart = lib.getExe pkgs.gammastep;
+        Restart = "on-failure";
+      };
+      wantedBy = ["graphical-session.target"];
+    };
   };
 }

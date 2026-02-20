@@ -10,6 +10,7 @@
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.ndg.follows = "ndg";
     };
 
     # Avoid overriding the Nixpkgs of NDG, or otherwise it will have to be rebuilt.
