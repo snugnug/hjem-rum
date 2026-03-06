@@ -11,7 +11,7 @@
   inherit (lib.strings) concatStringsSep;
   inherit (lib.types) lines listOf str;
 
-  gitIni = pkgs.formats.gitIni {};
+  gitIni = pkgs.formats.gitIni {listsAsDuplicateKeys = true;};
   cfg = config.rum.programs.git;
 in {
   imports = [(mkRemovedOptionModule ["rum" "programs" "git" "destination"] "The default destination is now under `~/.config/git`")];

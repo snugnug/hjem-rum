@@ -12,6 +12,7 @@
           push.autoSetupRemote = true;
           rebase.autoStash = true;
           safe.directory = "/tmp";
+          credential.helper = ["libsecret" "cache --timeout 7200" "oauth"];
         };
         ignore = ''
           .direnv/
