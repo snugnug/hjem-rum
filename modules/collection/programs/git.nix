@@ -108,8 +108,8 @@ in {
             })
         );
       };
-      "git/ignore" = mkIf (cfg.ignore != {}) {text = cfg.ignore;};
-      "git/attributes" = mkIf (cfg.attributes != {}) {text = cfg.attributes;};
+      "git/ignore" = mkIf (cfg.ignore != "") {text = cfg.ignore;};
+      "git/attributes" = mkIf (cfg.attributes != "") {text = cfg.attributes;};
     };
   };
 }
