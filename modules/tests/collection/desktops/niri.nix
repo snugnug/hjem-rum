@@ -25,8 +25,13 @@ in {
         STRINGS = ["FOO" "BAR" "BAZ"];
       };
 
-      rum.desktops.niri = {
+      rum.desktops.niri = let
+        noCsdKdl = pkgs.writeText "no-csd.kdl" ''
+          prefer-no-csd
+        '';
+      in {
         enable = true;
+        includes = [noCsdKdl];
         extraVariables = {
           RUM_TEST_TWO = "HELLO";
           NULL = null;
@@ -84,6 +89,10 @@ in {
       machine.wait_for_unit("default.target")
 
       machine.succeed("test -L %s" % config)
+
+      with subtest("Validate includes"):
+        pattern = r'include ^/nix/store/[^/]+-no-csd.kdl$'
+        machine.succeed(f"grep -E '{pattern}' %s" % config)
 
       with subtest("Validate binds"):
         machine.succeed("grep 'Mod+T  {focus-column-left;}' %s" % config)
