@@ -55,7 +55,12 @@ in {
     };
 
     integrations = {
-      fish.enable = mkEnableOption "direnv integration with fish";
+      fish.enable =
+        mkEnableOption "direnv integration with fish"
+        // {
+          default = true;
+          example = false;
+        };
       nix-direnv = {
         enable =
           mkEnableOption "direnv integration with nix-direnv"
@@ -65,8 +70,18 @@ in {
           };
         package = mkPackageOption pkgs "nix-direnv" {};
       };
-      nushell.enable = mkEnableOption "direnv integration with nushell";
-      zsh.enable = mkEnableOption "direnv integration with zsh";
+      nushell.enable =
+        mkEnableOption "direnv integration with nushell"
+        // {
+          default = true;
+          example = false;
+        };
+      zsh.enable =
+        mkEnableOption "direnv integration with zsh"
+        // {
+          default = true;
+          example = false;
+        };
     };
   };
 
