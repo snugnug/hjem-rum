@@ -14,7 +14,7 @@ in {
   options.rum.programs.beets = {
     enable = mkEnableOption "beets";
 
-    package = mkPackageOption pkgs "beets" {
+    package = mkPackageOption pkgs.python3Packages "beets" {
       nullable = true;
       extraDescription = ''
         To get plugins to work, you will need to override the beets derivation

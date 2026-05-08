@@ -11,7 +11,7 @@ in {
     hjem.users.bob.rum = {
       programs.beets = {
         enable = true;
-        package = pkgs.beets.override {pluginOverrides.duplicates.enable = true;};
+        package = pkgs.python3Packages.beets.override {pluginOverrides.duplicates.enable = true;};
         inherit settings;
       };
     };
