@@ -3,6 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -10,6 +16,7 @@
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix-darwin.follows = "nix-darwin";
     };
 
     # Avoid overriding the Nixpkgs of NDG, or otherwise it will have to be rebuilt.
@@ -58,7 +65,7 @@
     };
     packages = forAllSystems (pkgs: {
       docs = pkgs.callPackage ./docs/package.nix {
-        inherit (ndg.packages.${pkgs.system}) ndg;
+        inherit (ndg.packages.${pkgs.stdenv.hostPlatform.system}) ndg;
         inherit rumLib inputs;
       };
     });
@@ -69,10 +76,10 @@
         default = pkgs.mkShell {
           packages = with pkgs; [
             pre-commit
-            python312Packages.commitizen
+            commitizen
           ];
           inputsFrom = [
-            treefmtEval.${pkgs.system}.config.build.devShell
+            treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.devShell
           ];
           shellHook = ''
             pre-commit install --hook-type pre-commit --hook-type commit-msg --hook-type pre-push
@@ -92,6 +99,6 @@
     );
 
     # Provide the default formatter to invoke on 'nix fmt'.
-    formatter = forAllSystems (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
+    formatter = forAllSystems (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
   };
 }
