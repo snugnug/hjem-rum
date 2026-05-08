@@ -14,7 +14,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hjem = {
-      url = "github:feel-co/hjem";
+      # url = "github:feel-co/hjem";
+      url = "github:getpsyched/hjem/custom-username";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nix-darwin.follows = "nix-darwin";
     };
