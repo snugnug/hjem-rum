@@ -4,33 +4,21 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nix-darwin.follows = "nix-darwin";
     };
 
-    # Avoid overriding the Nixpkgs of NDG, or otherwise it will have to be rebuilt.
-    # Alternative here is using the binary releases, but it is bound to get into
-    # Nixpkgs eventually, so for now the duplicate Nixpkgs is *acceptable*.
-    # FIXME: remove when NDG is in Nixpkgs
-    ndg.url = "github:feel-co/ndg?ref=v2.5.1"; # pin NDG to benefit from binary cache
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
-    treefmt-nix,
-    ndg,
     hjem,
     ...
   } @ inputs: let
@@ -44,7 +32,7 @@
     rumLib = import ./modules/lib/default.nix {inherit (nixpkgs) lib;};
 
     treefmtEval = forAllSystems (pkgs:
-      treefmt-nix.lib.evalModule pkgs
+      (import (import ./npins).treefmt-nix).evalModule pkgs
       {
         projectRootFile = "flake.nix";
         programs.alejandra.enable = true;
@@ -65,8 +53,8 @@
     };
     packages = forAllSystems (pkgs: {
       docs = pkgs.callPackage ./docs/package.nix {
-        inherit (ndg.packages.${pkgs.stdenv.hostPlatform.system}) ndg;
         inherit rumLib inputs;
+        ndg = (import ((import ./npins).ndg + "/nix") {inherit pkgs;}).packages.default;
       };
     });
     lib = rumLib;
@@ -75,6 +63,7 @@
       pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            npins
             pre-commit
             commitizen
           ];

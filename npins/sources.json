@@ -1,0 +1,35 @@
+{
+  "pins": {
+    "ndg": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "feel-co",
+        "repo": "ndg"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.5.1",
+      "revision": "696647a8f0ea1451c02de21b6bdf2a2c9f238d85",
+      "url": "https://api.github.com/repos/feel-co/ndg/tarball/refs/tags/v2.5.1",
+      "hash": "sha256-vKuCSU8BCUxG8S2/EyOXrCbIQjmY07Jb5Cq3ehnLsnY=",
+      "frozen": true
+    },
+    "treefmt-nix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "treefmt-nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "29ec5026372e0dec56f890e50dbe4f45930320fd",
+      "url": "https://github.com/numtide/treefmt-nix/archive/29ec5026372e0dec56f890e50dbe4f45930320fd.tar.gz",
+      "hash": "sha256-4h3s1L/kKqt3gMDcVfN8/4v2jqHrgLIe4qok4ApH5x4="
+    }
+  },
+  "version": 7
+}
