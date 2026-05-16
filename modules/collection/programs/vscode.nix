@@ -41,7 +41,7 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
       "Code/User/settings.json" = mkIf (cfg.settings != {}) {
-        source = json.generate "settings.json" cfg.settings;
+        source = json.generate "Code-User-settings.json" cfg.settings;
       };
     };
   };

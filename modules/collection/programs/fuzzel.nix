@@ -37,7 +37,7 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."fuzzel/fuzzel.ini" = mkIf (cfg.settings != {}) {
-      source = ini.generate "fuzzel.ini" cfg.settings;
+      source = ini.generate "fuzzel-fuzzel.ini" cfg.settings;
     };
   };
 }
