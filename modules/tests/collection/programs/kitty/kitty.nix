@@ -18,8 +18,6 @@
           dark = "${pkgs.kitty-themes}/share/kitty-themes/themes/1984_dark.conf";
           no-preference = "${pkgs.kitty-themes}/share/kitty-themes/themes/default.conf";
         };
-        integrations.fish.enable = true;
-        integrations.zsh.enable = true;
       };
       programs.fish.enable = true;
       programs.zsh.enable = true;

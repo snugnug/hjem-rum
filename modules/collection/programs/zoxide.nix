@@ -34,9 +34,24 @@ in {
     };
 
     integrations = {
-      fish.enable = mkEnableOption "zoxide integration with fish";
-      zsh.enable = mkEnableOption "zoxide integration with zsh";
-      nushell.enable = mkEnableOption "zoxide integration with nushell";
+      fish.enable =
+        mkEnableOption "zoxide integration with fish"
+        // {
+          default = true;
+          example = false;
+        };
+      nushell.enable =
+        mkEnableOption "zoxide integration with nushell"
+        // {
+          default = true;
+          example = false;
+        };
+      zsh.enable =
+        mkEnableOption "zoxide integration with zsh"
+        // {
+          default = true;
+          example = false;
+        };
     };
   };
 
