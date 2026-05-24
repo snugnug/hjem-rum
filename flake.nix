@@ -54,7 +54,6 @@
     packages = forAllSystems (pkgs: {
       docs = pkgs.callPackage ./docs/package.nix {
         inherit rumLib inputs;
-        ndg = (import ((import ./npins).ndg + "/nix") {inherit pkgs;}).packages.default;
       };
     });
     lib = rumLib;

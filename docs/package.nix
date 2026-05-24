@@ -1,5 +1,4 @@
 {
-  ndg,
   pkgs,
   lib,
   rumLib,
@@ -110,7 +109,7 @@
     .optionsJSON;
 
   hjemRumDocs =
-    pkgs.runCommandLocal "hjr-docs" {nativeBuildInputs = [ndg];}
+    pkgs.runCommandLocal "hjr-docs" {nativeBuildInputs = [pkgs.ndg];}
     ''
       mkdir -p $out
 
