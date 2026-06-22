@@ -79,8 +79,8 @@
       transformOptions = opt:
         opt
         // {
-          # This is needed, as otherwise, every option will be prefixed with `<name>.rum`
-          name = removePrefixes ["<name>."] opt.name;
+          # This is needed, as otherwise, every option will be prefixed with `<username>.rum`
+          name = removePrefixes ["<username>."] opt.name;
 
           declarations =
             map (
