@@ -41,7 +41,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = mkIf (cfg.package != true) [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
       mkAfter "${getExe cfg.package} init fish ${toFlags} | source"
