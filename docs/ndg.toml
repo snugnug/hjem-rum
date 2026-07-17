@@ -1,0 +1,9 @@
+title = "Hjem Rum"
+
+highlight_code = true
+
+[search]
+enable = true
+
+[sidebar.options]
+depth = 2

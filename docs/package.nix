@@ -113,13 +113,10 @@
     ''
       mkdir -p $out
 
-      ndg --verbose html \
-        --jobs $NIX_BUILD_CORES --title "Hjem Rum" \
+      ndg --verbose --config-file ${./ndg.toml} html \
+        --jobs $NIX_BUILD_CORES \
         --module-options ${configJSON}/share/doc/nixos/options.json \
         --manpage-urls ${./manpage-urls.json} \
-        --options-depth 2 \
-        --generate-search \
-        --highlight-code \
         --output-dir "$out"
     '';
 in
