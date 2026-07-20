@@ -20,7 +20,9 @@
         mapAttrsToList (
           n: v: let
             v' =
-              if isBool v
+              if isNull v
+              then "null"
+              else if isBool v
               then boolToString v
               else if isAttrs v
               then nuFormat attrs.${n}
