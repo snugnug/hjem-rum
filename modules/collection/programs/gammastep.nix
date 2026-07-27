@@ -32,9 +32,10 @@ in {
       };
       description = ''
         Settings are written as an INI file to {file}`$XDG_CONFIG_HOME/gammastep/config.ini`.
-        Refer to [gammastep's example configuration] all available options.
+        Refer to {manpage}`gammastep(1)` for more information. Its [example configuration]
+        may also be useful.
 
-        [gammastep's example configuration]: https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample
+        [example configuration]: https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample
       '';
     };
   };
