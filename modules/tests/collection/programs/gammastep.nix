@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   name = "programs-gammastep";
   nodes.machine = {
     hjem.users.bob.rum = {
@@ -23,6 +23,15 @@
             lon = "12.6";
           };
         };
+
+        hooks = {
+          record-period = pkgs.writeShellScript "record-period" ''
+            case $1 in
+              period-changed)
+                echo "$2 -> $3" >> "$HOME/gammastep-period";;
+            esac
+          '';
+        };
       };
     };
   };
@@ -35,9 +44,13 @@
     with subtest("Verify if gammastep is in $PATH"):
         machine.succeed("su bob -c 'which gammastep'")
 
-    with subtest("Verify if the config file is in place"):
+    with subtest("Verify if the config files are in place"):
         confPath = "/home/bob/.config/gammastep/config.ini"
         machine.succeed("[ -r %s ]" % confPath)
+
+        hookPath = "/home/bob/.config/gammastep/hooks/record-period"
+        machine.succeed("[ -r %s ]" % hookPath)
+        machine.succeed("test -x %s" % hookPath)
 
     with subtest("Verify if gammastep is able to correctly read our config"):
         stdout = machine.succeed("su bob -c 'gammastep -vp' 2>&1")
@@ -54,5 +67,19 @@
                 "Expected line not found in gammastep output: %r\n"
                 "Full output was:\n%s" % (line, stdout)
             )
+
+    with subtest("Verify if gammastep is able to correctly exec our hook"):
+        machine.succeed("su bob -c 'timeout 5 gammastep -m dummy -v || true'")
+        machine.wait_for_file("/home/bob/gammastep-period")
+        startup, shutdown = machine.succeed("cat /home/bob/gammastep-period").strip().splitlines()
+
+        old, _, new = startup.partition(" -> ")
+        assert old == "none" and new in ("daytime", "night", "transition"), (
+            "Unexpected startup event: %r" % startup
+        )
+        old, _, new = shutdown.partition(" -> ")
+        assert old in ("daytime", "night", "transition") and new == "none", (
+            "Unexpected shutdown event: %r" % shutdown
+        )
   '';
 }

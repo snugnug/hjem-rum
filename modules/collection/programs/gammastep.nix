@@ -4,8 +4,10 @@
   pkgs,
   ...
 }: let
+  inherit (lib.attrsets) mapAttrs' nameValuePair;
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+  inherit (lib.options) literalExpression mkOption mkEnableOption mkPackageOption;
+  inherit (lib.types) attrsOf path;
 
   ini = pkgs.formats.ini {};
 
@@ -38,12 +40,42 @@ in {
         [example configuration]: https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample
       '';
     };
+
+    hooks = mkOption {
+      type = attrsOf path;
+      default = {};
+      example = literalExpression ''
+        {
+          echo-period = ./echo-period;
+          notify-period = pkgs.writeShellScript "notify-period" '''
+            case $1 in
+              period-changed)
+                exec ''${lib.getExe pkgs.libnotify} "gammastep" "Period changed from $2 to $3";;
+            esac
+          ''';
+        }
+      '';
+      description = ''
+        Executable hooks written to {file}`$XDG_CONFIG_HOME/gammastep/hooks/*`.
+        Refer to {manpage}`gammastep(1)` for more information.
+
+        Use any writer you like, such as {command}`pkgs.writeShellScript` or
+        {command}`pkgs.writers.writePython3`, to build the script.
+        If using a Nix path, make sure that gammastep can e[x]ecute the file.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
-    xdg.config.files."gammastep/config.ini" = mkIf (cfg.settings != {}) {
-      source = ini.generate "gammastep-config.ini" cfg.settings;
-    };
+    xdg.config.files =
+      {
+        "gammastep/config.ini" = mkIf (cfg.settings != {}) {
+          source = ini.generate "gammastep-config.ini" cfg.settings;
+        };
+      }
+      // mapAttrs' (name: script:
+        nameValuePair "gammastep/hooks/${name}" {source = script;})
+      cfg.hooks;
   };
 }
