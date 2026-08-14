@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkOption mkEnableOption mkPackageOption literalExample;
+  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
 
   yaml = pkgs.formats.yaml {};
 
@@ -24,7 +24,7 @@ in {
         [beets derivation]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/audio/beets/builtin-plugins.nix
       '';
       example = ''
-        pkgs.beets.override {
+        pkgs.python3Packages.beets.override {
             pluginOverrides = {
                 fish.enable = true;
                 convert.enable = true;
@@ -41,7 +41,7 @@ in {
         Refer to the beets [documentation] for available options.
 
         If you would like to use plugins, please consult the description of
-        [rum.programs.beets.package](#option-rum-programs-beets-package) and the
+        {option}`rum.programs.beets.package` and the
         [official plugin documentation] on the plugins configuration.
 
         [documentation]: https://beets.readthedocs.io/en/stable/reference/config.html

@@ -31,7 +31,7 @@ in {
           stdout = machine.succeed("su bob -c 'which beet'")
 
       with subtest("Verify that beets is aware of the config file"):
-          stdout = machine.succeed("su bob -c 'beet config -p'")
+          stdout = machine.succeed("su bob -c 'beet config --paths'")
           assert stdout == "%s\n" % confPath, "beets did not pick up on the config location"
 
       with subtest("Verify that the linked file contains the proper data"):
