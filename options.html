@@ -2153,7 +2153,7 @@ with the plugins you want. Consult the <a href="https://github.com/NixOS/nixpkgs
 available plugins.</p>
 </body></html></div>
   <div class="option-default">Default: <code>pkgs.beets</code></div>
-  <div class="option-example">Example: <pre><code>pkgs.beets.override {
+  <div class="option-example">Example: <pre><code>pkgs.python3Packages.beets.override {
     pluginOverrides = {
         fish.enable = true;
         convert.enable = true;
@@ -2172,7 +2172,7 @@ available plugins.</p>
   <div class="option-description"><html><head></head><body><p>Beets configuration that is written to <code class="file-path">$XDG_CONFIG_HOME/beets/config.yaml</code>.
 Refer to the beets <a href="https://beets.readthedocs.io/en/stable/reference/config.html">documentation</a> for available options.</p>
 <p>If you would like to use plugins, please consult the description of
-<a href="#option-rum-programs-beets-package">rum.programs.beets.package</a> and the
+<a class="option-reference" href="options.html#option-rum.programs.beets.package"><code class="nixos-option">rum.programs.beets.package</code></a> and the
 <a href="https://beets.readthedocs.io/en/stable/reference/config.html#plugins">official plugin documentation</a> on the plugins configuration.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
