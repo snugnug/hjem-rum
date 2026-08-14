@@ -81,7 +81,7 @@
           [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The spawn action to run on button-press. For other actions, please see
-          {option}`binds.<keybind>.action`. See [niri's wiki] for more information.
+          {option}`rum.desktops.niri.binds.<name>.action`. See [niri's wiki] for more information.
         '';
       };
       action = mkOption {
@@ -92,7 +92,7 @@
           [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html
 
           The non-spawn action to run on button-press. For spawning processes, please see
-          {option}`binds.<keybind>.spawn`. See [niri's wiki] for a complete list.
+          {option}`rum.desktops.niri.binds.<name>.spawn`. See [niri's wiki] for a complete list.
         '';
       };
       parameters = mkOption {
@@ -177,7 +177,7 @@ in {
         [niri's wiki]: https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#environment
 
         Extra environmental variables to be added to Niri's `environment` node.
-        This can be used to override variables set in {option}`environment.sessionVariables`.
+        This can be used to override variables set in `environment.sessionVariables`.
         You can therefore set a variable to `null` to force unset it in Niri. Learn more from [niri's wiki].
       '';
     };
@@ -197,7 +197,7 @@ in {
 
         Lines of KDL code that are added to {file}`$XDG_CONFIG_HOME/niri/config.kdl`.
         See a full list of options in [niri's wiki].
-        To add to environment, please see {option}`extraVariables`.
+        To add to environment, please see {option}`rum.desktops.niri.extraVariables`.
 
         Here's an example of adding a file to your niri configuration:
 
