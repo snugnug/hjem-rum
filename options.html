@@ -1812,7 +1812,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   </h3>
   <div class="option-type">Type: <code>null or string</code></div>
   <div class="option-description"><html><head></head><body><p>The non-spawn action to run on button-press. For spawning processes, please see
-<code class="nixos-option">binds.&lt;keybind&gt;.spawn</code>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for a complete list.</p>
+<a class="option-reference" href="options.html#option-rum.desktops.niri.binds._name_.spawn"><code class="nixos-option">rum.desktops.niri.binds.&lt;name&gt;.spawn</code></a>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for a complete list.</p>
 </body></html></div>
   <div class="option-default">Default: <code>null</code></div>
   <div class="option-example">Example: <code>"focus-column-left"</code></div>
@@ -1842,7 +1842,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   </h3>
   <div class="option-type">Type: <code>null or (list of string)</code></div>
   <div class="option-description"><html><head></head><body><p>The spawn action to run on button-press. For other actions, please see
-<code class="nixos-option">binds.&lt;keybind&gt;.action</code>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for more information.</p>
+<a class="option-reference" href="options.html#option-rum.desktops.niri.binds._name_.action"><code class="nixos-option">rum.desktops.niri.binds.&lt;name&gt;.action</code></a>. See <a href="https://yalter.github.io/niri/Configuration%3A-Key-Bindings.html">niri's wiki</a> for more information.</p>
 </body></html></div>
   <div class="option-default">Default: <code>null</code></div>
   <div class="option-example">Example: <pre><code>[
@@ -1861,7 +1861,7 @@ quoted. See <a href="https://wiki.hyprland.org">Hyprland's documentation</a> for
   <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
   <div class="option-description"><html><head></head><body><p>Lines of KDL code that are added to <code class="file-path">$XDG_CONFIG_HOME/niri/config.kdl</code>.
 See a full list of options in <a href="https://yalter.github.io/niri/Configuration%3A-Introduction.html">niri's wiki</a>.
-To add to environment, please see <code class="nixos-option">extraVariables</code>.</p>
+To add to environment, please see <a class="option-reference" href="options.html#option-rum.desktops.niri.extraVariables"><code class="nixos-option">rum.desktops.niri.extraVariables</code></a>.</p>
 <p>Here's an example of adding a file to your niri configuration:</p>
 <pre class="highlight"><code class="language-nix">&nbsp;&nbsp;<span style="color:rgb(97,175,239);">config</span>&nbsp;<span style="color:rgb(171,178,191);">=</span>&nbsp;<span style="color:rgb(209,154,102);">builtins</span><span style="color:rgb(132,139,152);">.</span><span style="color:rgb(86,182,194);">readFile</span>&nbsp;<span style="color:rgb(232,102,113);">./config.kdl</span><span style="color:rgb(132,139,152);">;</span><br></code></pre>
 <p>Optionally, you can split your niri configuration into multiple KDL files like so:</p>
@@ -1900,7 +1900,7 @@ switch-events {
   </h3>
   <div class="option-type">Type: <code>attribute set of (null or (list of (signed integer or string or absolute path)) or signed integer or string or absolute path)</code></div>
   <div class="option-description"><html><head></head><body><p>Extra environmental variables to be added to Niri's <code>environment</code> node.
-This can be used to override variables set in <code class="nixos-option">environment.sessionVariables</code>.
+This can be used to override variables set in <code>environment.sessionVariables</code>.
 You can therefore set a variable to <code>null</code> to force unset it in Niri. Learn more from <a href="https://yalter.github.io/niri/Configuration%3A-Miscellaneous.html#environment">niri's wiki</a>.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
