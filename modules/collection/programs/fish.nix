@@ -13,7 +13,7 @@
   inherit (lib.trivial) pathExists;
   inherit (pkgs.writers) writeFish;
 
-  toFishFunc = body: funcName:
+  toFishFunc = funcName: body:
     if (typeOf body) == "string"
     then
       writeFish "${funcName}.fish" ''
@@ -187,7 +187,10 @@ in {
 
     xdg.config.files =
       {
-        "fish/config.fish" = mkIf (cfg.config != "") {source = writeFish "config.fish" cfg.config;};
+        "fish/config.fish" = mkIf (cfg.config != "") {
+          generator = writeFish "config.fish";
+          value = cfg.config;
+        };
         "fish/conf.d/rum-environment-variables.fish" = mkIf (env != {}) {
           text = ''
             ${concatMapAttrsStringSep "\n" (name: value: "set --global --export ${escapeShellArg name} ${escapeShellArg (toString value)}") env}          '';
@@ -201,7 +204,17 @@ in {
             ${concatMapAttrsStringSep "\n" (name: value: "alias -- ${escapeShellArg name} ${escapeShellArg (toString value)}") cfg.aliases}          '';
         };
       }
-      // (mapAttrs' (name: val: nameValuePair "fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
-      // (mapAttrs' (name: val: nameValuePair "fish/conf.d/${name}.fish" {source = writeFish "${name}.fish" val;}) cfg.earlyConfigFiles);
+      // (mapAttrs' (name: val:
+        nameValuePair "fish/functions/${name}.fish" {
+          generator = toFishFunc name;
+          value = val;
+        })
+      cfg.functions)
+      // (mapAttrs' (name: val:
+        nameValuePair "fish/conf.d/${name}.fish" {
+          generator = writeFish "${name}.fish";
+          value = val;
+        })
+      cfg.earlyConfigFiles);
   };
 }

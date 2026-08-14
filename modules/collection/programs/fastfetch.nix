@@ -46,7 +46,8 @@ in {
 
     xdg.config.files = {
       "fastfetch/config.jsonc" = mkIf (cfg.settings != {}) {
-        source = json.generate "fastfetch-config.jsonc" cfg.settings;
+        generator = json.generate "fastfetch-config.jsonc";
+        value = cfg.settings;
       };
     };
   };

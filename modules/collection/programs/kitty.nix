@@ -88,10 +88,8 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
       "kitty/kitty.conf" = mkIf (cfg.settings != {}) {
-        source = kittyKeyValue.generate "kitty.conf" (
-          cfg.settings
-          // optionalAttrs (cfg.integrations.fish.enable || cfg.integrations.zsh.enable) {shell_integration = "no-rc";}
-        );
+        generator = kittyKeyValue.generate "kitty.conf";
+        value = cfg.settings // optionalAttrs (cfg.integrations.fish.enable || cfg.integrations.zsh.enable) {shell_integration = "no-rc";};
       };
       "kitty/light-theme.auto.conf" = mkIf (cfg.theme.light != null) {source = cfg.theme.light;};
       "kitty/dark-theme.auto.conf" = mkIf (cfg.theme.dark != null) {source = cfg.theme.dark;};

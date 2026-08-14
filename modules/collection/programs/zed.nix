@@ -170,23 +170,28 @@ in {
     xdg.config.files =
       {
         "zed/settings.json" = mkIf (cfg.settings != {}) {
-          source = json.generate "zed-settings.json" cfg.settings;
+          generator = json.generate "zed-settings.json";
+          value = cfg.settings;
         };
         "zed/keymap.json" = mkIf (cfg.keymap != {}) {
-          source = json.generate "zed-keymap.json" cfg.keymap;
+          generator = json.generate "zed-keymap.json";
+          value = cfg.keymap;
         };
         "zed/tasks.json" = mkIf (cfg.tasks != {}) {
-          source = json.generate "zed-tasks.json" cfg.tasks;
+          generator = json.generate "zed-tasks.json";
+          value = cfg.tasks;
         };
       }
       // (mapAttrs' (name: value:
         nameValuePair "zed/snippets/${name}.json" {
-          source = json.generate "zed-${name}-snippet.json" value;
+          generator = json.generate "zed-${name}-snippet.json";
+          inherit value;
         })
       cfg.snippets)
       // (mapAttrs' (name: value:
         nameValuePair "zed/themes/${name}.json" {
-          source = json.generate "zed-${name}-theme.json" value;
+          generator = json.generate "zed-${name}-theme.json";
+          inherit value;
         })
       cfg.themes);
   };

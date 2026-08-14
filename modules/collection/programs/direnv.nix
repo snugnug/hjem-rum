@@ -74,7 +74,8 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
       "direnv/direnv.toml" = mkIf (cfg.settings != {}) {
-        source = toml.generate "direnv-config.toml" cfg.settings;
+        generator = toml.generate "direnv-config.toml";
+        value = cfg.settings;
       };
       "direnv/direnvrc" = mkIf (cfg.direnvrc != "") {text = cfg.direnvrc;};
       "direnv/lib/nix-direnv.sh" = mkIf cfg.integrations.nix-direnv.enable {source = "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";};

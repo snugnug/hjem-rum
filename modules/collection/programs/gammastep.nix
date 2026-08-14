@@ -42,7 +42,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."gammastep/config.ini" = mkIf (cfg.settings != {}) {
-      source = ini.generate "gammastep-config.ini" cfg.settings;
+      generator = ini.generate "gammastep-config.ini";
+      value = cfg.settings;
     };
   };
 }

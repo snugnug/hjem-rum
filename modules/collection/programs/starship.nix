@@ -54,7 +54,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."starship.toml" = mkIf (cfg.settings != {}) {
-      source = toml.generate "starship.toml" cfg.settings;
+      generator = toml.generate "starship.toml";
+      value = cfg.settings;
     };
 
     rum.programs = {

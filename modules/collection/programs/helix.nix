@@ -15,7 +15,8 @@
     mapAttrs' (
       name: value:
         nameValuePair "helix/themes/${name}.toml" {
-          source = toml.generate "helix-theme-${name}.toml" value;
+          generator = toml.generate "helix-theme-${name}.toml";
+          inherit value;
         }
     )
     themes;
@@ -91,11 +92,13 @@ in {
     xdg.config.files =
       {
         "helix/config.toml" = mkIf (cfg.settings != {}) {
-          source = toml.generate "helix-config.toml" cfg.settings;
+          generator = toml.generate "helix-config.toml";
+          value = cfg.settings;
         };
 
         "helix/languages.toml" = mkIf (cfg.languages != {}) {
-          source = toml.generate "helix-languages.toml" cfg.languages;
+          generator = toml.generate "helix-languages.toml";
+          value = cfg.languages;
         };
       }
       // optionalAttrs (cfg.themes != {}) (mkThemes cfg.themes);

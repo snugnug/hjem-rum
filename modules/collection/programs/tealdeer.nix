@@ -36,7 +36,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."tealdeer/config.toml" = mkIf (cfg.settings != {}) {
-      source = toml.generate "tealdeer-config.toml" cfg.settings;
+      generator = toml.generate "tealdeer-config.toml";
+      value = cfg.settings;
     };
   };
 }

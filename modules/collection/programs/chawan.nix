@@ -38,7 +38,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."chawan/config.toml" = mkIf (cfg.settings != {}) {
-      source = toml.generate "chawan-config.toml" cfg.settings;
+      generator = toml.generate "chawan-config.toml";
+      value = cfg.settings;
     };
   };
 }

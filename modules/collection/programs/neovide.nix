@@ -42,7 +42,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."neovide/config.toml" = mkIf (cfg.settings != {}) {
-      source = toml.generate "neovide-config.toml" cfg.settings;
+      generator = toml.generate "neovide-config.toml";
+      value = cfg.settings;
     };
   };
 }

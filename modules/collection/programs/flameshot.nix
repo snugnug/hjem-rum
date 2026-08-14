@@ -39,7 +39,8 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."flameshot/flameshot.ini" = mkIf (cfg.settings != {}) {
-      source = ini.generate "flameshot.ini" cfg.settings;
+      generator = ini.generate "flameshot.ini";
+      value = cfg.settings;
     };
   };
 }

@@ -23,7 +23,8 @@
       nameValuePair
       "ghostty/themes/${name}"
       {
-        source = keyValue.generate "ghostty-${name}-theme" value;
+        generator = keyValue.generate "ghostty-${name}-theme";
+        inherit value;
       })
     themes;
 
@@ -109,7 +110,8 @@ in {
     xdg.config.files =
       {
         "ghostty/config" = mkIf (cfg.settings != {}) {
-          source = keyValue.generate "ghostty-config" cfg.settings;
+          generator = keyValue.generate "ghostty-config";
+          value = cfg.settings;
         };
       }
       // optionalAttrs (cfg.themes != {}) (mkThemes cfg.themes);
