@@ -2,6 +2,7 @@
   yaml = pkgs.formats.yaml {};
 
   settings = {
+    create_backup_before_migrations = false;
     plugins = "duplicates";
   };
   settingsFile = yaml.generate "settings.yaml" settings;
