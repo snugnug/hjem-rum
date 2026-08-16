@@ -5,7 +5,8 @@
   ...
 }: let
   inherit (lib.attrsets) mapAttrs' nameValuePair;
-  inherit (lib.modules) mkIf;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.options) literalExpression mkOption mkEnableOption mkPackageOption;
   inherit (lib.types) attrsOf path;
 
@@ -64,18 +65,41 @@ in {
         If using a Nix path, make sure that gammastep can e[x]ecute the file.
       '';
     };
+
+    integrations.systemd.enable =
+      (mkEnableOption "gammastep integration with systemd")
+      // {
+        default = true;
+        defaultText = literalExpression "config.systemd.enable";
+        example = false;
+      };
   };
 
-  config = mkIf cfg.enable {
-    packages = mkIf (cfg.package != null) [cfg.package];
-    xdg.config.files =
-      {
-        "gammastep/config.ini" = mkIf (cfg.settings != {}) {
-          source = ini.generate "gammastep-config.ini" cfg.settings;
+  config = mkIf cfg.enable (mkMerge [
+    {
+      packages = mkIf (cfg.package != null) [cfg.package];
+      xdg.config.files =
+        {
+          "gammastep/config.ini" = mkIf (cfg.settings != {}) {
+            source = ini.generate "gammastep-config.ini" cfg.settings;
+          };
+        }
+        // mapAttrs' (name: script:
+          nameValuePair "gammastep/hooks/${name}" {source = script;})
+        cfg.hooks;
+    }
+    (mkIf cfg.integrations.systemd.enable {
+      systemd.services.gammastep = {
+        after = ["graphical-session.target"];
+        description = "Screen color temperature manager";
+        documentation = ["man:gammastep(1)" "https://gitlab.com/chinstrap/gammastep"];
+        partOf = ["graphical-session.target"];
+        serviceConfig = {
+          ExecStart = getExe cfg.package;
+          Restart = "on-failure";
         };
-      }
-      // mapAttrs' (name: script:
-        nameValuePair "gammastep/hooks/${name}" {source = script;})
-      cfg.hooks;
-  };
+        wantedBy = ["graphical-session.target"];
+      };
+    })
+  ]);
 }

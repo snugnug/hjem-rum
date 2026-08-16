@@ -81,5 +81,8 @@
         assert old in ("daytime", "night", "transition") and new == "none", (
             "Unexpected shutdown event: %r" % shutdown
         )
+
+    with subtest("Verify if gammastep.service is enabled"):
+        machine.succeed("su bob -c 'XDG_RUNTIME_DIR=/run/user/$(id -u bob) systemctl --user is-enabled gammastep.service'")
   '';
 }
