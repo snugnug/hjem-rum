@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  options,
   ...
 }: let
   inherit (lib.attrsets) mapAttrs' nameValuePair;
@@ -88,7 +89,9 @@ in {
           nameValuePair "gammastep/hooks/${name}" {source = script;})
         cfg.hooks;
     }
-    (mkIf cfg.integrations.systemd.enable {
+
+    (mkIf cfg.integrations.systemd.enable (lib.optionalAttrs (options ?
+      systemd) {
       systemd.services.gammastep = {
         after = ["graphical-session.target"];
         description = "Screen color temperature manager";
@@ -100,6 +103,6 @@ in {
         };
         wantedBy = ["graphical-session.target"];
       };
-    })
+    }))
   ]);
 }
