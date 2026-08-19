@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  pkgs,
   options,
+  pkgs,
   ...
 }: let
-  inherit (lib.attrsets) mapAttrs' nameValuePair;
+  inherit (lib.attrsets) mapAttrs' nameValuePair optionalAttrs;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.options) literalExpression mkOption mkEnableOption mkPackageOption;
@@ -89,9 +89,7 @@ in {
           nameValuePair "gammastep/hooks/${name}" {source = script;})
         cfg.hooks;
     }
-
-    (mkIf cfg.integrations.systemd.enable (lib.optionalAttrs (options ?
-      systemd) {
+    (optionalAttrs (options ? systemd) (mkIf cfg.integrations.systemd.enable {
       systemd.services.gammastep = {
         after = ["graphical-session.target"];
         description = "Screen color temperature manager";
