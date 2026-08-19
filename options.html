@@ -314,7 +314,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">170</span>
+        <span class="toc-count">172</span>
       </summary>
       <ul>
         
@@ -683,6 +683,22 @@
         <li>
           <a href='#option-rum.programs.gammastep.enable' title="rum.programs.gammastep.enable">
             gammastep.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum.programs.gammastep.hooks' title="rum.programs.gammastep.hooks">
+            gammastep.hooks
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-rum.programs.gammastep.integrations.systemd.enable' title="rum.programs.gammastep.integrations.systemd.enable">
+            gammastep.integrations.systemd.enable
             
             
           </a>
@@ -2867,6 +2883,45 @@ for all available options.</p>
   <div class="option-example">Example: <code>true</code></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/gammastep.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/gammastep.nix&gt;</a></code></div>
 </div>
+<div class="option" id="option-rum.programs.gammastep.hooks">
+  <h3 class="option-name">
+    <a href="#option-rum.programs.gammastep.hooks" class="option-anchor">rum.programs.gammastep.hooks</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of absolute path</code></div>
+  <div class="option-description"><html><head></head><body><p>Executable hooks written to <code class="file-path">$XDG_CONFIG_HOME/gammastep/hooks/*</code>.
+Refer to <a href="https://man.archlinux.org/man/gammastep.1.en" class="manpage-reference">gammastep(1)</a> for more information.</p>
+<p>Use any writer you like, such as <code class="command">pkgs.writeShellScript</code> or
+<code class="command">pkgs.writers.writePython3</code>, to build the script.
+If using a Nix path, make sure that gammastep can e[x]ecute the file.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  echo-period = ./echo-period;
+  notify-period = pkgs.writeShellScript "notify-period" ''
+    case $1 in
+      period-changed)
+        exec ${lib.getExe pkgs.libnotify} "gammastep" "Period changed from $2 to $3";;
+    esac
+  '';
+}
+</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/gammastep.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/gammastep.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum.programs.gammastep.integrations.systemd.enable">
+  <h3 class="option-name">
+    <a href="#option-rum.programs.gammastep.integrations.systemd.enable" class="option-anchor">rum.programs.gammastep.integrations.systemd.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><html><head></head><body><p>Whether to enable gammastep integration with systemd.</p>
+</body></html></div>
+  <div class="option-default">Default: <code>config.systemd.enable</code></div>
+  <div class="option-example">Example: <code>false</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/gammastep.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/gammastep.nix&gt;</a></code></div>
+</div>
 <div class="option" id="option-rum.programs.gammastep.package">
   <h3 class="option-name">
     <a href="#option-rum.programs.gammastep.package" class="option-anchor">rum.programs.gammastep.package</a>
@@ -2887,7 +2942,8 @@ for all available options.</p>
   </h3>
   <div class="option-type">Type: <code>attribute set of section of an INI file (attrs of INI atom (null, bool, int, float or string))</code></div>
   <div class="option-description"><html><head></head><body><p>Settings are written as an INI file to <code class="file-path">$XDG_CONFIG_HOME/gammastep/config.ini</code>.
-Refer to <a href="https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample">gammastep's example configuration</a> all available options.</p>
+Refer to <a href="https://man.archlinux.org/man/gammastep.1.en" class="manpage-reference">gammastep(1)</a> for more information. Its <a href="https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample">example configuration</a>
+may also be useful.</p>
 </body></html></div>
   <div class="option-default">Default: <code>{ }</code></div>
   <div class="option-example">Example: <pre><code>{
