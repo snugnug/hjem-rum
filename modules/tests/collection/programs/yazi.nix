@@ -24,6 +24,17 @@
             light = "gruvbox";
           };
         };
+        plugins = {inherit (pkgs.yaziPlugins) git;};
+        flavors = let
+          yaziFlavors = pkgs.fetchFromGitHub {
+            owner = "yazi-rs";
+            repo = "flavors";
+            rev = "2d73b79da7c1a04420c6c5ef0b0974697f947ef6";
+            hash = "sha256-+awiEG5ep0/6GaW8YXJ7FP0/xrL4lSrJZgr7qjh8iBc=";
+          };
+        in {
+          dracula = "${yaziFlavors}/dracula.yazi";
+        };
       };
     };
   };
@@ -46,11 +57,15 @@
       yaziConfPath = confDir + "/yazi.toml"
       keymapConfPath = confDir + "/keymap.toml"
       themeConfPath = confDir + "/theme.toml"
+      gitPluginDir = confDir + "/plugins/git.yazi"
+      draculaFlavorDir = confDir + "/flavors/dracula.yazi"
 
       # Checks if the yazi config files exists in the expected place.
       machine.succeed("[ -r %s ]" % yaziConfPath)
       machine.succeed("[ -r %s ]" % keymapConfPath)
       machine.succeed("[ -r %s ]" % themeConfPath)
+      machine.succeed("[ -d %s ]" % gitPluginDir)
+      machine.succeed("[ -d %s ]" % draculaFlavorDir)
 
       # Checks if the yazi config files are valid
       machine.succeed("su bob -c 'taplo check --schema file://${schemaSrc}/schemas/yazi.json %s'" % yaziConfPath)
