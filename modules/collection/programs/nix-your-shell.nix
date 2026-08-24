@@ -16,9 +16,24 @@ in {
     package = mkPackageOption pkgs "nix-your-shell" {nullable = true;};
 
     integrations = {
-      fish.enable = mkEnableOption "nix-your-shell integration with fish";
-      zsh.enable = mkEnableOption "nix-your-shell integration with zsh";
-      nushell.enable = mkEnableOption "nix-your-shell integration with nushell";
+      fish.enable =
+        mkEnableOption "nix-your-shell integration with fish"
+        // {
+          default = true;
+          example = false;
+        };
+      nushell.enable =
+        mkEnableOption "nix-your-shell integration with nushell"
+        // {
+          default = true;
+          example = false;
+        };
+      zsh.enable =
+        mkEnableOption "nix-your-shell integration with zsh"
+        // {
+          default = true;
+          example = false;
+        };
     };
   };
 
