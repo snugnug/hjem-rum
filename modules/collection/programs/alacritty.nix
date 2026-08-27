@@ -46,7 +46,7 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."alacritty/alacritty.toml" = mkIf (cfg.settings != {}) {
-      source = toml.generate "alacritty.toml" cfg.settings;
+      source = toml.generate "alacritty-alacritty.toml" cfg.settings;
     };
   };
 }

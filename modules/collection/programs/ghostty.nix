@@ -23,7 +23,7 @@
       nameValuePair
       "ghostty/themes/${name}"
       {
-        source = keyValue.generate "ghostty-${name}-theme" value;
+        source = keyValue.generate "ghostty-themes-${name}" value;
       })
     themes;
 
