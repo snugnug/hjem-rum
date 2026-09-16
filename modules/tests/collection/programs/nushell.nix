@@ -54,20 +54,20 @@ in {
 
       with subtest("Verify settings."):
         machine.succeed("test -f %s" % configFile)
-        var = machine.succeed("su bob -c 'nu -c \"\$env.config.show_banner\" --config %s'" % configFile)
+        var = machine.succeed("su bob -c 'nu --config %s -c \"\$env.config.show_banner\"'" % configFile)
         assert "false" in var, "Config does not contain show_banner = false"
-        extraVar = machine.succeed("su bob -c 'nu -c \"\$env.config.buffer_editor\" --config %s'" % configFile)
+        extraVar = machine.succeed("su bob -c 'nu --config %s -c \"\$env.config.buffer_editor\"'" % configFile)
         assert "vi" in extraVar, "Config does not contain extraConfig string"
-        tableBasic = machine.succeed("su bob -c 'nu -c \"\$env.config.table.mode\" --config %s'" % configFile)
+        tableBasic = machine.succeed("su bob -c 'nu --config %s -c \"\$env.config.table.mode\"'" % configFile)
         assert "basic" in tableBasic, "Config does not contain table.mode = \"basic\""
-        tableModeType = machine.succeed("su bob -c 'nu -c \"\$env.config.table.mode | describe\" --config %s'" % configFile)
+        tableModeType = machine.succeed("su bob -c 'nu --config %s -c \"\$env.config.table.mode | describe\"'" % configFile)
         assert "string" in tableModeType, "The type validated by nu was not a string"
 
       with subtest("Verify aliases."):
-        machine.succeed("su bob -c 'nu -c \"ll\" --config %s'" % configFile)
+        machine.succeed("su bob -c 'nu --config %s -c \"ll\"'" % configFile)
 
       with subtest("Verify environmental variables"):
-        envVar = machine.succeed("su bob -c 'nu -c \"\$env.RUM_TEST\" --config %s'" % configFile)
+        envVar = machine.succeed("su bob -c 'nu --config %s -c \"\$env.RUM_TEST\"'" % configFile)
         assert "HEY" in envVar, "Env var RUM_TEST does not contain HEY"
 
       with subtest("Verify plugins."):
