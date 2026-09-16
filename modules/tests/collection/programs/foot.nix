@@ -5,7 +5,7 @@ let
       font = "NotoSansM Nerd Font Mono:size=13";
     };
     mouse.hide-when-typing = "yes";
-    colors.alpha = 0.8;
+    colors-light.alpha = 0.8;
     scrollback = {
       lines = 90000;
       indicator-position = "none";
