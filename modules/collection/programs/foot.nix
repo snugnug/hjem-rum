@@ -30,7 +30,7 @@ in {
           hide-when-typing = "yes";
         };
 
-        colors = {
+        colors-light = {
           alpha = 0.8;
         };
 
