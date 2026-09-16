@@ -1,1 +1,6 @@
 title = "Hjem Rum"
+
+[sidebar.options]
+nested = true
+nested_depth = 2
+collapse_singletons = true
