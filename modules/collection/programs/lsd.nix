@@ -74,13 +74,13 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."lsd/config.yaml" = mkIf (cfg.settings != {}) {
-      source = yaml.generate "config.yaml" cfg.settings;
+      source = yaml.generate "lsd-config.yaml" cfg.settings;
     };
     xdg.config.files."lsd/icons.yaml" = mkIf (cfg.icons != {}) {
-      source = yaml.generate "icons.yaml" cfg.icons;
+      source = yaml.generate "lsd-icons.yaml" cfg.icons;
     };
     xdg.config.files."lsd/colors.yaml" = mkIf (cfg.colors != {}) {
-      source = yaml.generate "colors.yaml" cfg.colors;
+      source = yaml.generate "lsd-colors.yaml" cfg.colors;
     };
   };
 }

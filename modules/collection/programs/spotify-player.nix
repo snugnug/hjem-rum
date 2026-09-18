@@ -144,16 +144,16 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
       "spotify-player/app.toml" = mkIf (cfg.settings != {}) {
-        source = toml.generate "spotify-player/app.toml" cfg.settings;
+        source = toml.generate "spotify-player-app.toml" cfg.settings;
       };
 
       # Passes each declared theme under the "themes" attr as needed
       "spotify-player/theme.toml" = mkIf (cfg.themes != []) {
-        source = toml.generate "spotify-player/theme.toml" {inherit (cfg) themes;};
+        source = toml.generate "spotify-player-theme.toml" {inherit (cfg) themes;};
       };
 
       "spotify-player/keymap.toml" = mkIf (cfg.keymap != {}) {
-        source = toml.generate "spotify-player/keymap.toml" cfg.keymap;
+        source = toml.generate "spotify-player-keymap.toml" cfg.keymap;
       };
     };
   };

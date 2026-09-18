@@ -41,7 +41,7 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."bottom/bottom.toml" = mkIf (cfg.settings != {}) {
-      source = toml.generate "bottom.toml" cfg.settings;
+      source = toml.generate "bottom-bottom.toml" cfg.settings;
     };
   };
 }
