@@ -2,7 +2,7 @@
   description = "A module collection for Hjem";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
     hjem = {
       url = "github:feel-co/hjem";
