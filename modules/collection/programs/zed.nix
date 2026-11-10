@@ -181,12 +181,12 @@ in {
       }
       // (mapAttrs' (name: value:
         nameValuePair "zed/snippets/${name}.json" {
-          source = json.generate "zed-${name}-snippet.json" value;
+          source = json.generate "zed-snippets-${name}.json" value;
         })
       cfg.snippets)
       // (mapAttrs' (name: value:
         nameValuePair "zed/themes/${name}.json" {
-          source = json.generate "zed-${name}-theme.json" value;
+          source = json.generate "zed-themes-${name}.json" value;
         })
       cfg.themes);
   };

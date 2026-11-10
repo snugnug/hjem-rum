@@ -88,7 +88,7 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
       "kitty/kitty.conf" = mkIf (cfg.settings != {}) {
-        source = kittyKeyValue.generate "kitty.conf" (
+        source = kittyKeyValue.generate "kitty-kitty.conf" (
           cfg.settings
           // optionalAttrs (cfg.integrations.fish.enable || cfg.integrations.zsh.enable) {shell_integration = "no-rc";}
         );

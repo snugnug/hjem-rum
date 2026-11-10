@@ -44,7 +44,7 @@ in {
   config = mkIf cfg.enable {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files."imv/config" = mkIf (cfg.settings != {}) {
-      source = pkgs.concatText "imv-config.ini" [
+      source = pkgs.concatText "imv-config" [
         optionsFile
         aliasesFile
         bindsFile

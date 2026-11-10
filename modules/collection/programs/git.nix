@@ -96,7 +96,7 @@ in {
     packages = mkIf (cfg.package != null) [cfg.package];
     xdg.config.files = {
       "git/config" = mkIf (cfg.settings != {} || cfg.integrations.difftastic.enable) {
-        source = gitIni.generate "config" (
+        source = gitIni.generate "git-config" (
           cfg.settings
           // (let
             difft-command = concatStringsSep " " ([(getExe cfg.integrations.difftastic.package)] ++ cfg.integrations.difftastic.flags);

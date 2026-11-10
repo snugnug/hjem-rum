@@ -15,7 +15,7 @@
     mapAttrs' (
       name: value:
         nameValuePair "helix/themes/${name}.toml" {
-          source = toml.generate "helix-theme-${name}.toml" value;
+          source = toml.generate "helix-themes-${name}.toml" value;
         }
     )
     themes;
