@@ -2,11 +2,7 @@
   name = "programs-fzf";
   nodes.machine = {
     hjem.users.bob.rum = {
-      programs.fzf = {
-        enable = true;
-        integrations.fish.enable = true;
-        integrations.zsh.enable = true;
-      };
+      programs.fzf.enable = true;
       programs.fish.enable = true;
       programs.zsh.enable = true;
     };

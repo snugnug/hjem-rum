@@ -16,8 +16,18 @@ in {
     package = mkPackageOption pkgs "fzf" {nullable = true;};
 
     integrations = {
-      fish.enable = mkEnableOption "fzf integration with fish";
-      zsh.enable = mkEnableOption "fzf integration with zsh";
+      fish.enable =
+        mkEnableOption "fzf integration with fish"
+        // {
+          default = true;
+          example = false;
+        };
+      zsh.enable =
+        mkEnableOption "fzf integration with zsh"
+        // {
+          default = true;
+          example = false;
+        };
     };
   };
 

@@ -5,9 +5,6 @@
       programs.zoxide = {
         enable = true;
         flags = ["--cmd cd"];
-        integrations.fish.enable = true;
-        integrations.zsh.enable = true;
-        integrations.nushell.enable = true;
       };
       programs.fish.enable = true;
       programs.zsh.enable = true;

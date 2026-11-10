@@ -79,8 +79,18 @@ in {
     };
 
     integrations = {
-      fish.enable = mkEnableOption "kitty integration with fish";
-      zsh.enable = mkEnableOption "kitty integration with zsh";
+      fish.enable =
+        mkEnableOption "kitty integration with fish"
+        // {
+          default = true;
+          example = false;
+        };
+      zsh.enable =
+        mkEnableOption "kitty integration with zsh"
+        // {
+          default = true;
+          example = false;
+        };
     };
   };
 
@@ -90,7 +100,7 @@ in {
       "kitty/kitty.conf" = mkIf (cfg.settings != {}) {
         source = kittyKeyValue.generate "kitty.conf" (
           cfg.settings
-          // optionalAttrs (cfg.integrations.fish.enable || cfg.integrations.zsh.enable) {shell_integration = "no-rc";}
+          // optionalAttrs ((cfg.integrations.fish.enable && config.rum.programs.fish.enable) || (cfg.integrations.zsh.enable && config.rum.programs.zsh.enable)) {shell_integration = "no-rc";}
         );
       };
       "kitty/light-theme.auto.conf" = mkIf (cfg.theme.light != null) {source = cfg.theme.light;};
