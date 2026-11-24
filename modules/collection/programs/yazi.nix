@@ -75,7 +75,7 @@ in {
 
     xdg.config.files = {
       "yazi/yazi.toml" = mkIf (cfg.settings != {}) {
-        source = toml.generate "yazi-yazi.toml" cfg.settings;
+        source = toml.generate "yazi.toml" cfg.settings;
       };
       "yazi/keymap.toml" = mkIf (cfg.keymap != {}) {
         source = toml.generate "yazi-keymap.toml" cfg.keymap;
