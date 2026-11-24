@@ -18,10 +18,6 @@
           	)}"
           }
         '';
-        integrations.fish.enable = true;
-        integrations.nix-direnv.enable = true;
-        integrations.nushell.enable = true;
-        integrations.zsh.enable = true;
       };
       programs.fish.enable = true;
       programs.nushell.enable = true;

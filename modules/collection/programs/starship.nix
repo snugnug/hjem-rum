@@ -45,9 +45,24 @@ in {
     transience.enable = mkEnableOption "enable transience";
 
     integrations = {
-      fish.enable = mkEnableOption "starship integration with fish";
-      nushell.enable = mkEnableOption "starship integration with nushell";
-      zsh.enable = mkEnableOption "starship integration with zsh";
+      fish.enable =
+        mkEnableOption "starship integration with fish"
+        // {
+          default = true;
+          example = false;
+        };
+      nushell.enable =
+        mkEnableOption "starship integration with nushell"
+        // {
+          default = true;
+          example = false;
+        };
+      zsh.enable =
+        mkEnableOption "starship integration with zsh"
+        // {
+          default = true;
+          example = false;
+        };
     };
   };
 
